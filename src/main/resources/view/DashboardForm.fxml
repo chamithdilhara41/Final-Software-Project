@@ -162,6 +162,6 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <AnchorPane layoutX="204.0" layoutY="78.0" prefHeight="536.0" prefWidth="848.0" />
+      <AnchorPane fx:id="mainPane" layoutX="204.0" layoutY="78.0" prefHeight="536.0" prefWidth="848.0" />
    </children>
 </AnchorPane>

@@ -7,6 +7,9 @@ import javafx.scene.layout.AnchorPane;
 public class DashboardFormController {
 
     @FXML
+    private AnchorPane mainPane;
+
+    @FXML
     private AnchorPane rootNode;
 
     @FXML
