@@ -7,11 +7,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="rootNode" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.DashboardFormController">
+<AnchorPane fx:id="rootNode" prefHeight="755.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.DashboardFormController">
    <children>
-      <AnchorPane prefHeight="78.0" prefWidth="1054.0" style="-fx-background-color: #9FE2BF;" />
-      <AnchorPane layoutY="546.0" prefHeight="104.0" prefWidth="1054.0" style="-fx-background-color: #9FE2BF;">
+      <AnchorPane prefHeight="78.0" prefWidth="1150.0" style="-fx-background-color: #9FE2BF;" />
+      <AnchorPane layoutY="651.0" prefHeight="104.0" prefWidth="1150.0" style="-fx-background-color: #9FE2BF;">
          <children>
             <JFXButton buttonType="RAISED" layoutX="22.0" layoutY="31.0" onAction="#btnOnActionLogout" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #ff6464;" text="LOG OUT..">
                <font>
@@ -162,6 +161,36 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <AnchorPane fx:id="mainPane" layoutX="204.0" layoutY="78.0" prefHeight="536.0" prefWidth="848.0" />
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="2.0" layoutY="546.0" onAction="#btnOnActionReports" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Reports">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-stocks-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="1.0" layoutY="598.0" onAction="#btnOnActionSettings" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Settings">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-setting-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <AnchorPane fx:id="mainPane" layoutX="204.0" layoutY="78.0" prefHeight="646.0" prefWidth="945.0" />
    </children>
 </AnchorPane>
