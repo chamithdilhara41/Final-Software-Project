@@ -55,6 +55,16 @@ public class DashboardFormController {
     }
 
     @FXML
+    void btnOnActionReports(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnOnActionSettings(ActionEvent event) {
+
+    }
+
+    @FXML
     void btnOnActionStock(ActionEvent event) {
 
     }
