@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootNode" prefHeight="755.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.MainFormController">
+   <children>
+      <AnchorPane prefHeight="78.0" prefWidth="1150.0" style="-fx-background-color: #9FE2BF;" />
+      <AnchorPane layoutY="651.0" prefHeight="104.0" prefWidth="1150.0" style="-fx-background-color: #9FE2BF;">
+         <children>
+            <JFXButton buttonType="RAISED" layoutX="22.0" layoutY="31.0" onAction="#btnOnActionLogout" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #ff6464;" text="LOG OUT..">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons8-log-out-48.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="1.0" layoutY="78.0" onAction="#btnOnActionDashboard" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Dashboard">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-dashboard-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="1.0" layoutY="130.0" onAction="#btnOnActionSupplier" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Supplier">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="36.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-supplier-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="1.0" layoutY="182.0" onAction="#btnOnActionBuyer" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Buyer">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-buyer-50%20(1).png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="1.0" layoutY="234.0" onAction="#btnOnActionOrders" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Orders">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-order-64.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="1.0" layoutY="286.0" onAction="#btnOnActionStock" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Stock">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="29.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-warehouse-80.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="1.0" layoutY="338.0" onAction="#btnOnActionTransactions" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Transactions">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-transaction-64.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="2.0" layoutY="390.0" onAction="#btnOnActionPayment" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Payment">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-buyer-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="2.0" layoutY="442.0" onAction="#btnOnActionEmployee" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text="Employee">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-employee-80.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="1.0" layoutY="494.0" onAction="#btnOnActionVehicle" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Vehicle">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-lorry-48.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="2.0" layoutY="546.0" onAction="#btnOnActionReports" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Reports">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-stocks-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="1.0" layoutY="598.0" onAction="#btnOnActionSettings" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Settings">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Candara Italic" size="25.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-setting-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <AnchorPane fx:id="mainPane" layoutX="204.0" layoutY="78.0" prefHeight="656.0" prefWidth="946.0" />
+   </children>
+</AnchorPane>

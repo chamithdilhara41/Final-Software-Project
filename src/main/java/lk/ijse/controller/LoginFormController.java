@@ -57,7 +57,7 @@ public class LoginFormController {
 
     private void navigateToTheDashboard () throws IOException {
         // Load the FXML file
-        Parent rootNode = FXMLLoader.load(getClass().getResource("/view/DashboardForm.fxml"));
+        Parent rootNode = FXMLLoader.load(getClass().getResource("/view/MainForm.fxml"));
 
         // Create a new Scene
         Scene scene = new Scene(rootNode);
