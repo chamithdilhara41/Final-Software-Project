@@ -55,7 +55,7 @@ public class LoginFormController {
 
     }
 
-    private void navigateToTheDashboard() throws IOException {
+    private void navigateToTheDashboard () throws IOException {
         // Load the FXML file
         Parent rootNode = FXMLLoader.load(getClass().getResource("/view/DashboardForm.fxml"));
 
