@@ -15,7 +15,6 @@ import lk.ijse.repository.SupplierRepo;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class SupplierFormController {
 
@@ -51,8 +50,6 @@ public class SupplierFormController {
     @FXML
     private TextField txtSupplierName;
 
-    private ObservableList<SupplierTm> obList = FXCollections.observableArrayList();
-
     public void initialize() throws SQLException {
         getAllSuppliers();
         setCellValueFactory();
@@ -65,8 +62,20 @@ public class SupplierFormController {
 
     @FXML
     void btnOnActionDelete(ActionEvent event) {
+        String supplierID = txtSupplierID.getText();
 
+        try {
+            boolean isDeleted = SupplierRepo.delete(supplierID);
+            if(isDeleted) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Supplier deleted!").show();
+                getAllSuppliers();
+                setCellValueFactory();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
     }
+
 
     @FXML
     void btnOnActionSave(ActionEvent event) {
@@ -137,7 +146,8 @@ public class SupplierFormController {
         }
     }
     void getAllSuppliers() throws SQLException {
-        obList = FXCollections.observableArrayList();
+
+        ObservableList<SupplierTm> obList = FXCollections.observableArrayList();
         List<Supplier> supplierList = SupplierRepo.getAll();
 
         for ( Supplier supplier: supplierList){
