@@ -14,8 +14,7 @@ public class SupplierRepo {
     public static boolean save(Supplier supplier) throws SQLException {
         String sql = "INSERT INTO supplier VALUES(?, ?, ?, ?, ?);";
 
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
+        PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
 
         pstm.setObject(1, supplier.getSupplierId());
         pstm.setObject(2, supplier.getSupplierName());
@@ -29,9 +28,9 @@ public class SupplierRepo {
     public static Supplier searchById(String supplierID) throws SQLException {
 
         String sql = "SELECT * FROM supplier WHERE supplierID = ?";
-        Connection connection = DbConnection.getInstance().getConnection();
 
-        PreparedStatement pstm = connection.prepareStatement(sql);
+        PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+
         pstm.setObject(1, supplierID);
         ResultSet resultSet = pstm.executeQuery();
         if (resultSet.next()) {
@@ -53,6 +52,7 @@ public class SupplierRepo {
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
+
         pstm.setObject(1, supplier.getSupplierName());
         pstm.setObject(2, supplier.getSupplierAddress());
         pstm.setObject(3, supplier.getSupplierContact());
