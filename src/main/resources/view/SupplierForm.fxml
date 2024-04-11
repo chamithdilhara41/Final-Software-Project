@@ -14,6 +14,11 @@
 
 <AnchorPane prefHeight="656.0" prefWidth="945.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.SupplierFormController">
    <children>
+      <Label layoutX="29.0" layoutY="24.0" text="Supplier Details">
+         <font>
+            <Font name="Candara Italic" size="24.0" />
+         </font>
+      </Label>
       <TableView id="tblSupplier" layoutX="27.0" layoutY="72.0" prefHeight="250.0" prefWidth="890.0">
         <columns>
           <TableColumn fx:id="colSupplierID" prefWidth="75.0" text="SupplierID" />
@@ -68,11 +73,11 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="29.0" layoutY="24.0" text="Supplier Details">
+      <TextField fx:id="txtSupplierGender" layoutX="105.0" layoutY="472.0" prefHeight="30.0" prefWidth="111.0">
          <font>
-            <Font name="Candara Italic" size="24.0" />
+            <Font size="14.0" />
          </font>
-      </Label>
+      </TextField>
       <JFXButton buttonType="RAISED" layoutX="379.0" layoutY="603.0" onAction="#btnOnActionClear" prefHeight="41.0" prefWidth="111.0" ripplerFill="BLACK" style="-fx-background-color: #7f8c8d;" text="Clear">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -141,10 +146,5 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierGender" layoutX="105.0" layoutY="472.0" prefHeight="30.0" prefWidth="111.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </TextField>
    </children>
 </AnchorPane>

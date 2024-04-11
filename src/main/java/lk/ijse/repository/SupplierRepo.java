@@ -1,5 +1,6 @@
 package lk.ijse.repository;
 
+import javafx.scene.control.Alert;
 import lk.ijse.db.DbConnection;
 import lk.ijse.model.Supplier;
 
@@ -34,6 +35,7 @@ public class SupplierRepo {
         pstm.setObject(1, supplierID);
         ResultSet resultSet = pstm.executeQuery();
         if (resultSet.next()) {
+            new Alert(Alert.AlertType.INFORMATION, "Supplier Found!").show();
             String supplierId = resultSet.getString(1);
             String supplierName = resultSet.getString(2);
             String supplierAddress = resultSet.getString(3);
