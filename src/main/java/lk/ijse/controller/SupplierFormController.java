@@ -1,16 +1,25 @@
 package lk.ijse.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.model.Supplier;
+import lk.ijse.model.tm.SupplierTm;
 import lk.ijse.repository.SupplierRepo;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class SupplierFormController {
+
+    public TableView<SupplierTm> tblSupplier;
 
     @FXML
     private TableColumn<?, ?> colSupplierAddress;
@@ -42,6 +51,13 @@ public class SupplierFormController {
     @FXML
     private TextField txtSupplierName;
 
+    private ObservableList<SupplierTm> obList = FXCollections.observableArrayList();
+
+    public void initialize() throws SQLException {
+        getAllSuppliers();
+        setCellValueFactory();
+    }
+
     @FXML
     void btnOnActionClear(ActionEvent event) {
         clearFields();
@@ -67,6 +83,8 @@ public class SupplierFormController {
             if(isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Supplier saved!").show();
                 clearFields();
+                getAllSuppliers();
+                setCellValueFactory();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -88,6 +106,8 @@ public class SupplierFormController {
             boolean isUpdated = SupplierRepo.update(supplier);
             if(isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Supplier updated!").show();
+                getAllSuppliers();
+                setCellValueFactory();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -115,5 +135,29 @@ public class SupplierFormController {
         } else {
             new Alert(Alert.AlertType.INFORMATION, "Supplier not found!").show();
         }
+    }
+    void getAllSuppliers() throws SQLException {
+        obList = FXCollections.observableArrayList();
+        List<Supplier> supplierList = SupplierRepo.getAll();
+
+        for ( Supplier supplier: supplierList){
+            obList.add(new SupplierTm(
+                    supplier.getSupplierId(),
+                    supplier.getSupplierName(),
+                    supplier.getSupplierAddress(),
+                    supplier.getSupplierContact(),
+                    supplier.getSupplierGender()
+            ));
+        }
+        tblSupplier.setItems(obList);
+    }
+
+    void setCellValueFactory(){
+        colSupplierID.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
+        colSupplierName.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
+        colSupplierAddress.setCellValueFactory(new PropertyValueFactory<>("supplierAddress"));
+        colSupplierContact.setCellValueFactory(new PropertyValueFactory<>("supplierContact"));
+        colSupplierGender.setCellValueFactory(new PropertyValueFactory<>("supplierGender"));
+
     }
 }

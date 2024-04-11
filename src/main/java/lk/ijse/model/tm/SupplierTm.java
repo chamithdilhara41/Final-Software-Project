@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 
 public class SupplierTm {
-    private int supplierId;
+    private String supplierId;
     private String supplierName;
     private String supplierAddress;
     private String supplierContact;

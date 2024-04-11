@@ -19,7 +19,7 @@
             <Font name="Candara Italic" size="24.0" />
          </font>
       </Label>
-      <TableView id="tblSupplier" layoutX="27.0" layoutY="72.0" prefHeight="250.0" prefWidth="890.0">
+      <TableView id="tblSupplier" fx:id="tblSupplier" layoutX="27.0" layoutY="72.0" prefHeight="250.0" prefWidth="890.0">
         <columns>
           <TableColumn fx:id="colSupplierID" prefWidth="75.0" text="SupplierID" />
           <TableColumn fx:id="colSupplierName" prefWidth="234.40003967285156" text="Supplier Name" />
