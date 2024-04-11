@@ -99,7 +99,7 @@
             <Font name="Calibri Light" size="19.0" />
          </font>
       </Label>
-      <PasswordField fx:id="txtPasswordLogin" layoutX="365.0" layoutY="225.0" prefHeight="48.0" prefWidth="290.0" promptText="type password here">
+      <PasswordField fx:id="txtPasswordLogin" layoutX="365.0" layoutY="225.0" onAction="#txtOnActionLogin" prefHeight="48.0" prefWidth="290.0" promptText="type password here">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>
@@ -138,6 +138,13 @@
          <effect>
             <Bloom />
          </effect>
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons8-login-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </JFXButton>
       <Hyperlink layoutX="461.0" layoutY="451.0" onAction="#hyperOnActionRegister" text="Register here..." />
    </children>

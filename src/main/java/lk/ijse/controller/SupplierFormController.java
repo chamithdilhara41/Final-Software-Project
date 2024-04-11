@@ -1,30 +1,16 @@
 package lk.ijse.controller;
 
-import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import lk.ijse.model.Supplier;
+import lk.ijse.repository.SupplierRepo;
+
+import java.sql.SQLException;
 
 public class SupplierFormController {
-
-    @FXML
-    private JFXButton btnClear;
-
-    @FXML
-    private JFXButton btnDelete;
-
-    @FXML
-    private RadioButton btnRadioFemale;
-
-    @FXML
-    private RadioButton btnRadioMale;
-
-    @FXML
-    private JFXButton btnSave;
-
-    @FXML
-    private JFXButton btnUpdate;
 
     @FXML
     private TableColumn<?, ?> colSupplierAddress;
@@ -48,9 +34,70 @@ public class SupplierFormController {
     private TextField txtSupplierContact;
 
     @FXML
+    private TextField txtSupplierGender;
+
+    @FXML
     private TextField txtSupplierID;
 
     @FXML
     private TextField txtSupplierName;
 
+    @FXML
+    void btnOnActionClear(ActionEvent event) {
+        clearFields();
+    }
+
+    @FXML
+    void btnOnActionDelete(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnOnActionSave(ActionEvent event) {
+        String supplierID = txtSupplierID.getText();
+        String supplierName = txtSupplierName.getText();
+        String supplierAddress = txtSupplierAddress.getText();
+        String supplierContact = txtSupplierContact.getText();
+        String supplierGender = txtSupplierGender.getText();
+
+        Supplier supplier = new Supplier(supplierID, supplierName, supplierAddress, supplierContact, supplierGender);
+
+
+        try {
+            boolean isSaved = SupplierRepo.save(supplier);
+            if(isSaved) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Supplier saved!").show();
+                clearFields();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+    }
+
+    @FXML
+    void btnOnActionUpdate(ActionEvent event) {
+
+    }
+    private void clearFields() {
+        txtSupplierID.setText("");
+        txtSupplierName.setText("");
+        txtSupplierAddress.setText("");
+        txtSupplierContact.setText("");
+        txtSupplierGender.setText("");
+    }
+
+    public void txtOnActionSearch(ActionEvent actionEvent) throws SQLException {
+        String supplierID = txtSupplierID.getText();
+
+        Supplier supplier = SupplierRepo.searchById(supplierID);
+        if (supplier != null) {
+            txtSupplierID.setText(supplier.getSupplierId());
+            txtSupplierName.setText(supplier.getSupplierName());
+            txtSupplierAddress.setText(supplier.getSupplierAddress());
+            txtSupplierContact.setText(supplier.getSupplierContact());
+            txtSupplierGender.setText(supplier.getSupplierGender());
+        } else {
+            new Alert(Alert.AlertType.INFORMATION, "Supplier not found!").show();
+        }
+    }
 }

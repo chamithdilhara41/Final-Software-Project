@@ -28,7 +28,7 @@ public class LoginFormController {
 
 
     @FXML
-    void btnLoginOnAction(ActionEvent event) throws SQLException, IOException {
+    void btnLoginOnAction() throws SQLException, IOException {
 
         String usernameLogin = txtUsernameLogin.getText();
         String passwordLogin = txtPasswordLogin.getText();
@@ -94,4 +94,7 @@ public class LoginFormController {
         stage.show();
     }
 
+    public void txtOnActionLogin(ActionEvent actionEvent) throws SQLException, IOException {
+        btnLoginOnAction();
+    }
 }

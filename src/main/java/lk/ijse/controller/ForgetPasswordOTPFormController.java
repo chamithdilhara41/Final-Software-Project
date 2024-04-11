@@ -26,7 +26,7 @@ public class ForgetPasswordOTPFormController {
     private TextField txtForgetOTP4;
 
     @FXML
-    void btnBackLoginOnAction(ActionEvent event) throws IOException {
+    void btnBackLoginOnAction(ActionEvent event) throws IOException   {
         Parent root = FXMLLoader.load(getClass().getResource("/view/LoginForm.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
