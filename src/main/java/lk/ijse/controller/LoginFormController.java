@@ -11,7 +11,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.db.DbConnection;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

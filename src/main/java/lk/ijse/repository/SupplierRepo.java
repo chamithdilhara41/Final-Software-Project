@@ -3,7 +3,6 @@ package lk.ijse.repository;
 import javafx.scene.control.Alert;
 import lk.ijse.db.DbConnection;
 import lk.ijse.model.Supplier;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
