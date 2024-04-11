@@ -2,6 +2,8 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,7 +11,37 @@
 
 <AnchorPane fx:id="rootNode" prefHeight="755.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.MainFormController">
    <children>
-      <AnchorPane prefHeight="78.0" prefWidth="1150.0" style="-fx-background-color: #9FE2BF;" />
+      <AnchorPane prefHeight="78.0" prefWidth="1150.0" style="-fx-background-color: #9FE2BF;">
+         <children>
+            <Label layoutX="948.0" layoutY="12.0" text="Date : ">
+               <font>
+                  <Font name="System Bold Italic" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDate" layoutX="1006.0" layoutY="12.0" textFill="#c40404">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="15.0" prefHeight="50.0" prefWidth="483.0" text="AWS Tea Collecting Center" textFill="#efe445">
+               <font>
+                  <Font name="Comic Sans MS Bold Italic" size="35.0" />
+               </font>
+               <effect>
+                  <DropShadow height="53.76" radius="19.945" width="28.02" />
+               </effect>
+            </Label>
+            <Label layoutX="948.0" layoutY="41.0" text="Time :">
+               <font>
+                  <Font name="System Bold Italic" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTime" layoutX="1006.0" layoutY="41.0" textFill="#242fff">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
       <AnchorPane layoutY="651.0" prefHeight="104.0" prefWidth="1150.0" style="-fx-background-color: #9FE2BF;">
          <children>
             <JFXButton buttonType="RAISED" layoutX="22.0" layoutY="31.0" onAction="#btnOnActionLogout" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #ff6464;" text="LOG OUT..">

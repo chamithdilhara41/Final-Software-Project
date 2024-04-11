@@ -6,12 +6,30 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class MainFormController {
+
+    @FXML
+    public Label lblDate;
+
+    @FXML
+    public Label lblTime;
 
     @FXML
     private AnchorPane mainPane;
@@ -21,6 +39,8 @@ public class MainFormController {
 
     public void initialize() throws IOException {
         loadDashboardForm();
+        setDate();
+        setTime();
     }
 
     @FXML
@@ -103,6 +123,27 @@ public class MainFormController {
     @FXML
     void btnOnActionVehicle(ActionEvent event) {
 
+    }
+    private void setDate() {
+        LocalDate now = LocalDate.now();
+        lblDate.setText(String.valueOf(now));
+    }
+
+    private void setTime() {
+
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+
+            LocalTime currentTime = LocalTime.now();
+
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
+            String formattedTime = currentTime.format(timeFormatter);
+
+            lblTime.setText(formattedTime);
+        }), new KeyFrame(Duration.seconds(1)));
+
+        clock.setCycleCount(Animation.INDEFINITE);
+
+        clock.play();
     }
 
 }
