@@ -13,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import lk.ijse.model.Supplier;
 import lk.ijse.model.tm.SupplierTm;
 import lk.ijse.repository.SupplierRepo;
-
 import java.sql.SQLException;
 import java.util.List;
 
@@ -76,7 +75,6 @@ public class SupplierFormController {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
-
 
     @FXML
     void btnOnActionSave(ActionEvent event) {
