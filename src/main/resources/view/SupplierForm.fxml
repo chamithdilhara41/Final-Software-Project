@@ -14,12 +14,12 @@
 
 <AnchorPane prefHeight="656.0" prefWidth="945.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.SupplierFormController">
    <children>
-      <Label layoutX="29.0" layoutY="24.0" text="Supplier Details">
+      <Label layoutX="29.0" layoutY="21.0" text="Tea Leaves Supplier Details">
          <font>
             <Font name="Candara Italic" size="24.0" />
          </font>
       </Label>
-      <TableView id="tblSupplier" fx:id="tblSupplier" layoutX="27.0" layoutY="72.0" prefHeight="250.0" prefWidth="890.0">
+      <TableView id="tblSupplier" fx:id="tblSupplier" layoutX="27.0" layoutY="72.0" onMouseClicked="#OnMouseClicked" prefHeight="250.0" prefWidth="890.0">
         <columns>
           <TableColumn fx:id="colSupplierID" prefWidth="75.0" text="SupplierID" />
           <TableColumn fx:id="colSupplierName" prefWidth="234.40003967285156" text="Supplier Name" />

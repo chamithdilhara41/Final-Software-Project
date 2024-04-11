@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import lk.ijse.model.Supplier;
 import lk.ijse.model.tm.SupplierTm;
 import lk.ijse.repository.SupplierRepo;
@@ -169,5 +170,24 @@ public class SupplierFormController {
         colSupplierContact.setCellValueFactory(new PropertyValueFactory<>("supplierContact"));
         colSupplierGender.setCellValueFactory(new PropertyValueFactory<>("supplierGender"));
 
+    }
+
+    public void OnMouseClicked(MouseEvent mouseEvent) {
+        int index = tblSupplier.getSelectionModel().getSelectedIndex();
+
+        if (index <= -1){
+            return;
+        }
+        String id = colSupplierID.getCellData(index).toString();
+        String name = colSupplierName.getCellData(index).toString();
+        String address = colSupplierAddress.getCellData(index).toString();
+        String contact = colSupplierContact.getCellData(index).toString();
+        String gender = colSupplierGender.getCellData(index).toString();
+
+        txtSupplierID.setText(id);
+        txtSupplierName.setText(name);
+        txtSupplierAddress.setText(address);
+        txtSupplierContact.setText(contact);
+        txtSupplierGender.setText(gender);
     }
 }
