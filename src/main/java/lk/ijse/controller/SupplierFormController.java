@@ -76,6 +76,23 @@ public class SupplierFormController {
     @FXML
     void btnOnActionUpdate(ActionEvent event) {
 
+        String supplierID = txtSupplierID.getText();
+        String supplierName = txtSupplierName.getText();
+        String supplierAddress = txtSupplierAddress.getText();
+        String supplierContact = txtSupplierContact.getText();
+        String supplierGender = txtSupplierGender.getText();
+
+        Supplier supplier = new Supplier(supplierID, supplierName, supplierAddress, supplierContact, supplierGender);
+
+        try {
+            boolean isUpdated = SupplierRepo.update(supplier);
+            if(isUpdated) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Supplier updated!").show();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+
     }
     private void clearFields() {
         txtSupplierID.setText("");

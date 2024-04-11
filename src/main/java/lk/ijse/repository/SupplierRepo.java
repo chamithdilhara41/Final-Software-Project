@@ -47,4 +47,18 @@ public class SupplierRepo {
 
         return null;
     }
+
+    public static boolean update(Supplier supplier) throws SQLException {
+        String sql = "UPDATE supplier SET name=?, address=?, contact=?, gender=? WHERE supplierId = ?;";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setObject(1, supplier.getSupplierName());
+        pstm.setObject(2, supplier.getSupplierAddress());
+        pstm.setObject(3, supplier.getSupplierContact());
+        pstm.setObject(4, supplier.getSupplierGender());
+        pstm.setObject(5, supplier.getSupplierId());
+
+        return pstm.executeUpdate() > 0;
+    }
 }
