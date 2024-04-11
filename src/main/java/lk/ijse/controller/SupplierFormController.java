@@ -62,7 +62,6 @@ public class SupplierFormController {
 
         Supplier supplier = new Supplier(supplierID, supplierName, supplierAddress, supplierContact, supplierGender);
 
-
         try {
             boolean isSaved = SupplierRepo.save(supplier);
             if(isSaved) {

@@ -47,7 +47,6 @@ public class MainFormController {
 
     @FXML
     void btnOnActionDashboard(ActionEvent event) throws IOException {
-
         AnchorPane dashboardPane = FXMLLoader.load(getClass().getResource("/view/DashboardForm.fxml"));
 
         mainPane.getChildren().clear();
@@ -56,7 +55,6 @@ public class MainFormController {
 
     private void loadDashboardForm() throws IOException {
         AnchorPane dashboardPane = FXMLLoader.load(this.getClass().getResource("/view/DashboardForm.fxml"));
-
 
         mainPane.getChildren().clear();
         mainPane.getChildren().add(dashboardPane);
@@ -105,7 +103,6 @@ public class MainFormController {
     @FXML
     void btnOnActionSupplier(ActionEvent event) throws IOException {
 
-
         AnchorPane supplierPane = FXMLLoader.load(getClass().getResource("/view/SupplierForm.fxml"));
 
         mainPane.getChildren().clear();
@@ -127,7 +124,6 @@ public class MainFormController {
     }
 
     private void setTime() {
-
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
 
             LocalTime currentTime = LocalTime.now();
