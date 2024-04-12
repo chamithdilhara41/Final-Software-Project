@@ -39,8 +39,11 @@ public class MainFormController {
     }
 
     @FXML
-    void btnOnActionBuyer(ActionEvent event) {
+    void btnOnActionBuyer(ActionEvent event) throws IOException {
+        AnchorPane dashboardPane = FXMLLoader.load(getClass().getResource("/view/BuyerForm.fxml"));
 
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(dashboardPane);
     }
 
     @FXML
