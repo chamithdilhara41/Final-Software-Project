@@ -83,17 +83,43 @@ public class BuyerFormController {
 
     @FXML
     void OnMouseClicked(MouseEvent event) {
+        int index = tblBuyer.getSelectionModel().getSelectedIndex();
 
+        if (index <= -1){
+            return;
+        }
+        String id = colBuyerID.getCellData(index).toString();
+        String name = colBuyerName.getCellData(index).toString();
+        String address = colBuyerAddress.getCellData(index).toString();
+        String contactOffice = colBuyerContactOffice.getCellData(index).toString();
+        String contactManager = colBuyerContactManager.getCellData(index).toString();
+
+        txtBuyerID.setText(id);
+        txtBuyerName.setText(name);
+        txtBuyerAddress.setText(address);
+        txtBuyerContactOffice.setText(contactOffice);
+        txtBuyerContactManager .setText(contactManager);
     }
 
     @FXML
     void btnOnActionClear(ActionEvent event) {
-
+        clearFields();
     }
 
     @FXML
     void btnOnActionDelete(ActionEvent event) {
+        String buyerID = txtBuyerID.getText();
 
+        try {
+            boolean isDeleted = BuyerRepo.delete(buyerID);
+            if (isDeleted){
+                new Alert(Alert.AlertType.CONFIRMATION,"Buyer deleted").show();
+                getAllBuyers();
+                setCellValueFactory();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+        }
     }
 
     @FXML
@@ -119,7 +145,6 @@ public class BuyerFormController {
         }
     }
 
-
     private void clearFields() {
         txtBuyerID.setText("");
         txtBuyerName.setText("");
@@ -130,12 +155,40 @@ public class BuyerFormController {
 
     @FXML
     void btnOnActionUpdate(ActionEvent event) {
+        String buyerID = txtBuyerID.getText();
+        String buyerName = txtBuyerName.getText();
+        String buyerAddress = txtBuyerAddress.getText();
+        String buyerContactOffice = txtBuyerContactOffice.getText();
+        String buyerContactManager = txtBuyerContactManager.getText();
 
+        Buyer buyer = new Buyer(buyerID, buyerName, buyerAddress, buyerContactOffice, buyerContactManager);
+
+        try {
+            boolean isUpdated = BuyerRepo.update(buyer);
+            if(isUpdated) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Buyer updated!").show();
+                clearFields();
+                getAllBuyers();
+                setCellValueFactory();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
     }
 
     @FXML
-    void txtOnActionSearch(ActionEvent event) {
+    void txtOnActionSearch(ActionEvent event) throws SQLException {
+        String buyerID = txtBuyerID.getText();
 
+        Buyer buyer = BuyerRepo.searchById(buyerID);
+        if (buyer != null) {
+            txtBuyerID.setText(buyer.getBuyerId());
+            txtBuyerName.setText(buyer.getBuyerName());
+            txtBuyerAddress.setText(buyer.getBuyerAddress());
+            txtBuyerContactOffice.setText(buyer.getBuyerContactOffice());
+            txtBuyerContactManager.setText(buyer.getBuyerContactManager());
+        } else {
+            new Alert(Alert.AlertType.INFORMATION, "Buyer not found!").show();
+        }
     }
-
 }

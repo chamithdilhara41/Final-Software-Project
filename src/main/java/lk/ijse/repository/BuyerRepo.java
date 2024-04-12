@@ -2,8 +2,6 @@ package lk.ijse.repository;
 
 import lk.ijse.db.DbConnection;
 import lk.ijse.model.Buyer;
-import lk.ijse.model.Supplier;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,5 +41,48 @@ public class BuyerRepo {
             ));
         }
         return data;
+    }
+
+    public static Buyer searchById(String buyerID) throws SQLException {
+        String sql = "SELECT * FROM buyer WHERE buyerId = ?";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setObject(1, buyerID);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            String buyerId = resultSet.getString(1);
+            String buyerName = resultSet.getString(2);
+            String buyerAddress = resultSet.getString(3);
+            String buyerContactOffice = resultSet.getString(4);
+            String buyerContactManager = resultSet.getString(5);
+
+            return new Buyer(buyerID,buyerName,buyerAddress,buyerContactOffice,buyerContactManager);
+        }
+        return null;
+    }
+
+    public static boolean update(Buyer buyer) throws SQLException {
+        String sql = "UPDATE buyer SET name = ?, address = ?, contactOffice = ?, contactManager = ? WHERE buyerId = ?";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setObject(1, buyer.getBuyerName());
+        pstm.setObject(2, buyer.getBuyerAddress());
+        pstm.setObject(3, buyer.getBuyerContactOffice());
+        pstm.setObject(4, buyer.getBuyerContactManager());
+        pstm.setObject(5, buyer.getBuyerId());
+
+        return pstm.executeUpdate() > 0;
+    }
+
+    public static boolean delete(String buyerID) throws SQLException {
+        String sql = "DELETE FROM buyer WHERE buyerId = ?;";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setObject(1, buyerID);
+
+        return pstm.executeUpdate() > 0;
     }
 }
