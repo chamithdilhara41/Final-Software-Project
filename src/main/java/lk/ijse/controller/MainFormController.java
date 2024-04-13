@@ -116,8 +116,11 @@ public class MainFormController {
     }
 
     @FXML
-    void btnOnActionVehicle(ActionEvent event) {
+    void btnOnActionVehicle(ActionEvent event) throws IOException {
+        AnchorPane dashboardPane = FXMLLoader.load(getClass().getResource("/view/VehicleForm.fxml"));
 
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(dashboardPane);
     }
     private void setDate() {
         LocalDate now = LocalDate.now();
