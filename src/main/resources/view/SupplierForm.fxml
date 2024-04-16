@@ -73,7 +73,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierGender" layoutX="105.0" layoutY="472.0" prefHeight="30.0" prefWidth="111.0">
+      <TextField fx:id="txtSupplierGender" layoutX="105.0" layoutY="472.0" prefHeight="30.0" prefWidth="111.0" promptText="Male or Female">
          <font>
             <Font size="14.0" />
          </font>
