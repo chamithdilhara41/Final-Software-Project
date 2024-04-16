@@ -2,7 +2,6 @@ package lk.ijse.repository;
 
 import javafx.scene.control.Alert;
 import lk.ijse.db.DbConnection;
-import lk.ijse.model.Supplier;
 import lk.ijse.model.Vehicle;
 
 import java.sql.Connection;
@@ -76,5 +75,22 @@ public class VehicleRepo {
         pstm.setObject(1, vehicleNo);
 
         return pstm.executeUpdate() > 0;
+    }
+
+    public static List<String> getNos() throws SQLException {
+
+        String sql = "SELECT vehicleNo FROM vehicle";
+
+        PreparedStatement pstm = DbConnection.getInstance().getConnection()
+                .prepareStatement(sql);
+
+        List<String> idList = new ArrayList<>();
+
+        ResultSet resultSet = pstm.executeQuery();
+        while (resultSet.next()) {
+            String id = resultSet.getString(1);
+            idList.add(id);
+        }
+        return idList;
     }
 }

@@ -62,8 +62,11 @@ public class MainFormController {
     }
 
     @FXML
-    void btnOnActionEmployee(ActionEvent event) {
+    void btnOnActionEmployee(ActionEvent event) throws IOException {
+        AnchorPane employeePane = FXMLLoader.load(getClass().getResource("/view/EmployeeForm.fxml"));
 
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(employeePane);
     }
 
     @FXML
