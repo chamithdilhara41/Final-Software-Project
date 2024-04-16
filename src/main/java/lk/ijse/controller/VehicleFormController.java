@@ -53,5 +53,4 @@ public class VehicleFormController {
     void txtOnActionSearch(ActionEvent event) {
 
     }
-
 }
