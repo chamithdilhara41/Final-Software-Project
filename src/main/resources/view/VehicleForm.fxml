@@ -21,8 +21,8 @@
         </Label>
         <TableView id="tblSupplier" fx:id="tblVehicle" layoutX="27.0" layoutY="72.0" onMouseClicked="#OnMouseClicked" prefHeight="250.0" prefWidth="412.0">
             <columns>
-                <TableColumn fx:id="colSupplierID" prefWidth="164.79998397827148" text="Vehicle No." />
-                <TableColumn fx:id="colSupplierName" prefWidth="247.1999969482422" text="Vehicle Type" />
+                <TableColumn fx:id="colVehicleNo" prefWidth="164.79998397827148" text="Vehicle No." />
+                <TableColumn fx:id="colVehicleType" prefWidth="247.1999969482422" text="Vehicle Type" />
             </columns>
         </TableView>
         <Label layoutX="29.0" layoutY="370.0" prefHeight="20.0" prefWidth="85.0" text="Vehicle No. :-">
@@ -30,7 +30,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtVehicleNo" layoutX="115.0" layoutY="366.0" onAction="#txtOnActionSearch">
+        <TextField fx:id="txtVehicleNo" layoutX="115.0" layoutY="366.0" onAction="#txtOnActionSearch" promptText="XXX - XXXX">
             <font>
                 <Font size="14.0" />
             </font>
