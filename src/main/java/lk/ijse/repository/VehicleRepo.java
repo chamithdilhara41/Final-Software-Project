@@ -3,6 +3,7 @@ package lk.ijse.repository;
 import javafx.scene.control.Alert;
 import lk.ijse.db.DbConnection;
 import lk.ijse.model.Vehicle;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,6 +61,24 @@ public class VehicleRepo {
         ResultSet resultSet = pstm.executeQuery();
         if (resultSet.next()) {
             new Alert(Alert.AlertType.CONFIRMATION, "Vehicle Found").showAndWait();
+            String vehicleNo = resultSet.getString(1);
+            String vehicleType = resultSet.getString(2);
+
+            return new Vehicle(vehicleNo, vehicleType);
+        }
+        return null;
+    }
+
+
+    @Nullable
+    public static Vehicle searchByVehicleNoForEmp(String vehicleNO) throws SQLException {
+
+        String sql = "SELECT * FROM vehicle WHERE vehicleNo = ?;";
+
+        PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        pstm.setObject(1, vehicleNO);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
             String vehicleNo = resultSet.getString(1);
             String vehicleType = resultSet.getString(2);
 

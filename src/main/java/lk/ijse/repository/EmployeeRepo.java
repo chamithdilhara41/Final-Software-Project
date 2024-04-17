@@ -45,4 +45,48 @@ public class EmployeeRepo {
         return data;
 
     }
+
+    public static boolean update(Employee employee) throws SQLException {
+        String sql = "UPDATE employee SET name=?, address=?, contact=?, salary=?, vehicleNo=? WHERE employeeId = ?;";
+
+        PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        pstm.setObject(1, employee.getEmployeeName());
+        pstm.setObject(2, employee.getEmployeeAddress());
+        pstm.setObject(3, employee.getEmployeeContact());
+        pstm.setObject(4, employee.getEmployeeSalary());
+        pstm.setObject(5, employee.getVehicleNo());
+        pstm.setObject(6, employee.getEmployeeId());
+
+        return pstm.executeUpdate() > 0;
+    }
+
+    public static boolean delete(String employeeID) throws SQLException {
+        String sql = "DELETE FROM employee WHERE employeeId = ?";
+
+        PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        pstm.setObject(1, employeeID);
+
+        return pstm.executeUpdate() > 0;
+    }
+
+    public static Employee searchById(String employeeID) throws SQLException {
+        
+        String sql = "SELECT * FROM employee WHERE employeeId = ?";
+
+        PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        pstm.setObject(1, employeeID);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            String employeeId = resultSet.getString(1);
+            String employeeName = resultSet.getString(2);
+            String employeeAddress = resultSet.getString(3);
+            String employeeContact = resultSet.getString(4);
+            Double employeeSalary = Double.valueOf(resultSet.getString(5));
+            String vehicleNo = resultSet.getString(6);
+
+            return new Employee(employeeId,employeeName,employeeAddress,employeeContact,employeeSalary,vehicleNo);
+        }
+
+        return null;
+    }
 }
