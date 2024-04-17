@@ -13,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import lk.ijse.model.Buyer;
 import lk.ijse.model.tm.BuyerTm;
 import lk.ijse.repository.BuyerRepo;
-
 import java.sql.SQLException;
 import java.util.List;
 
