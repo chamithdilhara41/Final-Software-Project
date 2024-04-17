@@ -121,6 +121,7 @@ public class VehicleFormController {
         try {
             boolean isUpdated = VehicleRepo.update(vehicle);
             if(isUpdated) {
+                clearFields();
                 new Alert(Alert.AlertType.CONFIRMATION, "Vehicle updated!").show();
                 getAllVehicles();setCellValueFactory();
             }
