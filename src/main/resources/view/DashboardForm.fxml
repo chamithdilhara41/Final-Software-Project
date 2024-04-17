@@ -28,7 +28,7 @@
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Label layoutX="86.0" layoutY="74.0" text="100">
+            <Label fx:id="lblSupplierCount" layoutX="86.0" layoutY="74.0">
                <font>
                   <Font name="System Bold Italic" size="30.0" />
                </font>
@@ -47,7 +47,7 @@
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Label layoutX="95.0" layoutY="74.0" text="3">
+            <Label fx:id="lblEmployeeCount" layoutX="95.0" layoutY="74.0">
                <font>
                   <Font name="System Bold Italic" size="30.0" />
                </font>
