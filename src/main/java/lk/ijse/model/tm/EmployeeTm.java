@@ -12,5 +12,6 @@ public class EmployeeTm {
     private String employeeName;
     private String employeeAddress;
     private String employeeContact;
+    private Double employeeSalary;
     private String vehicleNo;
 }

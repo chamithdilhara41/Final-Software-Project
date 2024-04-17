@@ -23,10 +23,11 @@
         <TableView id="tblSupplier" fx:id="tblEmployee" layoutX="30.0" layoutY="68.0" onMouseClicked="#OnMouseClicked" prefHeight="250.0" prefWidth="890.0">
             <columns>
                 <TableColumn fx:id="colEmployeeID" prefWidth="75.0" text="EmployeeID" />
-                <TableColumn fx:id="colEmployeeName" prefWidth="234.40003967285156" text="Employee Name" />
-                <TableColumn fx:id="colEmployeeAddress" prefWidth="247.20001220703125" text="Employee Address" />
-                <TableColumn fx:id="colEmployeeContact" prefWidth="185.59991455078125" text="Employee Contact" />
-                <TableColumn fx:id="colVehicleNo" prefWidth="148.80010986328125" text="Vehicle No" />
+                <TableColumn fx:id="colEmployeeName" prefWidth="183.20008850097656" text="Employee Name" />
+                <TableColumn fx:id="colEmployeeAddress" prefWidth="152.79998779296875" text="Employee Address" />
+                <TableColumn fx:id="colEmployeeContact" prefWidth="174.4000244140625" text="Employee Contact" />
+            <TableColumn fx:id="colEmployeeSalary" prefWidth="167.199951171875" text="Employee Salary" />
+                <TableColumn fx:id="colVehicleNo" prefWidth="137.5999755859375" text="Vehicle No" />
             </columns>
         </TableView>
         <Label layoutX="29.0" layoutY="350.0" prefHeight="20.0" prefWidth="96.0" text="Employee ID :-">

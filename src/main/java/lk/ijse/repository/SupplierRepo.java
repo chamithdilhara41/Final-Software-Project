@@ -64,7 +64,7 @@ public class SupplierRepo {
     }
     public static List<Supplier> getAll() throws SQLException {
         Connection con = DbConnection.getInstance().getConnection();
-        String sql = "SELECT * FROM Supplier";
+        String sql = "SELECT * FROM supplier";
 
         List<Supplier> data = new ArrayList<>();
 
