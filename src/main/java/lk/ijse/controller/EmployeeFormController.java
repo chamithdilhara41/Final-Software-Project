@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -16,6 +17,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class EmployeeFormController {
+
+    @FXML
+    public Label lblVehicleType;
 
     @FXML
     private JFXComboBox<String> cmbVehicleNo;
@@ -88,17 +92,26 @@ public class EmployeeFormController {
     }
 
     public void cmbVehicleNoOnAction(ActionEvent actionEvent) {
+        String No = cmbVehicleNo.getValue();
+        try {
+            Vehicle vehicle = VehicleRepo.searchByVehicleNo(No);
 
+            assert vehicle != null;
+            lblVehicleType.setText(vehicle.getVehicleType());
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void getVehicleNos() {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> idList = VehicleRepo.getNos();
+            List<String> NoList = VehicleRepo.getNos();
 
-            for(String id : idList) {
-                obList.add(id);
+            for(String No : NoList) {
+                obList.add(No);
             }
 
             cmbVehicleNo.setItems(obList);
