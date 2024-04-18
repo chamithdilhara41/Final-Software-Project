@@ -100,8 +100,11 @@ public class MainFormController {
     }
 
     @FXML
-    void btnOnActionStock(ActionEvent event) {
+    void btnOnActionStock(ActionEvent event) throws IOException {
+        AnchorPane stockPane = FXMLLoader.load(getClass().getResource("/view/StockForm.fxml"));
 
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(stockPane);
     }
 
     @FXML
