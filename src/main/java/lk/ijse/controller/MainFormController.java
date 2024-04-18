@@ -80,8 +80,11 @@ public class MainFormController {
     }
 
     @FXML
-    void btnOnActionOrders(ActionEvent event) {
+    void btnOnActionOrders(ActionEvent event) throws IOException {
+        AnchorPane orderPane = FXMLLoader.load(getClass().getResource("/view/OrderForm.fxml"));
 
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(orderPane);
     }
 
     @FXML
