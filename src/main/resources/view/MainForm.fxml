@@ -193,7 +193,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="2.0" layoutY="546.0" onAction="#btnOnActionReports" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Reports">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" layoutX="2.0" layoutY="546.0" onAction="#btnOnActionDelivery" prefHeight="52.0" prefWidth="203.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text=" Delivery">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -203,7 +203,7 @@
          <graphic>
             <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/icons8-stocks-50.png" />
+                  <Image url="@../images/icons8-delivery-50.png" />
                </image>
             </ImageView>
          </graphic>
