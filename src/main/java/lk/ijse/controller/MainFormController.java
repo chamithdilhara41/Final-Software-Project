@@ -120,8 +120,11 @@ public class MainFormController {
     }
 
     @FXML
-    void btnOnActionTransactions(ActionEvent event) {
+    void btnOnActionTransactions(ActionEvent event) throws IOException {
+        AnchorPane transactinPane = FXMLLoader.load(getClass().getResource("/view/TransactionForm.fxml"));
 
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(transactinPane);
     }
 
     @FXML

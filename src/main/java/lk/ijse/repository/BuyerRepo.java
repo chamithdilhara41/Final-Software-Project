@@ -2,8 +2,6 @@ package lk.ijse.repository;
 
 import lk.ijse.db.DbConnection;
 import lk.ijse.model.Buyer;
-import lk.ijse.model.Vehicle;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -119,6 +117,25 @@ public class BuyerRepo {
 
             return new Buyer(buyerID, buyerName, buyerAddress,buyerContactOffice,buyerContactManager);
         }
+        return null;
+    }
+
+    public static Buyer searchByOrderIdForTransaction(String oId) throws SQLException {
+        String sql = "SELECT * FROM buyer JOIN orders ON buyer.buyerId = orders.buyerId WHERE orderId = ?;";
+
+        PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        pstm.setObject(1, oId);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            String buyerID = resultSet.getString(1);
+            String buyerName = resultSet.getString(2);
+            String buyerAddress = resultSet.getString(3);
+            String buyerContactOffice = resultSet.getString(4);
+            String buyerContactManager = resultSet.getString(5);
+
+            return new Buyer(buyerID, buyerName, buyerAddress,buyerContactOffice,buyerContactManager);
+        }
+
         return null;
     }
 }

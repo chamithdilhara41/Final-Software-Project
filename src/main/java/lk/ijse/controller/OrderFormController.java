@@ -81,8 +81,6 @@ public class OrderFormController {
         String buyerId = colBuyerID.getCellData(index).toString();
         String date = colDate.getCellData(index).toString();
 
-
-
         txtOrderID.setText(orderId);
         txtDate.setText(date);
         cmbBuyerId.setValue(buyerId);
