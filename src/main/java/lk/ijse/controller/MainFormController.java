@@ -96,8 +96,11 @@ public class MainFormController {
     }
 
     @FXML
-    void btnOnActionDelivery(ActionEvent event) {
+    void btnOnActionDelivery(ActionEvent event) throws IOException {
+        AnchorPane paymentPane = FXMLLoader.load(getClass().getResource("/view/DeliveryForm.fxml"));
 
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(paymentPane);
     }
 
     @FXML

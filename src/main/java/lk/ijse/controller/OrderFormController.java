@@ -183,6 +183,7 @@ public class OrderFormController {
             txtDate.setText(order.getDate());
         }else {
             new Alert(Alert.AlertType.INFORMATION, "Order not found!").show();
+            cmbBuyerId.getSelectionModel().clearSelection();
         }
     }
 

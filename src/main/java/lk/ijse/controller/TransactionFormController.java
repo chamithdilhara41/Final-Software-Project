@@ -222,7 +222,6 @@ public class TransactionFormController {
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage(),ButtonType.OK).show();
         }
-
     }
 
     @FXML
@@ -241,6 +240,12 @@ public class TransactionFormController {
             cmbPaymentMethod.setValue(transaction.getMethod());
         }else {
             new Alert(Alert.AlertType.ERROR, "Transaction Not Found").show();
+            txtAmount.setText("");
+            txtAccountNo.setText("");
+            txtDescription.setText("");
+            lblBuyerName.setText("");
+            cmbOrderID.getSelectionModel().clearSelection();
+            cmbPaymentMethod.getSelectionModel().clearSelection();
         }
     }
 

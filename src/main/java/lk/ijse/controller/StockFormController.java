@@ -162,6 +162,8 @@ public class StockFormController {
             }
             else {
                 new Alert(Alert.AlertType.INFORMATION, "Stock not found!").show();
+                txtTotalWeight.setText("");
+                txtQuantity.setText("");
             }
     }
 

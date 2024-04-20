@@ -188,6 +188,10 @@ public class BuyerFormController {
             txtBuyerContactManager.setText(buyer.getBuyerContactManager());
         } else {
             new Alert(Alert.AlertType.INFORMATION, "Buyer not found!").show();
+            txtBuyerName.setText("");
+            txtBuyerAddress.setText("");
+            txtBuyerContactOffice.setText("");
+            txtBuyerContactManager.setText("");
         }
     }
 }

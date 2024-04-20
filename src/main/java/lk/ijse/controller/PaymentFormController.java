@@ -202,6 +202,12 @@ public class PaymentFormController {
                 txtDate.setText(payment.getDate());
                 txtSupplierID.setText(payment.getSupplierId());
                 txtOnActionSearchSupplier(event);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Payment Not Found").show();
+                txtSupplierID.setText("");
+                txtDescription.setText("");
+                txtAmount.setText("");
+                lblSupplierName.setText("");
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).show();

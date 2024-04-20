@@ -142,6 +142,10 @@ public class SupplierFormController {
             txtSupplierGender.setText(supplier.getSupplierGender());
         } else {
             new Alert(Alert.AlertType.INFORMATION, "Supplier not found!").show();
+            txtSupplierName.setText("");
+            txtSupplierAddress.setText("");
+            txtSupplierContact.setText("");
+            txtSupplierGender.setText("");
         }
     }
     void getAllSuppliers() throws SQLException {

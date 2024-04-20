@@ -141,6 +141,7 @@ public class VehicleFormController {
             txtVehicleType.setText(vehicle.getVehicleType());
         } else {
             new Alert(Alert.AlertType.ERROR, "Vehicle not found!").show();
+            txtVehicleType.setText("");
         }
     }
 

@@ -184,6 +184,11 @@ public class EmployeeFormController {
             cmbVehicleNo.setValue(employee.getVehicleNo());
         } else {
             new Alert(Alert.AlertType.INFORMATION, "Supplier not found!").show();
+            txtEmployeeName.setText("");
+            txtEmployeeContact.setText("");
+            txtEmployeeAddress.setText("");
+            txtEmployeeSalary.setText("");
+            cmbVehicleNo.getSelectionModel().clearSelection();
         }
     }
 
