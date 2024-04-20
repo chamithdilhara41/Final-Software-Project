@@ -44,7 +44,7 @@ public class LoginFormController {
             String dbPw = resultSet.getString("password");
             if (passwordLogin.equals(dbPw)){
                 new Alert(Alert.AlertType.CONFIRMATION,"Login Successful!").show();
-                navigateToTheDashboard();
+                navigateToTheMainForm();
             }else {
                 new Alert(Alert.AlertType.ERROR,"sorry! password is incorrect!").show();
             }
@@ -54,7 +54,7 @@ public class LoginFormController {
 
     }
 
-    private void navigateToTheDashboard () throws IOException {
+    private void navigateToTheMainForm () throws IOException {
         // Load the FXML file
         Parent rootNode = FXMLLoader.load(getClass().getResource("/view/MainForm.fxml"));
 
@@ -67,7 +67,7 @@ public class LoginFormController {
         // Set the new scene to the stage
         stage.setScene(scene);
         stage.centerOnScreen();
-        stage.setTitle("Dashboard Form");
+        stage.setTitle("Main Form (Tea leaves Management System)");
     }
 
 

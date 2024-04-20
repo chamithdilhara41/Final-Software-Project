@@ -11,8 +11,13 @@
 
 <AnchorPane fx:id="rootNode" prefHeight="755.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.MainFormController">
    <children>
-      <AnchorPane prefHeight="78.0" prefWidth="1150.0" style="-fx-background-color: #9FE2BF;">
+      <AnchorPane prefHeight="78.0" prefWidth="1150.0">
          <children>
+            <ImageView fitHeight="78.0" fitWidth="1150.0" opacity="0.51" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/tea-plant-green-landscape.jpg" />
+               </image>
+            </ImageView>
             <Label layoutX="948.0" layoutY="12.0" text="Date : ">
                <font>
                   <Font name="System Bold Italic" size="19.0" />
@@ -36,7 +41,7 @@
                   <Font name="System Bold Italic" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="lblTime" layoutX="1006.0" layoutY="41.0" textFill="#242fff">
+            <Label fx:id="lblTime" layoutX="1006.0" layoutY="41.0" textFill="#232fdf">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
@@ -44,6 +49,11 @@
          </children></AnchorPane>
       <AnchorPane layoutY="651.0" prefHeight="104.0" prefWidth="1150.0" style="-fx-background-color: #9FE2BF;">
          <children>
+            <ImageView fitHeight="104.0" fitWidth="203.0" opacity="0.5" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/tea-plant-plants-leaves-wallpaper-preview.jpg" />
+               </image>
+            </ImageView>
             <JFXButton buttonType="RAISED" layoutX="22.0" layoutY="31.0" onAction="#btnOnActionLogout" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #ff6464;" text="LOG OUT..">
                <font>
                   <Font name="System Bold" size="18.0" />
