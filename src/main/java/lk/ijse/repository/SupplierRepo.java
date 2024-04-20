@@ -90,4 +90,24 @@ public class SupplierRepo {
 
         return pstm.executeUpdate() > 0;
     }
+
+    public static Supplier searchBySupplierIdForPayment(String supplierID) throws SQLException {
+        String sql = "SELECT * FROM supplier WHERE supplierID = ?";
+
+        PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+
+        pstm.setObject(1, supplierID);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            String supplierId = resultSet.getString(1);
+            String supplierName = resultSet.getString(2);
+            String supplierAddress = resultSet.getString(3);
+            String supplierContact = resultSet.getString(4);
+            String supplierGender = resultSet.getString(5);
+
+            return  new Supplier(supplierId, supplierName, supplierAddress, supplierContact, supplierGender);
+        }
+
+        return null;
+    }
 }

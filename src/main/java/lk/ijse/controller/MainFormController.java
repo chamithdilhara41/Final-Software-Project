@@ -88,8 +88,11 @@ public class MainFormController {
     }
 
     @FXML
-    void btnOnActionPayment(ActionEvent event) {
+    void btnOnActionPayment(ActionEvent event) throws IOException {
+        AnchorPane paymentPane = FXMLLoader.load(getClass().getResource("/view/PaymentForm.fxml"));
 
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(paymentPane);
     }
 
     @FXML

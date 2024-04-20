@@ -231,6 +231,7 @@ public class TransactionFormController {
 
         Transaction transaction = TransactionRepo.searchByTransactionId(transactionID);
         if(transaction != null){
+            new Alert(Alert.AlertType.INFORMATION, "Transaction Found").show();
             txtTransactionID.setText(transaction.getTransactionId());
             cmbOrderID.setValue(transaction.getOrderId());
             txtAccountNo.setText(transaction.getAccountNo());
