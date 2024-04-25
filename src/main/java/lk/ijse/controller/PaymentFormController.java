@@ -221,8 +221,10 @@ public class PaymentFormController {
         Supplier supplier = SupplierRepo.searchBySupplierIdForPayment(supplierID);
         if(supplier != null){
             lblSupplierName.setText(supplier.getSupplierName());
+
         }else {
             new Alert(Alert.AlertType.ERROR,"Supplier not found").show();
+
         }
     }
 

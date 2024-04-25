@@ -14,10 +14,10 @@ public class TransactionRepo {
         String sql = "insert into transection values(?,?,?,?,?,?,?)";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
-        pstm.setObject(1, transaction.getTransactionId());
-        pstm.setObject(2, transaction.getDescription());
-        pstm.setObject(3, transaction.getAmount());
-        pstm.setObject(4, transaction.getDate());
+        pstm.setObject(1,transaction.getTransactionId());
+        pstm.setObject(2,transaction.getDescription());
+        pstm.setObject(3,transaction.getAmount());
+        pstm.setObject(4,transaction.getDate());
         pstm.setObject(5,transaction.getAccountNo());
         pstm.setObject(6,transaction.getMethod());
         pstm.setObject(7,transaction.getOrderId());

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -19,39 +20,19 @@
                 <Font name="Candara Italic" size="24.0" />
             </font>
         </Label>
-        <TableView id="tblSupplier" fx:id="tblStock" layoutX="27.0" layoutY="72.0" onMouseClicked="#OnMouseClicked" prefHeight="250.0" prefWidth="562.0">
+        <TableView id="tblSupplier" fx:id="tblStock" layoutX="27.0" layoutY="72.0" onMouseClicked="#OnMouseClicked" prefHeight="250.0" prefWidth="433.0">
             <columns>
                 <TableColumn fx:id="colStockID" prefWidth="139.19997787475586" text="StockID" />
-                <TableColumn fx:id="colTotalWeight" prefWidth="292.8000030517578" text="Total Weight (kg)" />
-                <TableColumn fx:id="colQuantity" prefWidth="130.39996337890625" text="Quantity" />
+                <TableColumn fx:id="colTotalWeight" prefWidth="178.40003967285156" text="Total Weight (kg)" />
+            <TableColumn fx:id="colTotalWeight1" prefWidth="114.39998779296877" text="Date" />
             </columns>
         </TableView>
-        <Label layoutX="29.0" layoutY="363.0" prefHeight="20.0" prefWidth="85.0" text="Stock ID :-">
+        <Label layoutX="29.0" layoutY="363.0" prefHeight="20.0" prefWidth="74.0" text="Stock ID :-">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
         <TextField fx:id="txtStockID" layoutX="103.0" layoutY="359.0" onAction="#txtOnActionSearch" prefHeight="30.0" prefWidth="209.0">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </TextField>
-        <Label layoutX="406.0" layoutY="364.0" prefHeight="20.0" prefWidth="124.0" text="Total Weight (kg) :-">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Label>
-        <TextField fx:id="txtTotalWeight" layoutX="530.0" layoutY="360.0" prefHeight="30.0" prefWidth="194.0" promptText="XXXX.XXX Kg">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </TextField>
-        <Label layoutX="29.0" layoutY="425.0" prefHeight="20.0" prefWidth="73.0" text="Quantity :-">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Label>
-        <TextField fx:id="txtQuantity" layoutX="104.0" layoutY="421.0" prefHeight="30.0" prefWidth="111.0">
             <font>
                 <Font size="14.0" />
             </font>
@@ -124,5 +105,59 @@
                 <Font size="36.0" />
             </font>
         </Label>
+      <JFXComboBox fx:id="cmbSupplierID" layoutX="120.0" layoutY="424.0" onAction="#cmbSupplierIdOnAction" prefHeight="30.0" prefWidth="170.0" />
+      <Label layoutX="29.0" layoutY="439.0" prefHeight="20.0" prefWidth="84.0" text="Supplier ID :-">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="29.0" layoutY="505.0" prefHeight="20.0" prefWidth="111.0" text="Supplier Name :-">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblSupplierName" layoutX="149.0" layoutY="505.0" prefHeight="20.0" prefWidth="170.0">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="352.0" layoutY="439.0" prefHeight="20.0" prefWidth="92.0" text="Weight (Kg.) :-">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtWeight" layoutX="448.0" layoutY="434.0" prefHeight="30.0" prefWidth="133.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="354.0" layoutY="504.0" prefHeight="20.0" prefWidth="53.0" text="Date :-">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtDate" layoutX="404.0" layoutY="500.0" onAction="#txtOnActionSearch" prefHeight="30.0" prefWidth="133.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <JFXButton buttonType="RAISED" layoutX="604.0" layoutY="494.0" onAction="#btnOnActionAddWeight" prefHeight="42.0" prefWidth="151.0" style="-fx-background-color: #0b8a21;" text="+ Add Weight for Stock" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <TableView id="tblSupplier" fx:id="tblSupplierStock" layoutX="481.0" layoutY="73.0" onMouseClicked="#OnMouseClicked" prefHeight="250.0" prefWidth="332.0">
+         <columns>
+            <TableColumn fx:id="colSupplierID" prefWidth="99.20001220703125" text="Supplier ID" />
+            <TableColumn fx:id="colSupplierName" prefWidth="102.4000244140625" text="Name" />
+            <TableColumn fx:id="colWeight" prefWidth="128.0" text="Weight (kg)" />
+         </columns>
+      </TableView>
     </children>
 </AnchorPane>
