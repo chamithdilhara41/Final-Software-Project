@@ -36,7 +36,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="29.0" layoutY="263.0" prefHeight="126.0" prefWidth="213.0" style="-fx-background-color: #89a6ff;">
+      <AnchorPane layoutX="29.0" layoutY="262.0" prefHeight="126.0" prefWidth="213.0" style="-fx-background-color: #89a6ff;">
          <children>
             <Label layoutX="10.0" layoutY="6.0" prefHeight="30.0" prefWidth="203.0" text="How many Employees">
                <font>
@@ -72,7 +72,7 @@
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="lblEmployeeCount1" layoutX="95.0" layoutY="74.0" prefHeight="46.0" prefWidth="10.0">
+            <Label fx:id="lblBuyerCount" layoutX="95.0" layoutY="74.0" prefHeight="46.0" prefWidth="10.0">
                <font>
                   <Font name="System Bold Italic" size="30.0" />
                </font>

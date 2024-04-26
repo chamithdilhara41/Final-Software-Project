@@ -224,6 +224,7 @@ public class PaymentFormController {
 
         }else {
             new Alert(Alert.AlertType.ERROR,"Supplier not found").show();
+            lblSupplierName.setText("");
 
         }
     }
