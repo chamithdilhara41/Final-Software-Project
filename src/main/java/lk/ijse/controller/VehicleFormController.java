@@ -32,10 +32,12 @@ public class VehicleFormController {
 
     @FXML
     private TextField txtVehicleType;
+
     public void initialize() throws SQLException {
         getAllVehicles();
         setCellValueFactory();
     }
+
     @FXML
     void OnMouseClicked(MouseEvent event) {
         int index = tblVehicle.getSelectionModel().getSelectedIndex();
@@ -59,6 +61,11 @@ public class VehicleFormController {
     void btnOnActionDelete(ActionEvent event) {
         String vehicleNo = txtVehicleNo.getText();
 
+        if (vehicleNo.isEmpty()){
+            new Alert(Alert.AlertType.INFORMATION,"Please enter vehicle No").show();
+            return;
+        }
+
         try {
             boolean isDeleted = VehicleRepo.delete(vehicleNo);
             if (isDeleted){
@@ -77,6 +84,11 @@ public class VehicleFormController {
     void btnOnActionSave(ActionEvent event) {
         String vehicleNo = txtVehicleNo.getText();
         String vehicleType = txtVehicleType.getText();
+
+        if(vehicleNo.isEmpty() || vehicleType.isEmpty()){
+            new Alert(Alert.AlertType.CONFIRMATION , "Vehicle Name & No cannot be empty").showAndWait();
+            return;
+        }
 
         Vehicle vehicle = new Vehicle(vehicleNo, vehicleType);
 
@@ -115,6 +127,11 @@ public class VehicleFormController {
     void btnOnActionUpdate(ActionEvent event) {
         String vehicleNo = txtVehicleNo.getText();
         String vehicleType = txtVehicleType.getText();
+
+        if(vehicleNo.isEmpty() || vehicleType.isEmpty()){
+            new Alert(Alert.AlertType.CONFIRMATION , "Vehicle Name & No cannot be empty").showAndWait();
+            return;
+        }
 
         Vehicle vehicle = new Vehicle(vehicleNo, vehicleType);
 

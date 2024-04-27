@@ -129,6 +129,11 @@ public class PaymentFormController {
     void btnOnActionDelete(ActionEvent event) {
         String paymentID = txtPaymentID.getText();
 
+        if (paymentID.isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Please enter payment ID for delete", ButtonType.OK).show();
+            return;
+        }
+
         try {
             boolean isDeleted = PaymentRepo.delete(paymentID);
             if(isDeleted){
@@ -149,6 +154,11 @@ public class PaymentFormController {
         Double amount = Double.valueOf(txtAmount.getText());
         String date = txtDate.getText();
         String supplierID = txtSupplierID.getText();
+
+        if(paymentID.isEmpty() || description.isEmpty() || amount.describeConstable().isEmpty() || date.isEmpty() || supplierID.isEmpty()){
+            new Alert(Alert.AlertType.CONFIRMATION, "Please fill all the fields").show();
+            return;
+        }
 
         Payment payment = new Payment(paymentID, description, amount, date, supplierID);
 
@@ -172,6 +182,11 @@ public class PaymentFormController {
         Double amount = Double.valueOf(txtAmount.getText());
         String date = txtDate.getText();
         String supplierID = txtSupplierID.getText();
+
+        if(paymentID.isEmpty() || description.isEmpty() || amount.describeConstable().isEmpty() || date.isEmpty() || supplierID.isEmpty()){
+            new Alert(Alert.AlertType.CONFIRMATION, "Please fill all the fields").show();
+            return;
+        }
 
         Payment payment = new Payment(paymentID, description, amount, date, supplierID);
 

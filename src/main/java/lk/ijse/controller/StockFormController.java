@@ -135,12 +135,17 @@ public class StockFormController {
     void btnOnActionAddWeight(ActionEvent event) throws SQLException {
         String stockID = txtStockID.getText();
         String supplierID = cmbSupplierID.getValue();
-        Double weight = Double.valueOf(txtWeight.getText());
+        String weight = String.valueOf(txtWeight.getText());
         Date date = Date.valueOf(txtDate.getText());
 
-        Stock stock = new Stock(stockID, weight, date);
+        if (stockID.isEmpty() || supplierID.isEmpty() || weight.describeConstable().isEmpty() ) {
+            new Alert(Alert.AlertType.INFORMATION, "Please fill all the fields", ButtonType.OK).show();
+            return;
+        }
 
-        SupplierStockDetail supplierStockDetail = new SupplierStockDetail(stockID, supplierID, weight);
+        Stock stock = new Stock(stockID, Double.valueOf(weight), date);
+
+        SupplierStockDetail supplierStockDetail = new SupplierStockDetail(stockID, supplierID,  Double.valueOf(weight));
 
         try {
             boolean issaved1 = StockRepo.save(stock);
@@ -157,7 +162,7 @@ public class StockFormController {
             }
             } catch (SQLException e) {
 
-            boolean isUpdateWeight = StockRepo.updateWeight(stockID,supplierID,weight);
+            boolean isUpdateWeight = StockRepo.updateWeight(stockID,supplierID, Double.valueOf(weight));
             if (isUpdateWeight) {
 
                 boolean fuck= SupplierStockDetailRepo.save(supplierStockDetail);
@@ -170,8 +175,6 @@ public class StockFormController {
             }
             new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
         }
-
-
     }
 
     @FXML

@@ -108,6 +108,11 @@ public class EmployeeFormController {
     void btnOnActionDelete(ActionEvent event) {
         String EmployeeID = txtEmployeeID.getText();
 
+        if (EmployeeID.isEmpty()) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Please Enter Employee ID", ButtonType.OK).show();
+            return;
+        }
+
         try {
             boolean isDeleted = EmployeeRepo.delete(EmployeeID);
             if(isDeleted) {
@@ -129,6 +134,11 @@ public class EmployeeFormController {
         String employeeContact = txtEmployeeContact.getText();
         Double employeeSalary = Double.valueOf(txtEmployeeSalary.getText());
         String vehicleNo = cmbVehicleNo.getValue();
+
+        if(employeeID.isEmpty() || employeeName.isEmpty() || employeeAddress.isEmpty() || employeeContact.isEmpty()) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Please fill all fields!").show();
+            return;
+        }
 
         Employee employee = new Employee(employeeID,employeeName,employeeAddress,employeeContact,employeeSalary,vehicleNo);
 
@@ -154,6 +164,11 @@ public class EmployeeFormController {
         String employeeContact = txtEmployeeContact.getText();
         Double employeeSalary = Double.valueOf(txtEmployeeSalary.getText());
         String vehicleNo = cmbVehicleNo.getValue();
+
+        if(employeeID.isEmpty() || employeeName.isEmpty() || employeeAddress.isEmpty() || employeeContact.isEmpty()) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Please fill all fields!").show();
+            return;
+        }
 
         Employee employee = new Employee(employeeID,employeeName,employeeAddress,employeeContact,employeeSalary,vehicleNo);
 

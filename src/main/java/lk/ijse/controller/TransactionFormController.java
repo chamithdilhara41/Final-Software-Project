@@ -147,6 +147,11 @@ public class TransactionFormController {
     void btnOnActionDelete(ActionEvent event) {
         String transactionID = txtTransactionID.getText();
 
+        if (transactionID.isEmpty()) {
+            new Alert(Alert.AlertType.INFORMATION, "Please enter transaction ID", ButtonType.OK).show();
+            return;
+        }
+
         try {
             boolean isDeleted = TransactionRepo.delete(transactionID);
             if(isDeleted){
@@ -162,6 +167,7 @@ public class TransactionFormController {
 
     @FXML
     void btnOnActionSave(ActionEvent event) {
+
         String transactionID = txtTransactionID.getText();
         String orderID = cmbOrderID.getValue();
         String accountNo = txtAccountNo.getText();
@@ -169,6 +175,11 @@ public class TransactionFormController {
         Double amount = Double.valueOf(txtAmount.getText());
         String date = txtDate.getText();
         String paymentMethod = cmbPaymentMethod.getValue();
+
+        if (transactionID.isEmpty() || orderID.isEmpty() || accountNo.isEmpty() || description.isEmpty() || amount.describeConstable().isEmpty() || date.isEmpty() || paymentMethod.isEmpty()) {
+            new Alert(Alert.AlertType.INFORMATION,"Please fill all the fields").show();
+            return;
+        }
 
         Transaction transaction = new Transaction(transactionID, orderID, accountNo, description, amount, date, paymentMethod);
 
@@ -194,6 +205,11 @@ public class TransactionFormController {
         Double amount = Double.valueOf(txtAmount.getText());
         String date = txtDate.getText();
         String paymentMethod = cmbPaymentMethod.getValue();
+
+        if (transactionID.isEmpty() || orderID.isEmpty() || accountNo.isEmpty() || description.isEmpty() || amount.describeConstable().isEmpty() || date.isEmpty() || paymentMethod.isEmpty()) {
+            new Alert(Alert.AlertType.INFORMATION,"Please fill all the fields").show();
+            return;
+        }
 
         Transaction transaction = new Transaction(transactionID, orderID, accountNo, description, amount, date, paymentMethod);
 

@@ -118,6 +118,11 @@ public class DeliveryFormController {
     void btnOnActionDelete(ActionEvent event) {
         String deliveryID = txtDeliveryID.getText();
 
+        if (deliveryID.isEmpty()){
+            new Alert(Alert.AlertType.INFORMATION, "Please Enter Delivery ID", ButtonType.OK).show();
+            return;
+        }
+
         try {
             boolean isDeleted = DeliveryRepo.delete(deliveryID);
             if (isDeleted) {
@@ -137,6 +142,11 @@ public class DeliveryFormController {
         String date = txtDate.getText();
         String orderID = cmbOrderID.getValue();
         String vehicleNo = cmbVehicleNo.getValue();
+
+        if(deliveryID.isEmpty() || date.isEmpty() || orderID.isEmpty() || vehicleNo.isEmpty()) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Please fill all the fields", ButtonType.OK).show();
+            return;
+        }
 
         Delivery delivery = new Delivery(deliveryID, date, orderID, vehicleNo);
 
@@ -159,6 +169,12 @@ public class DeliveryFormController {
         String date = txtDate.getText();
         String orderID = cmbOrderID.getValue();
         String vehicleNo = cmbVehicleNo.getValue();
+
+        if(deliveryID.isEmpty() || date.isEmpty() || orderID.isEmpty() || vehicleNo.isEmpty()) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Please fill all the fields", ButtonType.OK).show();
+            return;
+        }
+
 
         Delivery delivery = new Delivery(deliveryID, date, orderID, vehicleNo);
 

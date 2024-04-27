@@ -17,6 +17,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class RegisterFormController {
+    @FXML
+    private TextField txtEmailRegister;
 
     @FXML
     private TextField txtNameRegister;
@@ -31,29 +33,34 @@ public class RegisterFormController {
     void btnRegisterOnAction(ActionEvent event) {
 
         String usernameRegister = txtUsernameRegister.getText();
+        String emailRegister = txtEmailRegister.getText();
         String name = txtNameRegister.getText();
         String passwordRegister = txtPasswordRegister.getText();
 
-        try {
-            boolean isSaved = saveUser(usernameRegister, name, passwordRegister);
-            if(isSaved) {
-                new Alert(Alert.AlertType.CONFIRMATION, "user saved!").show();
+        if(usernameRegister.isEmpty() || name.isEmpty() || passwordRegister.isEmpty() || emailRegister.isEmpty()){
+            new Alert(Alert.AlertType.INFORMATION,"Please Fill All Fields").show();
+        }else {
+            try {
+                boolean isSaved = saveUser(usernameRegister, name, passwordRegister, emailRegister);
+                if (isSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "user saved!").show();
 
-                Parent root = FXMLLoader.load(getClass().getResource("/view/LoginForm.fxml"));
-                Scene scene = new Scene(root);
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(scene);
-                stage.setTitle("Login Form");
-                stage.show();
+                    Parent root = FXMLLoader.load(getClass().getResource("/view/LoginForm.fxml"));
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.setTitle("Login Form");
+                    stage.show();
+                }
+            } catch (
+                    SQLException | IOException e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
-        } catch (
-                SQLException | IOException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
-    private boolean saveUser(String usernameRegister, String name, String passwordRegister) throws SQLException {
-        String sql = "INSERT INTO users VALUES(?, ?, ?)";
+    private boolean saveUser(String usernameRegister, String name, String passwordRegister, String emailRegister) throws SQLException {
+        String sql = "INSERT INTO users VALUES(?, ?, ?, ?)";
 
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -61,6 +68,7 @@ public class RegisterFormController {
         pstm.setObject(1, usernameRegister);
         pstm.setObject(2, name);
         pstm.setObject(3, passwordRegister);
+        pstm.setObject(4, emailRegister);
 
         return pstm.executeUpdate() > 0;
     }

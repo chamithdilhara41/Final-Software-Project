@@ -109,6 +109,11 @@ public class BuyerFormController {
     void btnOnActionDelete(ActionEvent event) {
         String buyerID = txtBuyerID.getText();
 
+        if (buyerID.isEmpty()){
+            new Alert(Alert.AlertType.INFORMATION, "Please fill buyer Id for delete ").show();
+            return;
+        }
+
         try {
             boolean isDeleted = BuyerRepo.delete(buyerID);
             if (isDeleted){
@@ -123,11 +128,17 @@ public class BuyerFormController {
 
     @FXML
     void btnOnActionSave(ActionEvent event) {
+
         String buyerID = txtBuyerID.getText();
         String buyerName = txtBuyerName.getText();
         String buyerAddress = txtBuyerAddress.getText();
         String buyerContactOffice = txtBuyerContactOffice.getText();
         String buyerContactManager = txtBuyerContactManager.getText();
+
+        if(buyerID.isEmpty() || buyerName.isEmpty() || buyerAddress.isEmpty() || buyerContactOffice.isEmpty() || buyerContactManager.isEmpty()){
+            new Alert(Alert.AlertType.CONFIRMATION,"Please fill all the fields").show();
+            return;
+        }
 
         Buyer buyer = new Buyer(buyerID, buyerName, buyerAddress, buyerContactOffice, buyerContactManager);
 
@@ -159,6 +170,11 @@ public class BuyerFormController {
         String buyerAddress = txtBuyerAddress.getText();
         String buyerContactOffice = txtBuyerContactOffice.getText();
         String buyerContactManager = txtBuyerContactManager.getText();
+
+        if(buyerID.isEmpty() || buyerName.isEmpty() || buyerAddress.isEmpty() || buyerContactOffice.isEmpty() || buyerContactManager.isEmpty()){
+            new Alert(Alert.AlertType.CONFIRMATION,"Please fill all the fields").show();
+            return;
+        }
 
         Buyer buyer = new Buyer(buyerID, buyerName, buyerAddress, buyerContactOffice, buyerContactManager);
 

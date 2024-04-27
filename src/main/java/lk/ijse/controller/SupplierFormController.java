@@ -64,6 +64,11 @@ public class SupplierFormController {
     void btnOnActionDelete(ActionEvent event) {
         String supplierID = txtSupplierID.getText();
 
+        if(supplierID.isEmpty()){
+            new Alert(Alert.AlertType.INFORMATION,"Please fill supplierId for delete").show();
+            return;
+        }
+
         try {
             boolean isDeleted = SupplierRepo.delete(supplierID);
             if(isDeleted) {
@@ -83,6 +88,11 @@ public class SupplierFormController {
         String supplierAddress = txtSupplierAddress.getText();
         String supplierContact = txtSupplierContact.getText();
         String supplierGender = txtSupplierGender.getText();
+
+        if(supplierID.isEmpty() || supplierName.isEmpty() || supplierAddress.isEmpty() || supplierContact.isEmpty() || supplierGender.isEmpty()) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Supplier name or address or contact is empty!").show();
+            return;
+        }
 
         Supplier supplier = new Supplier(supplierID, supplierName, supplierAddress, supplierContact, supplierGender);
 
@@ -107,6 +117,11 @@ public class SupplierFormController {
         String supplierAddress = txtSupplierAddress.getText();
         String supplierContact = txtSupplierContact.getText();
         String supplierGender = txtSupplierGender.getText();
+
+        if(supplierID.isEmpty() || supplierName.isEmpty() || supplierAddress.isEmpty() || supplierContact.isEmpty() || supplierGender.isEmpty()) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Supplier name or address or contact is empty!").show();
+            return;
+        }
 
         Supplier supplier = new Supplier(supplierID, supplierName, supplierAddress, supplierContact, supplierGender);
 
