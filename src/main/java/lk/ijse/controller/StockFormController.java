@@ -1,6 +1,8 @@
 package lk.ijse.controller;
 
 import com.jfoenix.controls.JFXComboBox;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import lk.ijse.model.Stock;
 import lk.ijse.model.Supplier;
 import lk.ijse.model.SupplierStockDetail;
@@ -26,6 +29,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class StockFormController {
+
+    public Label lblStockForm;
 
     @FXML
     private JFXComboBox<String> cmbSupplierID;
@@ -70,6 +75,7 @@ public class StockFormController {
     private TextField txtWeight;
 
     public void initialize() throws SQLException {
+        animateLabelTyping();
         getAllStocks();
         setCellValueFactoryForStocks();
         getSupplierIds();
@@ -97,7 +103,32 @@ public class StockFormController {
     }
 
     @FXML
-    void OnMouseClicked(MouseEvent event) {
+    void OnMouseClicked(MouseEvent event) throws SQLException {
+        int index = tblStock.getSelectionModel().getSelectedIndex();
+
+        if (index <= -1){
+            return;
+        }
+        String id = colStockID.getCellData(index).toString();
+        txtStockID.setText(id);
+
+        String stockID = colStockID.getCellData(index).toString();
+        ObservableList<SupplierStockDetailTm> obList = FXCollections.observableArrayList();
+
+        List<SupplierStockDetailTm> supplierStockDetail = SupplierStockDetailRepo.searchSuppliersWithStockId(stockID);
+
+            for (SupplierStockDetailTm No : supplierStockDetail) {
+                obList.add(new SupplierStockDetailTm(
+                        No.getSupplierId(),
+                        No.getName(),
+                        No.getWeight()
+                ));
+            }
+
+        tblSupplierStock.setItems(obList);
+        colSupplierID.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
+        colSupplierName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colWeight.setCellValueFactory(new PropertyValueFactory<>("weight"));
 
     }
 
@@ -108,7 +139,19 @@ public class StockFormController {
 
     @FXML
     void btnOnActionDelete(ActionEvent event) {
+        String stockID = txtStockID.getText();
 
+        try {
+            boolean isDeleted = StockRepo.delete(stockID);
+            if (isDeleted) {
+                getAllStocks();
+                setCellValueFactoryForStocks();
+
+                new Alert(Alert.AlertType.INFORMATION, "Stock Deleted").show();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
     }
 
     @FXML
@@ -118,12 +161,16 @@ public class StockFormController {
 
         List<SupplierStockDetailTm> supplierStockDetail = SupplierStockDetailRepo.searchSuppliersWithStockId(stockID);
 
-        for(SupplierStockDetailTm No : supplierStockDetail) {
-            obList.add(new SupplierStockDetailTm(
-                No.getSupplierId(),
-                No.getName(),
-                No.getWeight()
-            ));
+        if (supplierStockDetail.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Suppliers not found").show();
+        } else {
+            for (SupplierStockDetailTm No : supplierStockDetail) {
+                obList.add(new SupplierStockDetailTm(
+                        No.getSupplierId(),
+                        No.getName(),
+                        No.getWeight()
+                ));
+            }
         }
         tblSupplierStock.setItems(obList);
         colSupplierID.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
@@ -136,36 +183,40 @@ public class StockFormController {
         String stockID = txtStockID.getText();
         String supplierID = cmbSupplierID.getValue();
         String weight = String.valueOf(txtWeight.getText());
-        Date date = Date.valueOf(txtDate.getText());
+        String date = String.valueOf(Date.valueOf(txtDate.getText()));
 
-        if (stockID.isEmpty() || supplierID.isEmpty() || weight.describeConstable().isEmpty() ) {
-            new Alert(Alert.AlertType.INFORMATION, "Please fill all the fields", ButtonType.OK).show();
-            return;
+        try {
+            if (stockID.isEmpty() || supplierID.isEmpty() || weight.isEmpty() || date.isEmpty()) {
+                new Alert(Alert.AlertType.INFORMATION, "Please fill all the fields", ButtonType.OK).show();
+                return;
+            }
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
-        Stock stock = new Stock(stockID, Double.valueOf(weight), date);
+        Stock stock = new Stock(stockID, Double.valueOf(weight), Date.valueOf(date));
 
-        SupplierStockDetail supplierStockDetail = new SupplierStockDetail(stockID, supplierID,  Double.valueOf(weight));
+        SupplierStockDetail supplierStockDetail = new SupplierStockDetail(stockID, supplierID, Double.valueOf(weight));
 
         try {
             boolean issaved1 = StockRepo.save(stock);
             boolean isSaved;
-            if (issaved1 ) {
-                isSaved = SupplierStockDetailRepo.save(supplierStockDetail);
+                if (issaved1 ) {
+                    isSaved = SupplierStockDetailRepo.save(supplierStockDetail);
 
-                if (isSaved) {
-                    new Alert(Alert.AlertType.INFORMATION, "weight saved!").show();
-                    getAllStocks();
-                    setCellValueFactoryForStocks();
+                    if (isSaved) {
+                        new Alert(Alert.AlertType.INFORMATION, "weight saved!").show();
+                        getAllStocks();
+                        setCellValueFactoryForStocks();
+                    }
+
                 }
-
-            }
             } catch (SQLException e) {
 
             boolean isUpdateWeight = StockRepo.updateWeight(stockID,supplierID, Double.valueOf(weight));
             if (isUpdateWeight) {
 
-                boolean fuck= SupplierStockDetailRepo.save(supplierStockDetail);
+                boolean fuck = SupplierStockDetailRepo.save(supplierStockDetail);
                 if (fuck) {
                     new Alert(Alert.AlertType.INFORMATION, " weight updated!").show();
                     getAllStocks();
@@ -233,5 +284,28 @@ public class StockFormController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void animateLabelTyping() {
+        String loginText = lblStockForm.getText(); // Text to be typed
+        int animationDuration = 250; // Duration of animation in milliseconds
+
+        // Set initial text of lblLogin to an empty string
+        lblStockForm.setText("");
+
+        // Create a Timeline for the typing animation
+        Timeline typingAnimation = new Timeline();
+
+        // Add KeyFrames to gradually display the characters
+        for (int i = 0; i <= loginText.length(); i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
+                lblStockForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+            });
+            typingAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        // Play the animation
+        typingAnimation.play();
     }
 }

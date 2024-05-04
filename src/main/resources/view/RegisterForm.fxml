@@ -27,7 +27,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <Label layoutX="39.0" layoutY="21.0" text="Register here....">
+      <Label fx:id="lblRegister" layoutX="39.0" layoutY="21.0" text="Register here....">
          <font>
             <Font name="Candara Bold" size="32.0" />
          </font>

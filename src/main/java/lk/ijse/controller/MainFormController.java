@@ -1,5 +1,6 @@
 package lk.ijse.controller;
 
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,10 +41,11 @@ public class MainFormController {
 
     @FXML
     void btnOnActionBuyer(ActionEvent event) throws IOException {
-        AnchorPane dashboardPane = FXMLLoader.load(getClass().getResource("/view/BuyerForm.fxml"));
+        AnchorPane buyerPane = FXMLLoader.load(getClass().getResource("/view/BuyerForm.fxml"));
 
         mainPane.getChildren().clear();
-        mainPane.getChildren().add(dashboardPane);
+        mainPane.getChildren().add(buyerPane);
+        AnimationUtil.popUpAnimation(mainPane,buyerPane);
     }
 
     @FXML
@@ -52,6 +54,8 @@ public class MainFormController {
 
         mainPane.getChildren().clear();
         mainPane.getChildren().add(dashboardPane);
+        AnimationUtil.popUpAnimation(mainPane,dashboardPane);
+
     }
 
     private void loadDashboardForm() throws IOException {
@@ -67,16 +71,23 @@ public class MainFormController {
 
         mainPane.getChildren().clear();
         mainPane.getChildren().add(employeePane);
+        AnimationUtil.popUpAnimation(mainPane,employeePane);
     }
 
     @FXML
     void btnOnActionLogout(ActionEvent event) throws IOException {
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+
         Parent root = FXMLLoader.load(getClass().getResource("/view/LoginForm.fxml"));
+
         Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.setTitle("Login Form");
-        stage.show();
+
+        Stage loginStage = new Stage();
+        loginStage.setScene(scene);
+        loginStage.setTitle("Login Form");
+
+        loginStage.show();
     }
 
     @FXML
@@ -85,6 +96,7 @@ public class MainFormController {
 
         mainPane.getChildren().clear();
         mainPane.getChildren().add(orderPane);
+        AnimationUtil.popUpAnimation(mainPane,orderPane);
     }
 
     @FXML
@@ -93,6 +105,7 @@ public class MainFormController {
 
         mainPane.getChildren().clear();
         mainPane.getChildren().add(paymentPane);
+        AnimationUtil.popUpAnimation(mainPane,paymentPane);
     }
 
     @FXML
@@ -101,6 +114,7 @@ public class MainFormController {
 
         mainPane.getChildren().clear();
         mainPane.getChildren().add(paymentPane);
+        AnimationUtil.popUpAnimation(mainPane,paymentPane);
     }
 
     @FXML
@@ -114,6 +128,7 @@ public class MainFormController {
 
         mainPane.getChildren().clear();
         mainPane.getChildren().add(stockPane);
+        AnimationUtil.popUpAnimation(mainPane,stockPane);
     }
 
     @FXML
@@ -123,6 +138,7 @@ public class MainFormController {
 
         mainPane.getChildren().clear();
         mainPane.getChildren().add(supplierPane);
+        AnimationUtil.popUpAnimation(mainPane,supplierPane);
     }
 
     @FXML
@@ -131,14 +147,15 @@ public class MainFormController {
 
         mainPane.getChildren().clear();
         mainPane.getChildren().add(transactinPane);
+        AnimationUtil.popUpAnimation(mainPane, transactinPane);
     }
 
     @FXML
     void btnOnActionVehicle(ActionEvent event) throws IOException {
-        AnchorPane dashboardPane = FXMLLoader.load(getClass().getResource("/view/VehicleForm.fxml"));
-
+        AnchorPane vehicleForm = FXMLLoader.load(getClass().getResource("/view/VehicleForm.fxml"));
         mainPane.getChildren().clear();
-        mainPane.getChildren().add(dashboardPane);
+        mainPane.getChildren().add(vehicleForm);
+        AnimationUtil.popUpAnimation(mainPane, vehicleForm);
     }
     private void setDate() {
         LocalDate now = LocalDate.now();
@@ -159,5 +176,17 @@ public class MainFormController {
         clock.setCycleCount(Animation.INDEFINITE);
 
         clock.play();
+    }
+
+    public static class AnimationUtil {
+
+        public static void popUpAnimation(AnchorPane stage, Parent rootNode) {
+
+            // Implement your right back animation logic here
+            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), rootNode);
+            translateTransition.setFromX(+rootNode.getBoundsInLocal().getWidth());
+            translateTransition.setToX(0);
+            translateTransition.play();
+        }
     }
 }

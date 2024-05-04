@@ -1,6 +1,8 @@
 package lk.ijse.controller;
 
 import com.jfoenix.controls.JFXComboBox;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,14 +10,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import lk.ijse.model.Buyer;
 import lk.ijse.model.Delivery;
 import lk.ijse.model.Vehicle;
 import lk.ijse.model.tm.DeliveryTm;
-import lk.ijse.repository.BuyerRepo;
-import lk.ijse.repository.DeliveryRepo;
-import lk.ijse.repository.OrderRepo;
-import lk.ijse.repository.VehicleRepo;
+import lk.ijse.repository.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -23,8 +23,9 @@ import java.util.List;
 
 public class DeliveryFormController {
 
+    public Label lblDeliveryForm;
     @FXML
-    private JFXComboBox<String> cmbOrderID;
+    private JFXComboBox<String> cmbStockID;
 
     @FXML
     private JFXComboBox<String> cmbVehicleNo;
@@ -36,7 +37,7 @@ public class DeliveryFormController {
     private TableColumn<?, ?> colDeliveryID;
 
     @FXML
-    private TableColumn<?, ?> colOrderID;
+    private TableColumn<?, ?> colStockID;
 
     @FXML
     private TableColumn<?, ?> colVehicleNo;
@@ -57,9 +58,10 @@ public class DeliveryFormController {
     private TextField txtDeliveryID;
 
     public void initialize() throws SQLException {
+        animateLabelTyping();
         txtDate.setText(String.valueOf(LocalDate.now()));
         getVehicleNos();
-        getOrderIds();
+        getStockIds();
         getAllDeliveries();
         setCellValueFactory();
     }
@@ -67,7 +69,7 @@ public class DeliveryFormController {
     private void setCellValueFactory() {
         colDeliveryID.setCellValueFactory(new PropertyValueFactory<>("deliveryId"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        colOrderID.setCellValueFactory(new PropertyValueFactory<>("orderId"));
+        colStockID.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         colVehicleNo.setCellValueFactory(new PropertyValueFactory<>("vehicleNo"));
     }
 
@@ -95,12 +97,12 @@ public class DeliveryFormController {
 
         String deliveryID = colDeliveryID.getCellData(index).toString();
         String date = colDate.getCellData(index).toString();
-        String orderID = colOrderID.getCellData(index).toString();
+        String orderID = colStockID.getCellData(index).toString();
         String vehicleNo = colVehicleNo.getCellData(index).toString();
 
         txtDeliveryID.setText(deliveryID);
         txtDate.setText(date);
-        cmbOrderID.setValue(orderID);
+        cmbStockID.setValue(orderID);
         cmbVehicleNo.setValue(vehicleNo);
     }
 
@@ -111,7 +113,7 @@ public class DeliveryFormController {
     private void clearFields() {
         txtDeliveryID.setText("");
         lblBuyerName.setText("");
-        cmbOrderID.getSelectionModel().clearSelection();
+        cmbStockID.getSelectionModel().clearSelection();
         cmbVehicleNo.getSelectionModel().clearSelection();
     }
     @FXML
@@ -140,7 +142,7 @@ public class DeliveryFormController {
     void btnOnActionSave(ActionEvent event) {
         String deliveryID = txtDeliveryID.getText();
         String date = txtDate.getText();
-        String orderID = cmbOrderID.getValue();
+        String orderID = cmbStockID.getValue();
         String vehicleNo = cmbVehicleNo.getValue();
 
         if(deliveryID.isEmpty() || date.isEmpty() || orderID.isEmpty() || vehicleNo.isEmpty()) {
@@ -167,7 +169,7 @@ public class DeliveryFormController {
     void btnOnActionUpdate(ActionEvent event) {
         String deliveryID = txtDeliveryID.getText();
         String date = txtDate.getText();
-        String orderID = cmbOrderID.getValue();
+        String orderID = cmbStockID.getValue();
         String vehicleNo = cmbVehicleNo.getValue();
 
         if(deliveryID.isEmpty() || date.isEmpty() || orderID.isEmpty() || vehicleNo.isEmpty()) {
@@ -192,13 +194,15 @@ public class DeliveryFormController {
     }
 
     @FXML
-    void cmbOrderIdDOnAction(ActionEvent event) {
-        String oId = cmbOrderID.getValue();
+    void cmbStockIdOnAction(ActionEvent event) {
+        String sId = cmbStockID.getValue();
 
         try {
-            Buyer buyer = BuyerRepo.searchByOrderIdForTransaction(oId);
+            Buyer buyer = BuyerRepo.searchByStockIdForTransaction(sId);
             if(buyer != null){
                 lblBuyerName.setText(buyer.getBuyerName());
+            }else {
+                lblBuyerName.setText("");
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage(),ButtonType.OK).show();
@@ -234,12 +238,12 @@ public class DeliveryFormController {
             new Alert(Alert.AlertType.INFORMATION, "Delivery Searched").show();
             txtDeliveryID.setText(delivery.getDeliveryId());
             txtDate.setText(delivery.getDate());
-            cmbOrderID.setValue(delivery.getOrderId());
+            cmbStockID.setValue(delivery.getOrderId());
             cmbVehicleNo.setValue(delivery.getVehicleNo());
         }else {
             new Alert(Alert.AlertType.ERROR, "Delivery Not Found").show();
             lblBuyerName.setText("");
-            cmbOrderID.getSelectionModel().clearSelection();
+            cmbStockID.getSelectionModel().clearSelection();
             cmbVehicleNo.getSelectionModel().clearSelection();
         }
     }
@@ -260,20 +264,43 @@ public class DeliveryFormController {
         }
     }
 
-    private void getOrderIds() {
+    private void getStockIds() {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> NoList = OrderRepo.getIds();
+            List<String> NoList = StockRepo.getIds();
 
             for(String No : NoList) {
                 obList.add(No);
             }
 
-            cmbOrderID.setItems(obList);
+            cmbStockID.setItems(obList);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void animateLabelTyping() {
+        String loginText = lblDeliveryForm.getText(); // Text to be typed
+        int animationDuration = 250; // Duration of animation in milliseconds
+
+        // Set initial text of lblLogin to an empty string
+        lblDeliveryForm.setText("");
+
+        // Create a Timeline for the typing animation
+        Timeline typingAnimation = new Timeline();
+
+        // Add KeyFrames to gradually display the characters
+        for (int i = 0; i <= loginText.length(); i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
+                lblDeliveryForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+            });
+            typingAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        // Play the animation
+        typingAnimation.play();
     }
 }

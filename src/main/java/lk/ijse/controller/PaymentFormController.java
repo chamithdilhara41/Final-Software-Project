@@ -1,5 +1,7 @@
 package lk.ijse.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import lk.ijse.model.Payment;
 import lk.ijse.model.Supplier;
 import lk.ijse.model.tm.PaymentTm;
@@ -18,6 +21,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class PaymentFormController {
+
+    public Label lblPaymentForm;
 
     @FXML
     private TableColumn<?, ?> colAmount;
@@ -56,6 +61,7 @@ public class PaymentFormController {
     private TextField txtSupplierID;
 
     public void initialize() throws SQLException {
+        animateLabelTyping();
         txtDate.setText(LocalDate.now().toString());
         getAllPayments();
         setCellValueFactory();
@@ -244,4 +250,26 @@ public class PaymentFormController {
         }
     }
 
+    private void animateLabelTyping() {
+        String loginText = lblPaymentForm.getText(); // Text to be typed
+        int animationDuration = 250; // Duration of animation in milliseconds
+
+        // Set initial text of lblLogin to an empty string
+        lblPaymentForm.setText("");
+
+        // Create a Timeline for the typing animation
+        Timeline typingAnimation = new Timeline();
+
+        // Add KeyFrames to gradually display the characters
+        for (int i = 0; i <= loginText.length(); i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
+                lblPaymentForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+            });
+            typingAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        // Play the animation
+        typingAnimation.play();
+    }
 }

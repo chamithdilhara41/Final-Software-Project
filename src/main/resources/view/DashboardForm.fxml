@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="667.0" prefWidth="945.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.DashboardFormController">
+<AnchorPane fx:id="mainPane" prefHeight="667.0" prefWidth="945.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.DashboardFormController">
     <children>
         <Label layoutX="29.0" layoutY="24.0" text="Dashboard">
             <font>
@@ -79,5 +79,10 @@
             </Label>
          </children>
       </AnchorPane>
+      <JFXButton fx:id="btnPlaceOrder" buttonType="RAISED" layoutX="236.0" layoutY="596.0" onAction="#btnOnActionPlaceOrder" prefHeight="46.0" prefWidth="166.0" text="Place Order">
+         <font>
+            <Font name="System Bold Italic" size="24.0" />
+         </font>
+      </JFXButton>
     </children>
 </AnchorPane>

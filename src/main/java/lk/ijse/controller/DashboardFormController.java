@@ -1,9 +1,15 @@
 package lk.ijse.controller;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import lk.ijse.db.DbConnection;
+
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +22,13 @@ public class DashboardFormController {
     private int employeeCount;
 
     private int buyerCount;
+
+
+    @FXML
+    private AnchorPane mainPane; // Define mainPane variable and annotate with @FXML
+
+    @FXML
+    private JFXButton btnPlaceOrder;
 
     @FXML
     private Label lblEmployeeCount;
@@ -89,4 +102,19 @@ public class DashboardFormController {
         lblBuyerCount.setText(String.valueOf(buyerCount));
     }
 
+
+    public void btnOnActionPlaceOrder(javafx.event.ActionEvent actionEvent) throws IOException {
+//        AnchorPane dashboardPane = FXMLLoader.load(getClass().getResource("/view/PlaceOrderForm.fxml"));
+//
+//        mainPane.getChildren().clear();
+//        mainPane.getChildren().add(dashboardPane);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlaceOrderForm.fxml"));
+        AnchorPane contentPane = loader.load();
+
+        // Add the loaded content to the main pane
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(contentPane);
+        MainFormController.AnimationUtil.popUpAnimation(mainPane, contentPane);
+    }
 }

@@ -1,6 +1,8 @@
 package lk.ijse.controller;
 
 import com.jfoenix.controls.JFXComboBox;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import lk.ijse.model.Buyer;
 import lk.ijse.model.Transaction;
 import lk.ijse.model.tm.TransactionTm;
@@ -20,6 +23,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class TransactionFormController {
+
+    public Label lblTransactionForm;
 
     @FXML
     private JFXComboBox<String> cmbOrderID;
@@ -70,6 +75,7 @@ public class TransactionFormController {
     private TextField txtTransactionID;
 
     public void initialize() throws SQLException {
+        animateLabelTyping();
         getAllTransactions();
         setCellValueFactory();
         getOrderIds();
@@ -231,7 +237,7 @@ public class TransactionFormController {
         String oId = cmbOrderID.getValue();
 
         try {
-            Buyer buyer = BuyerRepo.searchByOrderIdForTransaction(oId);
+            Buyer buyer = BuyerRepo.searchByStockIdForTransaction(oId);
             if(buyer != null){
                 lblBuyerName.setText(buyer.getBuyerName());
             }
@@ -292,4 +298,26 @@ public class TransactionFormController {
         cmbPaymentMethod.setItems(obList);
     }
 
+    private void animateLabelTyping() {
+        String loginText = lblTransactionForm.getText(); // Text to be typed
+        int animationDuration = 250; // Duration of animation in milliseconds
+
+        // Set initial text of lblLogin to an empty string
+        lblTransactionForm.setText("");
+
+        // Create a Timeline for the typing animation
+        Timeline typingAnimation = new Timeline();
+
+        // Add KeyFrames to gradually display the characters
+        for (int i = 0; i <= loginText.length(); i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
+                lblTransactionForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+            });
+            typingAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        // Play the animation
+        typingAnimation.play();
+    }
 }

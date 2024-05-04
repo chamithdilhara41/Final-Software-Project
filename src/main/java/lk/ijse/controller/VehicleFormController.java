@@ -1,15 +1,15 @@
 package lk.ijse.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import lk.ijse.model.Vehicle;
 import lk.ijse.model.tm.VehicleTm;
 import lk.ijse.repository.VehicleRepo;
@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class VehicleFormController {
+
+    public Label lblVehiclesForm;
 
     @FXML
     private TableColumn<?, ?> colVehicleNo;
@@ -34,6 +36,7 @@ public class VehicleFormController {
     private TextField txtVehicleType;
 
     public void initialize() throws SQLException {
+        animateLabelTyping();
         getAllVehicles();
         setCellValueFactory();
     }
@@ -165,5 +168,28 @@ public class VehicleFormController {
     private void clearFields() {
         txtVehicleNo.setText("");
         txtVehicleType.setText("");
+    }
+
+    private void animateLabelTyping() {
+        String loginText = lblVehiclesForm.getText(); // Text to be typed
+        int animationDuration = 250; // Duration of animation in milliseconds
+
+        // Set initial text of lblLogin to an empty string
+        lblVehiclesForm.setText("");
+
+        // Create a Timeline for the typing animation
+        Timeline typingAnimation = new Timeline();
+
+        // Add KeyFrames to gradually display the characters
+        for (int i = 0; i <= loginText.length(); i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
+                lblVehiclesForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+            });
+            typingAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        // Play the animation
+        typingAnimation.play();
     }
 }

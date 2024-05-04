@@ -120,8 +120,10 @@ public class BuyerRepo {
         return null;
     }
 
-    public static Buyer searchByOrderIdForTransaction(String oId) throws SQLException {
-        String sql = "SELECT * FROM buyer JOIN orders ON buyer.buyerId = orders.buyerId WHERE orderId = ?;";
+    public static Buyer searchByStockIdForTransaction(String oId) throws SQLException {
+
+        //String sql = "SELECT * FROM buyer JOIN orders ON buyer.buyerId = orders.buyerId WHERE orderId = ?;";
+        String sql = "SELECT b.* FROM buyer b JOIN ordersstockinfo osi ON b.buyerId = osi.buyerId WHERE osi.stockId = ?;";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
         pstm.setObject(1, oId);

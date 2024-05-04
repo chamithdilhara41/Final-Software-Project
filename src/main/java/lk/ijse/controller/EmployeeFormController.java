@@ -1,6 +1,8 @@
 package lk.ijse.controller;
 
 import com.jfoenix.controls.JFXComboBox;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import lk.ijse.model.Employee;
 import lk.ijse.model.Vehicle;
 import lk.ijse.model.tm.EmployeeTm;
@@ -20,6 +23,7 @@ public class EmployeeFormController {
 
     @FXML
     public Label lblVehicleType;
+    public Label lblEmployeeForm;
 
     @FXML
     private JFXComboBox<String> cmbVehicleNo;
@@ -61,9 +65,10 @@ public class EmployeeFormController {
     private TextField txtEmployeeSalary;
 
     public void initialize() throws SQLException {
-      getVehicleNos();
-      getAllEmployees();
-      setCellValueFactory();
+        animateLabelTyping();
+        getVehicleNos();
+        getAllEmployees();
+        setCellValueFactory();
     }
 
     @FXML
@@ -266,5 +271,28 @@ public class EmployeeFormController {
         colEmployeeContact.setCellValueFactory(new PropertyValueFactory<>("employeeContact"));
         colEmployeeSalary.setCellValueFactory(new PropertyValueFactory<>("employeeSalary"));
         colVehicleNo.setCellValueFactory(new PropertyValueFactory<>("vehicleNo"));
+    }
+
+    private void animateLabelTyping() {
+        String loginText = lblEmployeeForm.getText(); // Text to be typed
+        int animationDuration = 250; // Duration of animation in milliseconds
+
+        // Set initial text of lblLogin to an empty string
+        lblEmployeeForm.setText("");
+
+        // Create a Timeline for the typing animation
+        Timeline typingAnimation = new Timeline();
+
+        // Add KeyFrames to gradually display the characters
+        for (int i = 0; i <= loginText.length(); i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
+                lblEmployeeForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+            });
+            typingAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        // Play the animation
+        typingAnimation.play();
     }
 }

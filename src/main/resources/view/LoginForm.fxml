@@ -79,12 +79,12 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <Label layoutX="350.0" layoutY="29.0" text="Login here....">
+      <Label fx:id="lblLogin" layoutX="350.0" layoutY="29.0" text="Login here....">
          <font>
             <Font name="Candara Bold" size="32.0" />
          </font>
       </Label>
-      <TextField fx:id="txtUsernameLogin" layoutX="365.0" layoutY="127.0" prefHeight="48.0" prefWidth="290.0" promptText="type username here">
+      <TextField fx:id="txtUsernameLogin" layoutX="364.0" layoutY="129.0" prefHeight="48.0" prefWidth="290.0" promptText="type username here" style="-fx-background-radius: 10 10 10 10;">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>
@@ -99,7 +99,7 @@
             <Font name="Calibri Light" size="19.0" />
          </font>
       </Label>
-      <PasswordField fx:id="txtPasswordLogin" layoutX="365.0" layoutY="225.0" onAction="#txtOnActionLogin" prefHeight="48.0" prefWidth="290.0" promptText="type password here">
+      <PasswordField fx:id="txtPasswordLogin" layoutX="364.0" layoutY="229.0" onAction="#txtOnActionLogin" prefHeight="48.0" prefWidth="290.0" promptText="type password here" style="-fx-background-radius: 10 10 10 10;">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>
@@ -127,8 +127,8 @@
             </LinearGradient>
          </stroke>
       </Line>
-      <Hyperlink layoutX="366.0" layoutY="273.0" onAction="#hyperOnActionForgetPassword" text="Forget password......" />
-      <JFXButton buttonType="RAISED" layoutX="369.0" layoutY="323.0" onAction="#btnLoginOnAction" prefHeight="48.0" prefWidth="283.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF;" text="LOGIN">
+      <Hyperlink layoutX="366.0" layoutY="278.0" onAction="#hyperOnActionForgetPassword" text="Forget password......" />
+      <JFXButton buttonType="RAISED" layoutX="375.0" layoutY="328.0" onAction="#btnLoginOnAction" prefHeight="48.0" prefWidth="266.0" ripplerFill="#0c8c08" style="-fx-background-color: #9FE2BF; -fx-background-radius: 20 20 20 20;" text="LOGIN">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>

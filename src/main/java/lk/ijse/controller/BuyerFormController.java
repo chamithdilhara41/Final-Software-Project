@@ -1,15 +1,15 @@
 package lk.ijse.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import lk.ijse.model.Buyer;
 import lk.ijse.model.tm.BuyerTm;
 import lk.ijse.repository.BuyerRepo;
@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class BuyerFormController {
+
+    public Label lblBuyerForm;
 
     @FXML
     private TableColumn<?, ?> colBuyerAddress;
@@ -51,7 +53,9 @@ public class BuyerFormController {
     @FXML
     private TextField txtBuyerName;
 
+
     public void initialize() throws SQLException {
+        animateLabelTyping();
         getAllBuyers();
         setCellValueFactory();
     }
@@ -209,5 +213,28 @@ public class BuyerFormController {
             txtBuyerContactOffice.setText("");
             txtBuyerContactManager.setText("");
         }
+    }
+
+    private void animateLabelTyping() {
+        String loginText = lblBuyerForm.getText(); // Text to be typed
+        int animationDuration = 250; // Duration of animation in milliseconds
+
+        // Set initial text of lblLogin to an empty string
+        lblBuyerForm.setText("");
+
+        // Create a Timeline for the typing animation
+        Timeline typingAnimation = new Timeline();
+
+        // Add KeyFrames to gradually display the characters
+        for (int i = 0; i <= loginText.length(); i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
+                lblBuyerForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+            });
+            typingAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        // Play the animation
+        typingAnimation.play();
     }
 }

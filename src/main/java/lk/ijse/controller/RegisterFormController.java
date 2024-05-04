@@ -1,5 +1,7 @@
 package lk.ijse.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,9 +9,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import lk.ijse.db.DbConnection;
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,6 +21,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class RegisterFormController {
+
+    @FXML
+    private Label lblRegister;
+
     @FXML
     private TextField txtEmailRegister;
 
@@ -28,6 +36,10 @@ public class RegisterFormController {
 
     @FXML
     private TextField txtUsernameRegister;
+
+    public void initialize() {
+        animateLabelTyping();
+    }
 
     @FXML
     void btnRegisterOnAction(ActionEvent event) {
@@ -83,6 +95,29 @@ public class RegisterFormController {
         stage.setScene(scene);
         stage.setTitle("Login Form");
         stage.show();
+    }
+
+    private void animateLabelTyping() {
+        String loginText = lblRegister.getText(); // Text to be typed
+        int animationDuration = 250; // Duration of animation in milliseconds
+
+        // Set initial text of lblLogin to an empty string
+        lblRegister.setText("");
+
+        // Create a Timeline for the typing animation
+        Timeline typingAnimation = new Timeline();
+
+        // Add KeyFrames to gradually display the characters
+        for (int i = 0; i <= loginText.length(); i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
+                lblRegister.setText(loginText.substring(0, finalI)); // Update label text with substring
+            });
+            typingAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        // Play the animation
+        typingAnimation.play();
     }
 
 }

@@ -1,12 +1,15 @@
 package lk.ijse.controller;
 
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -17,7 +20,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+
+
 public class LoginFormController {
+
+    @FXML
+    private Label lblLogin;
 
     @FXML
     private PasswordField txtPasswordLogin;
@@ -25,6 +36,10 @@ public class LoginFormController {
     @FXML
     private TextField txtUsernameLogin;
 
+
+    public void initialize() {
+        animateLabelTyping();
+    }
 
     @FXML
     void btnLoginOnAction() throws SQLException, IOException {
@@ -43,7 +58,7 @@ public class LoginFormController {
         if (resultSet.next()){
             String dbPw = resultSet.getString("password");
             if (passwordLogin.equals(dbPw)){
-                new Alert(Alert.AlertType.CONFIRMATION,"Login Successful!").show();
+                new Alert(Alert.AlertType.INFORMATION,"Login Successful").show();
                 navigateToTheMainForm();
             }else {
                 new Alert(Alert.AlertType.ERROR,"sorry! password is incorrect!").show();
@@ -63,13 +78,29 @@ public class LoginFormController {
 
         // Get the Stage from the current window
         Stage stage = (Stage) txtPasswordLogin.getScene().getWindow();
-
+        AnimationUtil.popUpAnimation(stage, rootNode);
         // Set the new scene to the stage
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.setTitle("Main Form (Tea leaves Management System)");
     }
+    public static class AnimationUtil {
 
+        public static void popUpAnimation(Stage stage, Parent rootNode) {
+
+            stage.setHeight(792);
+            stage.setWidth(1164);
+
+            // Implement your pop-up animation logic here
+            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), rootNode);
+            translateTransition.setFromY(-rootNode.getBoundsInLocal().getHeight());
+            translateTransition.setToY(0);
+            translateTransition.play();
+
+            // Show the stage after animation
+            stage.show();
+        }
+    }
 
     @FXML
     void hyperOnActionForgetPassword(ActionEvent event) throws IOException {
@@ -95,5 +126,28 @@ public class LoginFormController {
 
     public void txtOnActionLogin(ActionEvent actionEvent) throws SQLException, IOException {
         btnLoginOnAction();
+    }
+
+    private void animateLabelTyping() {
+        String loginText = lblLogin.getText(); // Text to be typed
+        int animationDuration = 250; // Duration of animation in milliseconds
+
+        // Set initial text of lblLogin to an empty string
+        lblLogin.setText("");
+
+        // Create a Timeline for the typing animation
+        Timeline typingAnimation = new Timeline();
+
+        // Add KeyFrames to gradually display the characters
+        for (int i = 0; i <= loginText.length(); i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
+                lblLogin.setText(loginText.substring(0, finalI)); // Update label text with substring
+            });
+            typingAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        // Play the animation
+        typingAnimation.play();
     }
 }

@@ -1,15 +1,15 @@
 package lk.ijse.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import lk.ijse.model.Supplier;
 import lk.ijse.model.tm.SupplierTm;
 import lk.ijse.repository.SupplierRepo;
@@ -19,6 +19,8 @@ import java.util.List;
 public class SupplierFormController {
 
     public TableView<SupplierTm> tblSupplier;
+
+    public Label lblSupplierForm;
 
     @FXML
     private TableColumn<?, ?> colSupplierAddress;
@@ -51,6 +53,7 @@ public class SupplierFormController {
     private TextField txtSupplierName;
 
     public void initialize() throws SQLException {
+        animateLabelTyping();
         getAllSuppliers();
         setCellValueFactory();
     }
@@ -206,5 +209,28 @@ public class SupplierFormController {
         txtSupplierAddress.setText(address);
         txtSupplierContact.setText(contact);
         txtSupplierGender.setText(gender);
+    }
+
+    private void animateLabelTyping() {
+        String loginText = lblSupplierForm.getText(); // Text to be typed
+        int animationDuration = 250; // Duration of animation in milliseconds
+
+        // Set initial text of lblLogin to an empty string
+        lblSupplierForm.setText("");
+
+        // Create a Timeline for the typing animation
+        Timeline typingAnimation = new Timeline();
+
+        // Add KeyFrames to gradually display the characters
+        for (int i = 0; i <= loginText.length(); i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
+                lblSupplierForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+            });
+            typingAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        // Play the animation
+        typingAnimation.play();
     }
 }

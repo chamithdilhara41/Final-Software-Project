@@ -16,23 +16,21 @@ import java.util.List;
 public class OrderRepo {
 
     public static boolean save(Order order) throws SQLException {
-        String sql = "INSERT INTO orders VALUES (?,?,?);";
+        String sql = "INSERT INTO orders VALUES (?,?);";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
         pstm.setObject(1, order.getOrderId());
-        pstm.setObject(2, order.getBuyerId());
-        pstm.setObject(3,order.getDate());
+        pstm.setObject(2, order.getDate());
 
         return pstm.executeUpdate() > 0;
     }
 
     public static boolean update(Order order) throws SQLException {
-        String sql = "UPDATE orders SET buyerId = ?, date = ? WHERE orderId = ?;";
+        String sql = "UPDATE orders SET date = ? WHERE orderId = ?;";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
-        pstm.setObject(1, order.getBuyerId());
-        pstm.setObject(2, order.getDate());
-        pstm.setObject(3, order.getOrderId());
+        pstm.setObject(1, order.getDate());
+        pstm.setObject(2, order.getOrderId());
 
         return pstm.executeUpdate() > 0;
     }
@@ -54,10 +52,9 @@ public class OrderRepo {
         ResultSet resultSet = pstm.executeQuery();
         if (resultSet.next()) {
             String orderId = resultSet.getString(1);
-            String buyerId = resultSet.getString(2);
-            String date = String.valueOf(resultSet.getDate(3));
+            String date = String.valueOf(resultSet.getDate(2));
 
-            return new Order(orderId,buyerId,date);
+            return new Order(orderId,date);
         }
         return null;
     }
@@ -72,8 +69,7 @@ public class OrderRepo {
         while (resultSet.next()) {
             data.add(new Order(
                     resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3)
+                    resultSet.getString(2)
             ));
         }
         return data;
@@ -93,5 +89,18 @@ public class OrderRepo {
             idList.add(id);
         }
         return idList;
+    }
+
+    public static String getCurrentId() throws SQLException {
+        String sql = "SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1";
+        PreparedStatement pstm = DbConnection.getInstance().getConnection()
+                .prepareStatement(sql);
+
+        ResultSet resultSet = pstm.executeQuery();
+        if(resultSet.next()) {
+            String orderId = resultSet.getString(1);
+            return orderId;
+        }
+        return null;
     }
 }

@@ -4,6 +4,7 @@ import lk.ijse.db.DbConnection;
 import lk.ijse.model.Order;
 import lk.ijse.model.Stock;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,5 +49,47 @@ public class StockRepo {
         pstm.setObject(2,stockID);
 
         return pstm.executeUpdate() > 0;
+    }
+
+    public static List<String> getIds() throws SQLException {
+        String sql = "SELECT stockId FROM stock";
+
+        PreparedStatement pstm = DbConnection.getInstance().getConnection()
+                .prepareStatement(sql);
+
+        List<String> idList = new ArrayList<>();
+
+        ResultSet resultSet = pstm.executeQuery();
+        while (resultSet.next()) {
+            String id = resultSet.getString(1);
+            idList.add(id);
+        }
+        return idList;
+    }
+
+    public static Stock searchByStockIdForOrder(String no) throws SQLException {
+        String sql = "select * from stock where stockID = ?";
+
+        PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        pstm.setObject(1,no);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            String stockId = resultSet.getString(1);
+            Double weight = resultSet.getDouble(2);
+            Date date = resultSet.getDate(3);
+
+            return new Stock(stockId, weight, date);
+        }
+        return null;
+    }
+
+    public static boolean delete(String stockID) throws SQLException {
+
+        String sql = "delete from stock where stockID = ?";
+
+        PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        pstm.setObject(1,stockID);
+        return pstm.executeUpdate() > 0;
+
     }
 }

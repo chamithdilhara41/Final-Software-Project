@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 
 public class OrderTm {
     private String orderId;
-    private String buyerId;
     private String Date;
 }

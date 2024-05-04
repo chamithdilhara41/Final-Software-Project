@@ -46,13 +46,12 @@ public class OrderFormController {
     public void initialize() throws SQLException {
         getAllOrders();
         setCellValueFactory();
-        getBuyerIds();
+        //getBuyerIds();
         txtDate.setText(String.valueOf(LocalDate.now()));
     }
 
     private void setCellValueFactory() {
         colOrderID.setCellValueFactory(new PropertyValueFactory<>("orderId"));
-        colBuyerID.setCellValueFactory(new PropertyValueFactory<>("buyerId"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
     }
 
@@ -63,7 +62,6 @@ public class OrderFormController {
         for ( Order order: ordersList){
             obList.add(new OrderTm(
                     order.getOrderId(),
-                    order.getBuyerId(),
                     order.getDate()
             ));
         }
@@ -78,12 +76,10 @@ public class OrderFormController {
             return;
         }
         String orderId = colOrderID.getCellData(index).toString();
-        String buyerId = colBuyerID.getCellData(index).toString();
         String date = colDate.getCellData(index).toString();
 
         txtOrderID.setText(orderId);
         txtDate.setText(date);
-        cmbBuyerId.setValue(buyerId);
     }
 
     @FXML
@@ -93,7 +89,7 @@ public class OrderFormController {
     private void clearFields() {
         txtOrderID.setText("");
         //txtDate.setText("");
-        cmbBuyerId.getSelectionModel().clearSelection();
+        //cmbBuyerId.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -116,10 +112,9 @@ public class OrderFormController {
     @FXML
     void btnOnActionSave(ActionEvent event) {
         String orderID = txtOrderID.getText();
-        String buyerId = cmbBuyerId.getValue();
         String date = txtDate.getText();
 
-        Order order = new Order(orderID, buyerId, date);
+        Order order = new Order(orderID, date);
         try {
             boolean isSaved = OrderRepo.save(order);
             if (isSaved) {
@@ -136,10 +131,9 @@ public class OrderFormController {
     @FXML
     void btnOnActionUpdate(ActionEvent event) {
         String orderID = txtOrderID.getText();
-        String buyerId = cmbBuyerId.getValue();
         String date = txtDate.getText();
 
-        Order order = new Order(orderID, buyerId, date);
+        Order order = new Order(orderID, date);
         try {
             boolean isUpdated = OrderRepo.update(order);
             if (isUpdated) {
@@ -179,7 +173,6 @@ public class OrderFormController {
         Order order = OrderRepo.searchByOrderId(orderID);
         if (order != null) {
             txtOrderID.setText(order.getOrderId());
-            cmbBuyerId.setValue(order.getBuyerId());
             txtDate.setText(order.getDate());
         }else {
             new Alert(Alert.AlertType.INFORMATION, "Order not found!").show();
@@ -187,20 +180,21 @@ public class OrderFormController {
         }
     }
 
-    private void getBuyerIds() {
-        ObservableList<String> obList = FXCollections.observableArrayList();
+//    private void getBuyerIds() {
+//        ObservableList<String> obList = FXCollections.observableArrayList();
+//
+//        try {
+//            List<String> NoList = BuyerRepo.getIds();
+//
+//            for(String No : NoList) {
+//                obList.add(No);
+//            }
+//
+//            cmbBuyerId.setItems(obList);
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
-        try {
-            List<String> NoList = BuyerRepo.getIds();
-
-            for(String No : NoList) {
-                obList.add(No);
-            }
-
-            cmbBuyerId.setItems(obList);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
