@@ -148,7 +148,7 @@ public class SupplierFormController {
                 new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
             }
             if(isSaved) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Supplier saved!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Supplier saved!").show();
                 clearFields();
                 getAllSuppliers();
                 setCellValueFactory();
@@ -182,7 +182,7 @@ public class SupplierFormController {
                 new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
             }
             if(isUpdated) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Supplier updated!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Supplier updated!").show();
                 getAllSuppliers();
                 setCellValueFactory();
             }

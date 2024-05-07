@@ -8,11 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lk.ijse.model.Vehicle;
 import lk.ijse.model.tm.VehicleTm;
 import lk.ijse.repository.VehicleRepo;
+import lk.ijse.util.Regex;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -39,6 +42,22 @@ public class VehicleFormController {
         animateLabelTyping();
         getAllVehicles();
         setCellValueFactory();
+    }
+
+    @FXML
+    void txtVehicleNoOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.VEHICLENo,txtVehicleNo);
+    }
+
+    @FXML
+    void txtVehicleTypeOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.VEHICLETYPE,txtVehicleType);
+    }
+
+    public boolean isValid(){
+        if(!Regex.setTextColor(lk.ijse.util.TextField.VEHICLENo,txtVehicleNo)) return false;
+        if(!Regex.setTextColor(lk.ijse.util.TextField.VEHICLETYPE,txtVehicleType)) return false;
+        return true;
     }
 
     @FXML
@@ -76,6 +95,8 @@ public class VehicleFormController {
                 clearFields();
                 getAllVehicles();
                 setCellValueFactory();
+            }else {
+                new Alert(Alert.AlertType.INFORMATION,"Can't find Vehicle").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR , e.getMessage()).showAndWait();
@@ -96,7 +117,12 @@ public class VehicleFormController {
         Vehicle vehicle = new Vehicle(vehicleNo, vehicleType);
 
         try {
-            boolean isSaved = VehicleRepo.save(vehicle);
+            boolean isSaved = false;
+            if (isValid()) {
+                isSaved = VehicleRepo.save(vehicle);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if(isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Vehicle saved!").show();
                 clearFields();
@@ -132,17 +158,22 @@ public class VehicleFormController {
         String vehicleType = txtVehicleType.getText();
 
         if(vehicleNo.isEmpty() || vehicleType.isEmpty()){
-            new Alert(Alert.AlertType.CONFIRMATION , "Vehicle Name & No cannot be empty").showAndWait();
+            new Alert(Alert.AlertType.INFORMATION , "Vehicle Type & No cannot be empty").showAndWait();
             return;
         }
 
         Vehicle vehicle = new Vehicle(vehicleNo, vehicleType);
 
         try {
-            boolean isUpdated = VehicleRepo.update(vehicle);
+            boolean isUpdated = false;
+            if (isValid()) {
+                isUpdated = VehicleRepo.update(vehicle);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if(isUpdated) {
                 clearFields();
-                new Alert(Alert.AlertType.CONFIRMATION, "Vehicle updated!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Vehicle updated!").show();
                 getAllVehicles();setCellValueFactory();
             }
         } catch (SQLException e) {
@@ -171,16 +202,14 @@ public class VehicleFormController {
     }
 
     private void animateLabelTyping() {
-        String loginText = lblVehiclesForm.getText(); // Text to be typed
-        int animationDuration = 250; // Duration of animation in milliseconds
+        String loginText = lblVehiclesForm.getText();
+        int animationDuration = 250;
 
-        // Set initial text of lblLogin to an empty string
         lblVehiclesForm.setText("");
 
-        // Create a Timeline for the typing animation
         Timeline typingAnimation = new Timeline();
 
-        // Add KeyFrames to gradually display the characters
+
         for (int i = 0; i <= loginText.length(); i++) {
             int finalI = i;
             KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
@@ -189,7 +218,6 @@ public class VehicleFormController {
             typingAnimation.getKeyFrames().add(keyFrame);
         }
 
-        // Play the animation
         typingAnimation.play();
     }
 }

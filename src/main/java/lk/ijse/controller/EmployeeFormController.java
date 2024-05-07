@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lk.ijse.model.Employee;
@@ -16,6 +17,8 @@ import lk.ijse.model.Vehicle;
 import lk.ijse.model.tm.EmployeeTm;
 import lk.ijse.repository.EmployeeRepo;
 import lk.ijse.repository.VehicleRepo;
+import lk.ijse.util.Regex;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -69,6 +72,41 @@ public class EmployeeFormController {
         getVehicleNos();
         getAllEmployees();
         setCellValueFactory();
+    }
+
+
+    @FXML
+    void txtEmployeeAddressOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.ADDRESS, txtEmployeeAddress);
+    }
+
+    @FXML
+    void txtEmployeeContactOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.CONTACT, txtEmployeeContact);
+    }
+
+    @FXML
+    void txtEmployeeIdOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.ID,txtEmployeeID);
+    }
+
+    @FXML
+    void txtEmployeeNameOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.NAME, txtEmployeeName);
+    }
+
+    @FXML
+    void txtEmployeeSalaryOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.SALARY, txtEmployeeSalary);
+    }
+
+    public boolean isValid(){
+        if (!Regex.setTextColor(lk.ijse.util.TextField.NAME, txtEmployeeName)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.ADDRESS, txtEmployeeAddress)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.CONTACT, txtEmployeeContact)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.ID, txtEmployeeID)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.SALARY, txtEmployeeSalary)) return false;
+        return true;
     }
 
     @FXML
@@ -125,6 +163,8 @@ public class EmployeeFormController {
                 clearFields();
                 getAllEmployees();
                 setCellValueFactory();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Can't find Employee").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -137,22 +177,27 @@ public class EmployeeFormController {
         String employeeName = txtEmployeeName.getText();
         String employeeAddress = txtEmployeeAddress.getText();
         String employeeContact = txtEmployeeContact.getText();
-        Double employeeSalary = Double.valueOf(txtEmployeeSalary.getText());
+        String employeeSalary = String.valueOf(Double.valueOf(txtEmployeeSalary.getText()));
         String vehicleNo = cmbVehicleNo.getValue();
 
         try {
             if(employeeID.isEmpty() || employeeName.isEmpty() || employeeAddress.isEmpty() || employeeContact.isEmpty() || vehicleNo.isEmpty()) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Please fill all fields!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Please fill all fields!").show();
                 return;
             }
         } catch (Exception e) {
-            new Alert(Alert.AlertType.CONFIRMATION, "Please fill all fields!").show();
+            new Alert(Alert.AlertType.INFORMATION, "Please fill all fields!").show();
         }
 
-        Employee employee = new Employee(employeeID,employeeName,employeeAddress,employeeContact,employeeSalary,vehicleNo);
+        Employee employee = new Employee(employeeID,employeeName,employeeAddress,employeeContact,Double.valueOf(employeeSalary),vehicleNo);
 
         try {
-            boolean isSaved = EmployeeRepo.save(employee);
+            boolean isSaved = false;
+            if (isValid()) {
+                isSaved = EmployeeRepo.save(employee);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Employee Saved").show();
                 clearFields();
@@ -175,16 +220,21 @@ public class EmployeeFormController {
         String vehicleNo = cmbVehicleNo.getValue();
 
         if(employeeID.isEmpty() || employeeName.isEmpty() || employeeAddress.isEmpty() || employeeContact.isEmpty()) {
-            new Alert(Alert.AlertType.CONFIRMATION, "Please fill all fields!").show();
+            new Alert(Alert.AlertType.INFORMATION, "Please fill all fields!").show();
             return;
         }
 
         Employee employee = new Employee(employeeID,employeeName,employeeAddress,employeeContact,employeeSalary,vehicleNo);
 
         try {
-            boolean isUpdated = EmployeeRepo.update(employee);
+            boolean isUpdated = false;
+            if (isValid()) {
+                isUpdated = EmployeeRepo.update(employee);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if(isUpdated) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Employee updated!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Employee updated!").show();
                 clearFields();
                 getAllEmployees();
                 setCellValueFactory();
@@ -278,25 +328,21 @@ public class EmployeeFormController {
     }
 
     private void animateLabelTyping() {
-        String loginText = lblEmployeeForm.getText(); // Text to be typed
-        int animationDuration = 250; // Duration of animation in milliseconds
+        String loginText = lblEmployeeForm.getText();
+        int animationDuration = 250;
 
-        // Set initial text of lblLogin to an empty string
         lblEmployeeForm.setText("");
 
-        // Create a Timeline for the typing animation
         Timeline typingAnimation = new Timeline();
 
-        // Add KeyFrames to gradually display the characters
         for (int i = 0; i <= loginText.length(); i++) {
             int finalI = i;
             KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
-                lblEmployeeForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+                lblEmployeeForm.setText(loginText.substring(0, finalI));
             });
             typingAnimation.getKeyFrames().add(keyFrame);
         }
 
-        // Play the animation
         typingAnimation.play();
     }
 }
