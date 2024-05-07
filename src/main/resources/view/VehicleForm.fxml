@@ -30,7 +30,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtVehicleNo" layoutX="115.0" layoutY="366.0" onAction="#txtOnActionSearch" promptText="XXX - XXXX">
+        <TextField fx:id="txtVehicleNo" layoutX="115.0" layoutY="366.0" onAction="#txtOnActionSearch" promptText="XXX - XXXX" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -40,7 +40,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtVehicleType" layoutX="505.0" layoutY="367.0" prefHeight="26.0" prefWidth="214.0">
+        <TextField fx:id="txtVehicleType" layoutX="505.0" layoutY="367.0" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>

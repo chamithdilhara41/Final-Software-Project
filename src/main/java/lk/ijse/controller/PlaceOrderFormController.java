@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import lk.ijse.animation.AnimationUtil;
 import lk.ijse.model.*;
 import lk.ijse.model.tm.OrderCartTm;
 import lk.ijse.repository.BuyerRepo;
@@ -180,7 +181,7 @@ public class PlaceOrderFormController {
         // Add the loaded content to the main pane
         mainPane.getChildren().clear();
         mainPane.getChildren().add(contentPane);
-        MainFormController.AnimationUtil.popUpAnimation(mainPane,contentPane);
+       AnimationUtil.popUpAnimation(mainPane,contentPane);
 
     }
 

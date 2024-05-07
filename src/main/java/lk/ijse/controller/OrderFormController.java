@@ -1,6 +1,8 @@
 package lk.ijse.controller;
 
 import com.jfoenix.controls.JFXComboBox;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import lk.ijse.model.Buyer;
 import lk.ijse.model.Order;
 import lk.ijse.model.tm.OrderTm;
@@ -18,6 +21,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class OrderFormController {
+
+    public Label lblOrderForm;
 
     @FXML
     private JFXComboBox<String> cmbBuyerId;
@@ -46,8 +51,9 @@ public class OrderFormController {
     public void initialize() throws SQLException {
         getAllOrders();
         setCellValueFactory();
+        animateLabelTyping();
         //getBuyerIds();
-        txtDate.setText(String.valueOf(LocalDate.now()));
+        //txtDate.setText(String.valueOf(LocalDate.now()));
     }
 
     private void setCellValueFactory() {
@@ -180,6 +186,28 @@ public class OrderFormController {
         }
     }
 
+    private void animateLabelTyping() {
+        String loginText = lblOrderForm.getText(); // Text to be typed
+        int animationDuration = 250; // Duration of animation in milliseconds
+
+        // Set initial text of lblLogin to an empty string
+        lblOrderForm.setText("");
+
+        // Create a Timeline for the typing animation
+        Timeline typingAnimation = new Timeline();
+
+        // Add KeyFrames to gradually display the characters
+        for (int i = 0; i <= loginText.length(); i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
+                lblOrderForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+            });
+            typingAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        // Play the animation
+        typingAnimation.play();
+    }
 //    private void getBuyerIds() {
 //        ObservableList<String> obList = FXCollections.observableArrayList();
 //

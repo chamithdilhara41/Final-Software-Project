@@ -28,52 +28,52 @@
             <TableColumn fx:id="colSupplierGender" prefWidth="148.80010986328125" text="Supplier Gender" />
         </columns>
       </TableView>
-      <Label layoutX="29.0" layoutY="350.0" prefHeight="20.0" prefWidth="85.0" text="Supplier ID :-">
+      <Label layoutX="29.0" layoutY="358.0" prefHeight="20.0" prefWidth="85.0" text="Supplier ID :-">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierID" layoutX="115.0" layoutY="346.0" onAction="#txtOnActionSearch">
+      <TextField fx:id="txtSupplierID" layoutX="115.0" layoutY="354.0" onAction="#txtOnActionSearch" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="406.0" layoutY="351.0" prefHeight="20.0" prefWidth="111.0" text="Supplier Name :-">
+      <Label layoutX="406.0" layoutY="359.0" prefHeight="20.0" prefWidth="111.0" text="Supplier Name :-">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierName" layoutX="517.0" layoutY="347.0" prefHeight="26.0" prefWidth="214.0">
+      <TextField fx:id="txtSupplierName" layoutX="517.0" layoutY="355.0" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="29.0" layoutY="412.0" prefHeight="20.0" prefWidth="124.0" text="Supplier Address :-">
+      <Label layoutX="29.0" layoutY="420.0" prefHeight="20.0" prefWidth="124.0" text="Supplier Address :-">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierAddress" layoutX="152.0" layoutY="408.0" prefHeight="26.0" prefWidth="214.0">
+      <TextField fx:id="txtSupplierAddress" layoutX="152.0" layoutY="416.0" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="406.0" layoutY="412.0" prefHeight="20.0" prefWidth="124.0" text="Supplier Contact :-">
+      <Label layoutX="406.0" layoutY="420.0" prefHeight="20.0" prefWidth="124.0" text="Supplier Contact :-">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierContact" layoutX="529.0" layoutY="408.0" prefHeight="26.0" prefWidth="214.0">
+      <TextField fx:id="txtSupplierContact" layoutX="529.0" layoutY="416.0" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="29.0" layoutY="477.0" prefHeight="20.0" prefWidth="78.0" text="Gender :-">
+      <Label layoutX="29.0" layoutY="485.0" prefHeight="20.0" prefWidth="78.0" text="Gender :-">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierGender" layoutX="105.0" layoutY="472.0" prefHeight="30.0" prefWidth="111.0" promptText="Male or Female">
+      <TextField fx:id="txtSupplierGender" layoutX="105.0" layoutY="480.0" prefHeight="30.0" prefWidth="111.0" promptText="Male or Female" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>

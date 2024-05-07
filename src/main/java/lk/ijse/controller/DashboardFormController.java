@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.animation.AnimationUtil;
 import lk.ijse.db.DbConnection;
 
 import java.awt.event.ActionEvent;
@@ -115,6 +116,6 @@ public class DashboardFormController {
         // Add the loaded content to the main pane
         mainPane.getChildren().clear();
         mainPane.getChildren().add(contentPane);
-        MainFormController.AnimationUtil.popUpAnimation(mainPane, contentPane);
+        AnimationUtil.popUpAnimation(mainPane, contentPane);
     }
 }

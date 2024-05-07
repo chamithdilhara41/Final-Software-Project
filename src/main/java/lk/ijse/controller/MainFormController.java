@@ -1,6 +1,5 @@
 package lk.ijse.controller;
 
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +17,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import lk.ijse.animation.AnimationUtil;
 
 public class MainFormController {
 
@@ -178,15 +178,5 @@ public class MainFormController {
         clock.play();
     }
 
-    public static class AnimationUtil {
 
-        public static void popUpAnimation(AnchorPane stage, Parent rootNode) {
-
-            // Implement your right back animation logic here
-            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), rootNode);
-            translateTransition.setFromX(+rootNode.getBoundsInLocal().getWidth());
-            translateTransition.setToX(0);
-            translateTransition.play();
-        }
-    }
 }

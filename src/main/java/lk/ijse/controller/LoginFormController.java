@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lk.ijse.animation.AnimationUtil;
 import lk.ijse.db.DbConnection;
 import java.io.IOException;
 import java.sql.Connection;
@@ -78,29 +79,13 @@ public class LoginFormController {
 
         // Get the Stage from the current window
         Stage stage = (Stage) txtPasswordLogin.getScene().getWindow();
-        AnimationUtil.popUpAnimation(stage, rootNode);
+        AnimationUtil.popUpAnimation1(stage, rootNode);
         // Set the new scene to the stage
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.setTitle("Main Form (Tea leaves Management System)");
     }
-    public static class AnimationUtil {
 
-        public static void popUpAnimation(Stage stage, Parent rootNode) {
-
-            stage.setHeight(792);
-            stage.setWidth(1164);
-
-            // Implement your pop-up animation logic here
-            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), rootNode);
-            translateTransition.setFromY(-rootNode.getBoundsInLocal().getHeight());
-            translateTransition.setToY(0);
-            translateTransition.play();
-
-            // Show the stage after animation
-            stage.show();
-        }
-    }
 
     @FXML
     void hyperOnActionForgetPassword(ActionEvent event) throws IOException {

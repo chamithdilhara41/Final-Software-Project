@@ -32,7 +32,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtStockID" layoutX="103.0" layoutY="385.0" onAction="#txtOnActionSearch" prefHeight="30.0" prefWidth="190.0">
+        <TextField fx:id="txtStockID" layoutX="103.0" layoutY="385.0" onAction="#txtOnActionSearch" prefHeight="30.0" prefWidth="190.0" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -58,7 +58,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtWeight" layoutX="448.0" layoutY="445.0" prefHeight="30.0" prefWidth="133.0">
+      <TextField fx:id="txtWeight" layoutX="448.0" layoutY="445.0" prefHeight="30.0" prefWidth="133.0" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>
@@ -68,7 +68,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtDate" layoutX="404.0" layoutY="511.0" onAction="#txtOnActionSearch" prefHeight="30.0" prefWidth="133.0">
+      <TextField fx:id="txtDate" layoutX="404.0" layoutY="511.0" onAction="#txtOnActionSearch" prefHeight="30.0" prefWidth="133.0" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>
@@ -140,7 +140,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSuppliersStockID" layoutX="578.0" layoutY="348.0" onAction="#txtOnActionSearchSuppliers" prefHeight="30.0" prefWidth="142.0" promptText="Search for Suppliers">
+      <TextField fx:id="txtSuppliersStockID" layoutX="578.0" layoutY="348.0" onAction="#txtOnActionSearchSuppliers" prefHeight="30.0" prefWidth="142.0" promptText="Search for Suppliers" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>

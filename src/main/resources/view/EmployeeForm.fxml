@@ -35,7 +35,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtEmployeeID" layoutX="124.0" layoutY="346.0" onAction="#txtOnActionSearch">
+        <TextField fx:id="txtEmployeeID" layoutX="124.0" layoutY="346.0" onAction="#txtOnActionSearch" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -45,7 +45,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtEmployeeName" layoutX="552.0" layoutY="347.0" prefHeight="26.0" prefWidth="214.0">
+        <TextField fx:id="txtEmployeeName" layoutX="552.0" layoutY="347.0" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -55,7 +55,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtEmployeeAddress" layoutX="158.0" layoutY="408.0" prefHeight="30.0" prefWidth="208.0">
+        <TextField fx:id="txtEmployeeAddress" layoutX="158.0" layoutY="408.0" prefHeight="30.0" prefWidth="208.0" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -65,7 +65,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtEmployeeContact" layoutX="559.0" layoutY="408.0" prefHeight="26.0" prefWidth="214.0">
+        <TextField fx:id="txtEmployeeContact" layoutX="559.0" layoutY="408.0" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -75,7 +75,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtEmployeeSalary" layoutX="131.0" layoutY="472.0" prefHeight="30.0" prefWidth="111.0" promptText="Rs. XXXXXX">
+        <TextField fx:id="txtEmployeeSalary" layoutX="131.0" layoutY="472.0" prefHeight="30.0" prefWidth="111.0" promptText="Rs. XXXXXX" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
