@@ -8,11 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lk.ijse.model.Buyer;
 import lk.ijse.model.tm.BuyerTm;
 import lk.ijse.repository.BuyerRepo;
+import lk.ijse.util.Regex;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -58,6 +61,40 @@ public class BuyerFormController {
         animateLabelTyping();
         getAllBuyers();
         setCellValueFactory();
+    }
+
+    @FXML
+    void txtBuyerAddressOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.ADDRESS, txtBuyerAddress);
+    }
+
+    @FXML
+    void txtBuyerIdOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.ID, txtBuyerID);
+    }
+
+    @FXML
+    void txtBuyerManagerContactOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.CONTACT, txtBuyerContactManager);
+    }
+
+    @FXML
+    void txtBuyerNameOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.NAME, txtBuyerName);
+    }
+
+    @FXML
+    void txtBuyerOfficeContactOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.CONTACT, txtBuyerContactOffice);
+    }
+
+    public boolean isValid(){
+        if (!Regex.setTextColor(lk.ijse.util.TextField.ID,txtBuyerID)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.NAME,txtBuyerName)) return false;
+        if(!Regex.setTextColor(lk.ijse.util.TextField.ADDRESS,txtBuyerAddress)) return false;
+        if(!Regex.setTextColor(lk.ijse.util.TextField.CONTACT,txtBuyerContactManager)) return false;
+        if(!Regex.setTextColor(lk.ijse.util.TextField.CONTACT,txtBuyerContactOffice)) return false;
+        return true;
     }
 
     private void setCellValueFactory() {
@@ -121,9 +158,11 @@ public class BuyerFormController {
         try {
             boolean isDeleted = BuyerRepo.delete(buyerID);
             if (isDeleted){
-                new Alert(Alert.AlertType.CONFIRMATION,"Buyer deleted").show();
+                new Alert(Alert.AlertType.INFORMATION,"Buyer deleted").show();
                 getAllBuyers();
                 setCellValueFactory();
+            }else {
+                new Alert(Alert.AlertType.INFORMATION, "Can't find Buyer").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
@@ -140,16 +179,21 @@ public class BuyerFormController {
         String buyerContactManager = txtBuyerContactManager.getText();
 
         if(buyerID.isEmpty() || buyerName.isEmpty() || buyerAddress.isEmpty() || buyerContactOffice.isEmpty() || buyerContactManager.isEmpty()){
-            new Alert(Alert.AlertType.CONFIRMATION,"Please fill all the fields").show();
+            new Alert(Alert.AlertType.INFORMATION,"Please fill all the fields").show();
             return;
         }
 
         Buyer buyer = new Buyer(buyerID, buyerName, buyerAddress, buyerContactOffice, buyerContactManager);
 
         try {
-            boolean isSaved = BuyerRepo.save(buyer);
+            boolean isSaved = false;
+            if (isValid()) {
+                isSaved = BuyerRepo.save(buyer);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if(isSaved) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Buyer saved!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Buyer saved!").show();
                 clearFields();
                 getAllBuyers();
                 setCellValueFactory();
@@ -183,7 +227,12 @@ public class BuyerFormController {
         Buyer buyer = new Buyer(buyerID, buyerName, buyerAddress, buyerContactOffice, buyerContactManager);
 
         try {
-            boolean isUpdated = BuyerRepo.update(buyer);
+            boolean isUpdated = false;
+            if (isValid()) {
+                isUpdated = BuyerRepo.update(buyer);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if(isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Buyer updated!").show();
                 clearFields();
@@ -216,25 +265,21 @@ public class BuyerFormController {
     }
 
     private void animateLabelTyping() {
-        String loginText = lblBuyerForm.getText(); // Text to be typed
-        int animationDuration = 250; // Duration of animation in milliseconds
+        String loginText = lblBuyerForm.getText();
+        int animationDuration = 250;
 
-        // Set initial text of lblLogin to an empty string
         lblBuyerForm.setText("");
 
-        // Create a Timeline for the typing animation
         Timeline typingAnimation = new Timeline();
 
-        // Add KeyFrames to gradually display the characters
         for (int i = 0; i <= loginText.length(); i++) {
             int finalI = i;
             KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
-                lblBuyerForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+                lblBuyerForm.setText(loginText.substring(0, finalI));
             });
             typingAnimation.getKeyFrames().add(keyFrame);
         }
 
-        // Play the animation
         typingAnimation.play();
     }
 }

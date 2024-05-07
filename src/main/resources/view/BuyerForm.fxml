@@ -33,7 +33,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtBuyerID" layoutX="103.0" layoutY="346.0" onAction="#txtOnActionSearch" style="-fx-background-radius: 15 15 15 15;">
+        <TextField fx:id="txtBuyerID" layoutX="103.0" layoutY="346.0" onAction="#txtOnActionSearch" onKeyReleased="#txtBuyerIdOnKeyReleased" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -43,7 +43,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtBuyerName" layoutX="507.0" layoutY="347.0" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
+        <TextField fx:id="txtBuyerName" layoutX="507.0" layoutY="347.0" onKeyReleased="#txtBuyerNameOnKeyReleased" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -53,7 +53,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtBuyerAddress" layoutX="142.0" layoutY="408.0" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
+        <TextField fx:id="txtBuyerAddress" layoutX="142.0" layoutY="408.0" onKeyReleased="#txtBuyerAddressOnKeyReleased" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -63,7 +63,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtBuyerContactOffice" layoutX="519.0" layoutY="407.0" prefHeight="26.0" prefWidth="214.0" promptText="Office" style="-fx-background-radius: 15 15 15 15;">
+        <TextField fx:id="txtBuyerContactOffice" layoutX="519.0" layoutY="407.0" onKeyReleased="#txtBuyerOfficeContactOnKeyReleased" prefHeight="26.0" prefWidth="214.0" promptText="Office" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -141,7 +141,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtBuyerContactManager" layoutX="146.0" layoutY="471.0" prefHeight="26.0" prefWidth="214.0" promptText="Manager" style="-fx-background-radius: 15 15 15 15;">
+      <TextField fx:id="txtBuyerContactManager" layoutX="146.0" layoutY="471.0" onKeyReleased="#txtBuyerManagerContactOnKeyReleased" prefHeight="26.0" prefWidth="214.0" promptText="Manager" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>

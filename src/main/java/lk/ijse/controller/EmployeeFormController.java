@@ -140,9 +140,13 @@ public class EmployeeFormController {
         Double employeeSalary = Double.valueOf(txtEmployeeSalary.getText());
         String vehicleNo = cmbVehicleNo.getValue();
 
-        if(employeeID.isEmpty() || employeeName.isEmpty() || employeeAddress.isEmpty() || employeeContact.isEmpty()) {
+        try {
+            if(employeeID.isEmpty() || employeeName.isEmpty() || employeeAddress.isEmpty() || employeeContact.isEmpty() || vehicleNo.isEmpty()) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Please fill all fields!").show();
+                return;
+            }
+        } catch (Exception e) {
             new Alert(Alert.AlertType.CONFIRMATION, "Please fill all fields!").show();
-            return;
         }
 
         Employee employee = new Employee(employeeID,employeeName,employeeAddress,employeeContact,employeeSalary,vehicleNo);

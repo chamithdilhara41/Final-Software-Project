@@ -161,17 +161,17 @@
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="441.0" layoutY="413.0" prefHeight="20.0" prefWidth="97.0" text="Buyer Name  :-">
+      <Label layoutX="441.0" layoutY="413.0" prefHeight="20.0" prefWidth="97.0" text="Buyer Name  :-" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="440.0" layoutY="431.0" prefHeight="20.0" prefWidth="97.0" text="(Tea factory)">
+      <Label layoutX="440.0" layoutY="431.0" prefHeight="20.0" prefWidth="97.0" text="(Tea factory)" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblBuyerName" layoutX="539.0" layoutY="413.0" prefHeight="20.0" prefWidth="366.0">
+      <Label fx:id="lblBuyerName" layoutX="539.0" layoutY="413.0" prefHeight="20.0" prefWidth="366.0" visible="false">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>

@@ -1,5 +1,6 @@
 package lk.ijse.controller;
 
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -8,11 +9,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lk.ijse.model.Supplier;
 import lk.ijse.model.tm.SupplierTm;
 import lk.ijse.repository.SupplierRepo;
+import lk.ijse.util.Regex;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -59,6 +63,41 @@ public class SupplierFormController {
     }
 
     @FXML
+    void txtGenderOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.GENDER, txtSupplierGender);
+    }
+
+    @FXML
+    void txtSupplierAddressOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.ADDRESS, txtSupplierAddress);
+    }
+
+    @FXML
+    void txtSupplierContactOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.CONTACT, txtSupplierContact);
+    }
+
+    @FXML
+    void txtSupplierIdOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.ID,txtSupplierID);
+    }
+
+    @FXML
+    void txtSupplierNameOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.NAME,txtSupplierName);
+    }
+
+    public boolean isValid(){
+        if (!Regex.setTextColor(lk.ijse.util.TextField.ID,txtSupplierID)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.GENDER,txtSupplierGender)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.ADDRESS,txtSupplierAddress)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.CONTACT,txtSupplierContact)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.NAME,txtSupplierName)) return false;
+        return true;
+    }
+
+
+    @FXML
     void btnOnActionClear(ActionEvent event) {
         clearFields();
     }
@@ -78,6 +117,8 @@ public class SupplierFormController {
                 new Alert(Alert.AlertType.CONFIRMATION, "Supplier deleted!").show();
                 getAllSuppliers();
                 setCellValueFactory();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Can't find Supplier").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -93,14 +134,19 @@ public class SupplierFormController {
         String supplierGender = txtSupplierGender.getText();
 
         if(supplierID.isEmpty() || supplierName.isEmpty() || supplierAddress.isEmpty() || supplierContact.isEmpty() || supplierGender.isEmpty()) {
-            new Alert(Alert.AlertType.CONFIRMATION, "Supplier name or address or contact is empty!").show();
+            new Alert(Alert.AlertType.INFORMATION, "Supplier name or address or contact is empty!").show();
             return;
         }
 
         Supplier supplier = new Supplier(supplierID, supplierName, supplierAddress, supplierContact, supplierGender);
 
         try {
-            boolean isSaved = SupplierRepo.save(supplier);
+            boolean isSaved = false;
+            if (isValid()) {
+                isSaved = SupplierRepo.save(supplier);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if(isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Supplier saved!").show();
                 clearFields();
@@ -122,14 +168,19 @@ public class SupplierFormController {
         String supplierGender = txtSupplierGender.getText();
 
         if(supplierID.isEmpty() || supplierName.isEmpty() || supplierAddress.isEmpty() || supplierContact.isEmpty() || supplierGender.isEmpty()) {
-            new Alert(Alert.AlertType.CONFIRMATION, "Supplier name or address or contact is empty!").show();
+            new Alert(Alert.AlertType.CONFIRMATION, "Please fill all the fields").show();
             return;
         }
 
         Supplier supplier = new Supplier(supplierID, supplierName, supplierAddress, supplierContact, supplierGender);
 
         try {
-            boolean isUpdated = SupplierRepo.update(supplier);
+            boolean isUpdated = false;
+            if (isValid()) {
+                isUpdated = SupplierRepo.update(supplier);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if(isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Supplier updated!").show();
                 getAllSuppliers();
@@ -212,25 +263,21 @@ public class SupplierFormController {
     }
 
     private void animateLabelTyping() {
-        String loginText = lblSupplierForm.getText(); // Text to be typed
-        int animationDuration = 250; // Duration of animation in milliseconds
+        String loginText = lblSupplierForm.getText();
+        int animationDuration = 250;
 
-        // Set initial text of lblLogin to an empty string
         lblSupplierForm.setText("");
 
-        // Create a Timeline for the typing animation
         Timeline typingAnimation = new Timeline();
 
-        // Add KeyFrames to gradually display the characters
         for (int i = 0; i <= loginText.length(); i++) {
             int finalI = i;
             KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
-                lblSupplierForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+                lblSupplierForm.setText(loginText.substring(0, finalI));
             });
             typingAnimation.getKeyFrames().add(keyFrame);
         }
 
-        // Play the animation
         typingAnimation.play();
     }
 }

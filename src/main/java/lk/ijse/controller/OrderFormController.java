@@ -1,5 +1,6 @@
 package lk.ijse.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -7,28 +8,50 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import lk.ijse.animation.AnimationUtil;
 import lk.ijse.model.Buyer;
 import lk.ijse.model.Order;
+import lk.ijse.model.tm.OrderStockTm;
 import lk.ijse.model.tm.OrderTm;
 import lk.ijse.repository.BuyerRepo;
 import lk.ijse.repository.OrderRepo;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
 public class OrderFormController {
 
+
+    @FXML
+    private AnchorPane mainPane; // Define mainPane variable and annotate with @FXML
+
+    @FXML
+    private JFXButton btnPlaceOrder;
+
     public Label lblOrderForm;
 
     @FXML
-    private JFXComboBox<String> cmbBuyerId;
+    private TableView<OrderStockTm> tblOrderStock;
+
+    @FXML
+    private TableColumn<?, ?> colOrderIDStockID;
+
+    @FXML
+    private TableColumn<?, ?> colStockID;
 
     @FXML
     private TableColumn<?, ?> colBuyerID;
+
+    @FXML
+    private JFXComboBox<String> cmbBuyerId;
 
     @FXML
     private TableColumn<?, ?> colDate;
@@ -50,13 +73,34 @@ public class OrderFormController {
 
     public void initialize() throws SQLException {
         getAllOrders();
-        setCellValueFactory();
+        setCellValueFactoryOrders();
         animateLabelTyping();
+        getAllOrderStocks();
+        setCellValueFactoryOrderStock();
         //getBuyerIds();
         //txtDate.setText(String.valueOf(LocalDate.now()));
     }
 
-    private void setCellValueFactory() {
+    private void getAllOrderStocks() throws SQLException {
+        ObservableList<OrderStockTm> obList = FXCollections.observableArrayList();
+        List<OrderStockTm> OrderStockList = OrderRepo.getAllOrderStocks();
+        for ( OrderStockTm OrderStock: OrderStockList){
+            obList.add(new OrderStockTm(
+                    OrderStock.getStockID(),
+                    OrderStock.getOrderID(),
+                    OrderStock.getBuyerID()
+            ));
+        }
+        tblOrderStock.setItems(obList);
+    }
+
+    private void setCellValueFactoryOrderStock() {
+        colStockID.setCellValueFactory(new PropertyValueFactory<>("stockID"));
+        colOrderIDStockID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
+        colBuyerID.setCellValueFactory(new PropertyValueFactory<>("buyerID"));
+    }
+
+    private void setCellValueFactoryOrders() {
         colOrderID.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
     }
@@ -76,16 +120,7 @@ public class OrderFormController {
 
     @FXML
     void OnMouseClicked(MouseEvent event) {
-        int index = tblOrder.getSelectionModel().getSelectedIndex();
 
-        if (index <= -1){
-            return;
-        }
-        String orderId = colOrderID.getCellData(index).toString();
-        String date = colDate.getCellData(index).toString();
-
-        txtOrderID.setText(orderId);
-        txtDate.setText(date);
     }
 
     @FXML
@@ -98,92 +133,19 @@ public class OrderFormController {
         //cmbBuyerId.getSelectionModel().clearSelection();
     }
 
-    @FXML
-    void btnOnActionDelete(ActionEvent event) {
-        String orderID = txtOrderID.getText();
+    public void btnOnActionPlaceOrder(javafx.event.ActionEvent actionEvent) throws IOException {
+//        AnchorPane dashboardPane = FXMLLoader.load(getClass().getResource("/view/PlaceOrderForm.fxml"));
+//
+//        mainPane.getChildren().clear();
+//        mainPane.getChildren().add(dashboardPane);
 
-        try {
-            boolean isDeleted = OrderRepo.delete(orderID);
-            if (isDeleted) {
-                new Alert(Alert.AlertType.INFORMATION, "Order Deleted").show();
-                clearFields();
-                getAllOrders();
-                setCellValueFactory();
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
-    }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlaceOrderForm.fxml"));
+        AnchorPane contentPane = loader.load();
 
-    @FXML
-    void btnOnActionSave(ActionEvent event) {
-        String orderID = txtOrderID.getText();
-        String date = txtDate.getText();
-
-        Order order = new Order(orderID, date);
-        try {
-            boolean isSaved = OrderRepo.save(order);
-            if (isSaved) {
-                new Alert(Alert.AlertType.INFORMATION, "Order Saved", ButtonType.OK).show();
-                clearFields();
-                getAllOrders();
-                setCellValueFactory();
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
-    }
-
-    @FXML
-    void btnOnActionUpdate(ActionEvent event) {
-        String orderID = txtOrderID.getText();
-        String date = txtDate.getText();
-
-        Order order = new Order(orderID, date);
-        try {
-            boolean isUpdated = OrderRepo.update(order);
-            if (isUpdated) {
-                new Alert(Alert.AlertType.INFORMATION, "Order Updated", ButtonType.OK).show();
-                clearFields();
-                getAllOrders();
-                setCellValueFactory();
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
-    }
-
-    @FXML
-    void cmbBuyerIdOnAction(ActionEvent event) {
-        String No = cmbBuyerId.getValue();
-        try {
-            Buyer buyer = BuyerRepo.searchByBuyerIdForOrder(No);
-
-            if (buyer != null) {
-                lblBuyerName.setText(buyer.getBuyerName());
-            } else {
-                // Handle case when vehicle is not found
-                lblBuyerName.setText("");
-            }
-
-        } catch (SQLException e) {
-            // Handle any SQLException that might occur during the search
-            new Alert(Alert.AlertType.ERROR, "Error occurred while searching for buyer: " + e.getMessage()).show();
-        }
-    }
-
-    @FXML
-    void txtOnActionSearch(ActionEvent event) throws SQLException {
-        String orderID = txtOrderID.getText();
-
-        Order order = OrderRepo.searchByOrderId(orderID);
-        if (order != null) {
-            txtOrderID.setText(order.getOrderId());
-            txtDate.setText(order.getDate());
-        }else {
-            new Alert(Alert.AlertType.INFORMATION, "Order not found!").show();
-            cmbBuyerId.getSelectionModel().clearSelection();
-        }
+        // Add the loaded content to the main pane
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(contentPane);
+        AnimationUtil.popUpAnimation(mainPane, contentPane);
     }
 
     private void animateLabelTyping() {

@@ -25,11 +25,7 @@ public class DashboardFormController {
     private int buyerCount;
 
 
-    @FXML
-    private AnchorPane mainPane; // Define mainPane variable and annotate with @FXML
 
-    @FXML
-    private JFXButton btnPlaceOrder;
 
     @FXML
     private Label lblEmployeeCount;
@@ -104,18 +100,5 @@ public class DashboardFormController {
     }
 
 
-    public void btnOnActionPlaceOrder(javafx.event.ActionEvent actionEvent) throws IOException {
-//        AnchorPane dashboardPane = FXMLLoader.load(getClass().getResource("/view/PlaceOrderForm.fxml"));
-//
-//        mainPane.getChildren().clear();
-//        mainPane.getChildren().add(dashboardPane);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlaceOrderForm.fxml"));
-        AnchorPane contentPane = loader.load();
-
-        // Add the loaded content to the main pane
-        mainPane.getChildren().clear();
-        mainPane.getChildren().add(contentPane);
-        AnimationUtil.popUpAnimation(mainPane, contentPane);
-    }
 }

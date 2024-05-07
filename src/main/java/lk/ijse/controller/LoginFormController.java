@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import lk.ijse.animation.AnimationUtil;
 import lk.ijse.db.DbConnection;
@@ -24,6 +25,7 @@ import java.sql.SQLException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import lk.ijse.util.Regex;
 
 
 public class LoginFormController {
@@ -43,10 +45,24 @@ public class LoginFormController {
     }
 
     @FXML
+    void txtUsernameOnKeyReleased(KeyEvent event) {
+        Regex.setTextColorLogin(lk.ijse.util.TextField.USERNAME,txtUsernameLogin);
+    }
+
+    @FXML
+    void txtPasswordOnKeyReleased(KeyEvent event) {
+        Regex.setTextColorLogin(lk.ijse.util.TextField.PASSWORD,txtPasswordLogin);
+    }
+
+    @FXML
     void btnLoginOnAction() throws SQLException, IOException {
 
         String usernameLogin = txtUsernameLogin.getText();
         String passwordLogin = txtPasswordLogin.getText();
+
+        if (usernameLogin.isEmpty() || passwordLogin.isEmpty()) {
+            new Alert(Alert.AlertType.CONFIRMATION,"please fill all.....");
+        }
 
         String sql = "SELECT username,password FROM users WHERE username = ?";
 

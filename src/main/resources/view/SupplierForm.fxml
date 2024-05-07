@@ -33,7 +33,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierID" layoutX="115.0" layoutY="354.0" onAction="#txtOnActionSearch" style="-fx-background-radius: 15 15 15 15;">
+      <TextField fx:id="txtSupplierID" layoutX="115.0" layoutY="354.0" onAction="#txtOnActionSearch" onKeyReleased="#txtSupplierIdOnKeyReleased" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>
@@ -43,7 +43,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierName" layoutX="517.0" layoutY="355.0" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
+      <TextField fx:id="txtSupplierName" layoutX="517.0" layoutY="355.0" onKeyReleased="#txtSupplierNameOnKeyReleased" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>
@@ -53,7 +53,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierAddress" layoutX="152.0" layoutY="416.0" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
+      <TextField fx:id="txtSupplierAddress" layoutX="152.0" layoutY="416.0" onKeyReleased="#txtSupplierAddressOnKeyReleased" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>
@@ -63,7 +63,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierContact" layoutX="529.0" layoutY="416.0" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
+      <TextField fx:id="txtSupplierContact" layoutX="529.0" layoutY="416.0" onKeyReleased="#txtSupplierContactOnKeyReleased" prefHeight="26.0" prefWidth="214.0" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>
@@ -73,7 +73,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierGender" layoutX="105.0" layoutY="480.0" prefHeight="30.0" prefWidth="111.0" promptText="Male or Female" style="-fx-background-radius: 15 15 15 15;">
+      <TextField fx:id="txtSupplierGender" layoutX="105.0" layoutY="480.0" onKeyReleased="#txtGenderOnKeyReleased" prefHeight="30.0" prefWidth="111.0" promptText="Male or Female" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>

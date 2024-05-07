@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class AnimationUtil {
+
     public static void popUpAnimation(AnchorPane stage, Parent rootNode) {
 
         // Implement your right back animation logic here

@@ -93,13 +93,5 @@
             <DropShadow />
          </effect>
       </AnchorPane>
-      <JFXButton fx:id="btnPlaceOrder" buttonType="RAISED" layoutX="236.0" layoutY="596.0" onAction="#btnOnActionPlaceOrder" prefHeight="46.0" prefWidth="166.0" text="Place Order">
-         <font>
-            <Font name="System Bold Italic" size="24.0" />
-         </font>
-         <effect>
-            <Shadow />
-         </effect>
-      </JFXButton>
     </children>
 </AnchorPane>

@@ -4,6 +4,7 @@ import lk.ijse.db.DbConnection;
 import lk.ijse.model.Buyer;
 import lk.ijse.model.Employee;
 import lk.ijse.model.Order;
+import lk.ijse.model.tm.OrderStockTm;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,20 +45,6 @@ public class OrderRepo {
         return pstm.executeUpdate() > 0;
     }
 
-    public static Order searchByOrderId(String orderID) throws SQLException {
-        String sql = "SELECT * FROM orders WHERE orderId = ?;";
-
-        PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
-        pstm.setObject(1, orderID);
-        ResultSet resultSet = pstm.executeQuery();
-        if (resultSet.next()) {
-            String orderId = resultSet.getString(1);
-            String date = String.valueOf(resultSet.getDate(2));
-
-            return new Order(orderId,date);
-        }
-        return null;
-    }
 
     public static List<Order> getAll() throws SQLException {
         Connection con = DbConnection.getInstance().getConnection();
@@ -102,5 +89,22 @@ public class OrderRepo {
             return orderId;
         }
         return null;
+    }
+
+    public static List<OrderStockTm> getAllOrderStocks() throws SQLException {
+        Connection con = DbConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM ordersstockinfo";
+
+        List<OrderStockTm> data = new ArrayList<>();
+
+        ResultSet resultSet = con.createStatement().executeQuery(sql);
+        while (resultSet.next()) {
+            data.add(new OrderStockTm(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3)
+            ));
+        }
+        return data;
     }
 }
