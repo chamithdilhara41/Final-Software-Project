@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lk.ijse.model.Buyer;
@@ -17,6 +18,7 @@ import lk.ijse.model.tm.TransactionTm;
 import lk.ijse.repository.BuyerRepo;
 import lk.ijse.repository.OrderRepo;
 import lk.ijse.repository.TransactionRepo;
+import lk.ijse.util.Regex;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -81,6 +83,36 @@ public class TransactionFormController {
         getOrderIds();
         getPaymentMethods();
         txtDate.setText(String.valueOf(LocalDate.now()));
+    }
+
+
+    @FXML
+    void txtAccountNoOnKeyReleased(KeyEvent event) {
+Regex.setTextColor(lk.ijse.util.TextField.ACCOUNTNo,txtAccountNo);
+    }
+
+    @FXML
+    void txtAmountOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.AMOUNT,txtAmount);
+    }
+
+    @FXML
+    void txtDateOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.DATE,txtDate);
+    }
+
+
+    @FXML
+    void txtTransectionIdOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.ID,txtTransactionID);
+    }
+
+    public boolean isValid(){
+        if (!Regex.setTextColor(lk.ijse.util.TextField.ACCOUNTNo,txtAccountNo)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.AMOUNT,txtAmount)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.DATE,txtDate)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.ID,txtTransactionID)) return false;
+        return true;
     }
 
     private void getAllTransactions() throws SQLException {
@@ -182,15 +214,24 @@ public class TransactionFormController {
         String date = txtDate.getText();
         String paymentMethod = cmbPaymentMethod.getValue();
 
-        if (transactionID.isEmpty() || orderID.isEmpty() || accountNo.isEmpty() || description.isEmpty() || amount.describeConstable().isEmpty() || date.isEmpty() || paymentMethod.isEmpty()) {
-            new Alert(Alert.AlertType.INFORMATION,"Please fill all the fields").show();
-            return;
+        try {
+            if (transactionID.isEmpty() || orderID.isEmpty() || accountNo.isEmpty() || description.isEmpty() || amount.describeConstable().isEmpty() || date.isEmpty() || paymentMethod.isEmpty()) {
+                new Alert(Alert.AlertType.INFORMATION,"Please fill all the fields").show();
+                return;
+            }
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.INFORMATION,"Please fill all fields!").show();
         }
 
         Transaction transaction = new Transaction(transactionID, orderID, accountNo, description, amount, date, paymentMethod);
 
         try {
-            boolean isSaved = TransactionRepo.save(transaction);
+            boolean isSaved = false;
+            if (isValid()) {
+                isSaved = TransactionRepo.save(transaction);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if(isSaved){
                 new Alert(Alert.AlertType.INFORMATION, "Transaction Saved").show();
                 clearFields();
@@ -212,15 +253,24 @@ public class TransactionFormController {
         String date = txtDate.getText();
         String paymentMethod = cmbPaymentMethod.getValue();
 
-        if (transactionID.isEmpty() || orderID.isEmpty() || accountNo.isEmpty() || description.isEmpty() || amount.describeConstable().isEmpty() || date.isEmpty() || paymentMethod.isEmpty()) {
-            new Alert(Alert.AlertType.INFORMATION,"Please fill all the fields").show();
-            return;
+        try {
+            if (transactionID.isEmpty() || orderID.isEmpty() || accountNo.isEmpty() || description.isEmpty() || amount.describeConstable().isEmpty() || date.isEmpty() || paymentMethod.isEmpty()) {
+                new Alert(Alert.AlertType.INFORMATION,"Please fill all the fields").show();
+                return;
+            }
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.INFORMATION,"Please fill all fields!").show();
         }
 
         Transaction transaction = new Transaction(transactionID, orderID, accountNo, description, amount, date, paymentMethod);
 
         try {
-            boolean isUpdated = TransactionRepo.update(transaction);
+            boolean isUpdated = false;
+            if (isValid()) {
+                isUpdated = TransactionRepo.update(transaction);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if(isUpdated){
                 new Alert(Alert.AlertType.INFORMATION, "Transaction Updated",ButtonType.OK).show();
                 clearFields();
@@ -299,25 +349,21 @@ public class TransactionFormController {
     }
 
     private void animateLabelTyping() {
-        String loginText = lblTransactionForm.getText(); // Text to be typed
-        int animationDuration = 250; // Duration of animation in milliseconds
+        String loginText = lblTransactionForm.getText();
+        int animationDuration = 250;
 
-        // Set initial text of lblLogin to an empty string
         lblTransactionForm.setText("");
 
-        // Create a Timeline for the typing animation
         Timeline typingAnimation = new Timeline();
 
-        // Add KeyFrames to gradually display the characters
         for (int i = 0; i <= loginText.length(); i++) {
             int finalI = i;
             KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
-                lblTransactionForm.setText(loginText.substring(0, finalI)); // Update label text with substring
+                lblTransactionForm.setText(loginText.substring(0, finalI));
             });
             typingAnimation.getKeyFrames().add(keyFrame);
         }
 
-        // Play the animation
         typingAnimation.play();
     }
 }

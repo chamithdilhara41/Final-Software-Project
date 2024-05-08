@@ -43,7 +43,7 @@ public class Regex {
                 filed = "^[A-Z]{2}-\\d{4}$";
                 break;
             case VEHICLETYPE:
-                filed = "^[\\\\W]{1,}$";
+                filed = "^[A-Za-z\\s]+$";
                 break;
             case PASSWORD:
                 filed = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
@@ -51,6 +51,10 @@ public class Regex {
             case USERNAME:
                 filed = "^[a-zA-Z0-9_]{3,20}$";
                 break;
+            case WEIGHT:
+                filed = "^[1-9]\\d*$";
+                break;
+
         }
 
         Pattern pattern = Pattern.compile(filed);

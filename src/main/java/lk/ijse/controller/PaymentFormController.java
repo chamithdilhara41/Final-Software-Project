@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lk.ijse.model.Payment;
@@ -15,6 +16,7 @@ import lk.ijse.model.Supplier;
 import lk.ijse.model.tm.PaymentTm;
 import lk.ijse.repository.PaymentRepo;
 import lk.ijse.repository.SupplierRepo;
+import lk.ijse.util.Regex;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -65,6 +67,34 @@ public class PaymentFormController {
         txtDate.setText(LocalDate.now().toString());
         getAllPayments();
         setCellValueFactory();
+    }
+
+    @FXML
+    void txtAmountOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.AMOUNT, txtAmount);
+    }
+
+    @FXML
+    void txtDateOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.DATE,txtDate);
+    }
+
+    @FXML
+    void txtPaymentIdOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.ID, txtPaymentID);
+    }
+
+    @FXML
+    void txtSupplierIdOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.ID, txtSupplierID);
+    }
+
+    public boolean isValid(){
+        if (!Regex.setTextColor(lk.ijse.util.TextField.ID, txtPaymentID)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.ID, txtSupplierID)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.AMOUNT, txtAmount)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.DATE, txtDate)) return false;
+        return true;
     }
 
     private void setCellValueFactory() {
@@ -147,6 +177,8 @@ public class PaymentFormController {
                 clearFields();
                 getAllPayments();
                 setCellValueFactory();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Can't find Payment ID").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).show();
@@ -157,7 +189,7 @@ public class PaymentFormController {
     void btnOnActionSave(ActionEvent event) {
         String paymentID = txtPaymentID.getText();
         String description = txtDescription.getText();
-        Double amount = Double.valueOf(txtAmount.getText());
+        String amount = String.valueOf(txtAmount.getText());
         String date = txtDate.getText();
         String supplierID = txtSupplierID.getText();
 
@@ -166,10 +198,15 @@ public class PaymentFormController {
             return;
         }
 
-        Payment payment = new Payment(paymentID, description, amount, date, supplierID);
+        Payment payment = new Payment(paymentID, description, Double.valueOf(amount), date, supplierID);
 
         try {
-            boolean isSaved = PaymentRepo.save(payment);
+            boolean isSaved = false;
+            if (isValid()) {
+                isSaved = PaymentRepo.save(payment);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Payment Saved").show();
                 clearFields();
@@ -189,15 +226,24 @@ public class PaymentFormController {
         String date = txtDate.getText();
         String supplierID = txtSupplierID.getText();
 
-        if(paymentID.isEmpty() || description.isEmpty() || amount.describeConstable().isEmpty() || date.isEmpty() || supplierID.isEmpty()){
-            new Alert(Alert.AlertType.CONFIRMATION, "Please fill all the fields").show();
-            return;
+        try {
+            if(paymentID.isEmpty() || description.isEmpty() || amount.describeConstable().isEmpty() || date.isEmpty() || supplierID.isEmpty()){
+                new Alert(Alert.AlertType.CONFIRMATION, "Please fill all the fields").show();
+                return;
+            }
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).show();
         }
 
         Payment payment = new Payment(paymentID, description, amount, date, supplierID);
 
         try {
-            boolean isUpdated = PaymentRepo.update(payment);
+            boolean isUpdated = false;
+            if (isValid()) {
+                isUpdated = PaymentRepo.update(payment);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Payment Updated").show();
                 clearFields();
@@ -251,16 +297,13 @@ public class PaymentFormController {
     }
 
     private void animateLabelTyping() {
-        String loginText = lblPaymentForm.getText(); // Text to be typed
-        int animationDuration = 250; // Duration of animation in milliseconds
+        String loginText = lblPaymentForm.getText();
+        int animationDuration = 250;
 
-        // Set initial text of lblLogin to an empty string
         lblPaymentForm.setText("");
 
-        // Create a Timeline for the typing animation
         Timeline typingAnimation = new Timeline();
 
-        // Add KeyFrames to gradually display the characters
         for (int i = 0; i <= loginText.length(); i++) {
             int finalI = i;
             KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
@@ -269,7 +312,6 @@ public class PaymentFormController {
             typingAnimation.getKeyFrames().add(keyFrame);
         }
 
-        // Play the animation
         typingAnimation.play();
     }
 }

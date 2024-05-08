@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="656.0" prefWidth="945.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.PaymentFormController">
+<AnchorPane onKeyReleased="#txtPaymentIdOnKeyReleased" prefHeight="656.0" prefWidth="945.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.PaymentFormController">
     <children>
         <Label layoutX="29.0" layoutY="21.0" text="Payments Details">
             <font>
@@ -33,7 +33,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtPaymentID" layoutX="137.0" layoutY="346.0" onAction="#txtOnActionSearch" prefHeight="30.0" prefWidth="147.0" style="-fx-background-radius: 15 15 15 15;">
+        <TextField fx:id="txtPaymentID" layoutX="137.0" layoutY="346.0" onAction="#txtOnActionSearch" onKeyReleased="#txtPaymentIdOnKeyReleased" prefHeight="30.0" prefWidth="147.0" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -53,7 +53,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtAmount" layoutX="129.0" layoutY="467.0" prefHeight="30.0" prefWidth="147.0" style="-fx-background-radius: 15 15 15 15;">
+        <TextField fx:id="txtAmount" layoutX="129.0" layoutY="467.0" onKeyReleased="#txtAmountOnKeyReleased" prefHeight="30.0" prefWidth="147.0" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -63,7 +63,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtDate" layoutX="79.0" layoutY="525.0" prefHeight="30.0" prefWidth="138.0" style="-fx-background-radius: 15 15 15 15;">
+        <TextField fx:id="txtDate" layoutX="79.0" layoutY="525.0" onKeyReleased="#txtDateOnKeyReleased" prefHeight="30.0" prefWidth="138.0" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -156,7 +156,7 @@
                 <Font name="System Bold Italic" size="14.0" />
             </font>
         </Label>
-      <TextField fx:id="txtSupplierID" layoutX="528.0" layoutY="346.0" onAction="#txtOnActionSearchSupplier" prefHeight="30.0" prefWidth="138.0" style="-fx-background-radius: 15 15 15 15;">
+      <TextField fx:id="txtSupplierID" layoutX="528.0" layoutY="346.0" onAction="#txtOnActionSearchSupplier" onKeyReleased="#txtSupplierIdOnKeyReleased" prefHeight="30.0" prefWidth="138.0" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>

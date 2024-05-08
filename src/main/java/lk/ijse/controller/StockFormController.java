@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lk.ijse.model.Stock;
@@ -22,6 +23,7 @@ import lk.ijse.repository.StockRepo;
 import lk.ijse.repository.SupplierRepo;
 import lk.ijse.repository.SupplierStockDetailRepo;
 import lk.ijse.repository.TransactionRepo;
+import lk.ijse.util.Regex;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -82,6 +84,33 @@ public class StockFormController {
         txtDate.setText(String.valueOf(LocalDate.now()));
     }
 
+    @FXML
+    void txtDateOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.DATE,txtDate);
+    }
+
+    @FXML
+    void txtStockIdOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.ID,txtStockID);
+    }
+
+    @FXML
+    void txtSupStockIdOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.ID,txtSuppliersStockID);
+    }
+
+    @FXML
+    void txtWeightOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.WEIGHT,txtWeight);
+    }
+
+    public  boolean isValid(){
+        if(!Regex.setTextColor(lk.ijse.util.TextField.ID,txtStockID)) return false;
+        if(!Regex.setTextColor(lk.ijse.util.TextField.WEIGHT,txtWeight)) return false;
+        if(!Regex.setTextColor(lk.ijse.util.TextField.DATE,txtDate)) return false;
+        return true;
+    }
+
     private void setCellValueFactoryForStocks() {
         colStockID.setCellValueFactory(new PropertyValueFactory<>("stockId"));
         colTotalWeight.setCellValueFactory(new PropertyValueFactory<>("totalWeight"));
@@ -134,7 +163,8 @@ public class StockFormController {
 
     @FXML
     void btnOnActionClear(ActionEvent event) {
-
+        cmbSupplierID.setValue("");
+        txtWeight.setText("");
     }
 
     @FXML
@@ -154,28 +184,37 @@ public class StockFormController {
         }
     }
 
+    public boolean isValidSupplier(){
+        if(!Regex.setTextColor(lk.ijse.util.TextField.ID,txtSuppliersStockID)) return false;
+        return true;
+    }
+
     @FXML
     void txtOnActionSearchSuppliers(ActionEvent event) throws SQLException {
-        String stockID = txtSuppliersStockID.getText();
-        ObservableList<SupplierStockDetailTm> obList = FXCollections.observableArrayList();
+        if (isValidSupplier()) {
+            String stockID = txtSuppliersStockID.getText();
+            ObservableList<SupplierStockDetailTm> obList = FXCollections.observableArrayList();
 
-        List<SupplierStockDetailTm> supplierStockDetail = SupplierStockDetailRepo.searchSuppliersWithStockId(stockID);
+            List<SupplierStockDetailTm> supplierStockDetail = SupplierStockDetailRepo.searchSuppliersWithStockId(stockID);
 
-        if (supplierStockDetail.isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Suppliers not found").show();
-        } else {
-            for (SupplierStockDetailTm No : supplierStockDetail) {
-                obList.add(new SupplierStockDetailTm(
-                        No.getSupplierId(),
-                        No.getName(),
-                        No.getWeight()
-                ));
+            if (supplierStockDetail.isEmpty()) {
+                new Alert(Alert.AlertType.ERROR, "Suppliers not found").show();
+            } else {
+                for (SupplierStockDetailTm No : supplierStockDetail) {
+                    obList.add(new SupplierStockDetailTm(
+                            No.getSupplierId(),
+                            No.getName(),
+                            No.getWeight()
+                    ));
+                }
             }
+            tblSupplierStock.setItems(obList);
+            colSupplierID.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
+            colSupplierName.setCellValueFactory(new PropertyValueFactory<>("name"));
+            colWeight.setCellValueFactory(new PropertyValueFactory<>("weight"));
+        }else {
+            new Alert(Alert.AlertType.INFORMATION, "Check supplier stock textField....").show();
         }
-        tblSupplierStock.setItems(obList);
-        colSupplierID.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
-        colSupplierName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colWeight.setCellValueFactory(new PropertyValueFactory<>("weight"));
     }
 
     @FXML
@@ -199,15 +238,25 @@ public class StockFormController {
         SupplierStockDetail supplierStockDetail = new SupplierStockDetail(stockID, supplierID, Double.valueOf(weight));
 
         try {
-            boolean issaved1 = StockRepo.save(stock);
-            boolean isSaved;
+            boolean issaved1 = false;
+            if (isValid()) {
+                issaved1 = StockRepo.save(stock);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
+            boolean isSaved = false;
                 if (issaved1 ) {
-                    isSaved = SupplierStockDetailRepo.save(supplierStockDetail);
-
+                    if (isValid()) {
+                        isSaved = SupplierStockDetailRepo.save(supplierStockDetail);
+                    }else {
+                        new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+                    }
                     if (isSaved) {
                         new Alert(Alert.AlertType.INFORMATION, "weight saved!").show();
                         getAllStocks();
                         setCellValueFactoryForStocks();
+                        cmbSupplierID.setValue("");
+                        txtWeight.setText("");
                     }
 
                 }

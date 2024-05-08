@@ -152,14 +152,14 @@ public class EmployeeFormController {
         String EmployeeID = txtEmployeeID.getText();
 
         if (EmployeeID.isEmpty()) {
-            new Alert(Alert.AlertType.CONFIRMATION, "Please Enter Employee ID", ButtonType.OK).show();
+            new Alert(Alert.AlertType.INFORMATION, "Please Enter Employee ID", ButtonType.OK).show();
             return;
         }
 
         try {
             boolean isDeleted = EmployeeRepo.delete(EmployeeID);
             if(isDeleted) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Employee deleted!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Employee deleted!").show();
                 clearFields();
                 getAllEmployees();
                 setCellValueFactory();
@@ -181,12 +181,12 @@ public class EmployeeFormController {
         String vehicleNo = cmbVehicleNo.getValue();
 
         try {
-            if(employeeID.isEmpty() || employeeName.isEmpty() || employeeAddress.isEmpty() || employeeContact.isEmpty() || vehicleNo.isEmpty()) {
+            if(employeeID.isEmpty() || employeeName.isEmpty() || employeeAddress.isEmpty() || employeeContact.isEmpty() || vehicleNo.isEmpty() || employeeSalary.isEmpty()) {
                 new Alert(Alert.AlertType.INFORMATION, "Please fill all fields!").show();
                 return;
             }
         } catch (Exception e) {
-            new Alert(Alert.AlertType.INFORMATION, "Please fill all fields!").show();
+            new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).show();
         }
 
         Employee employee = new Employee(employeeID,employeeName,employeeAddress,employeeContact,Double.valueOf(employeeSalary),vehicleNo);
@@ -219,10 +219,13 @@ public class EmployeeFormController {
         Double employeeSalary = Double.valueOf(txtEmployeeSalary.getText());
         String vehicleNo = cmbVehicleNo.getValue();
 
-        if(employeeID.isEmpty() || employeeName.isEmpty() || employeeAddress.isEmpty() || employeeContact.isEmpty()) {
-            new Alert(Alert.AlertType.INFORMATION, "Please fill all fields!").show();
-            return;
-        }
+        try {
+            if(employeeID.isEmpty() || employeeName.isEmpty() || employeeAddress.isEmpty() || employeeContact.isEmpty()) {
+                new Alert(Alert.AlertType.INFORMATION, "Please fill all fields!").show();
+                return;
+            }
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).show();        }
 
         Employee employee = new Employee(employeeID,employeeName,employeeAddress,employeeContact,employeeSalary,vehicleNo);
 
@@ -231,7 +234,7 @@ public class EmployeeFormController {
             if (isValid()) {
                 isUpdated = EmployeeRepo.update(employee);
             }else {
-                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ",ButtonType.OK).show();
             }
             if(isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Employee updated!").show();
@@ -240,7 +243,7 @@ public class EmployeeFormController {
                 setCellValueFactory();
             }
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            new Alert(Alert.AlertType.ERROR, e.getMessage(),ButtonType.OK).show();
         }
     }
 

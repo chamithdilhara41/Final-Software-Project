@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lk.ijse.model.Buyer;
@@ -16,6 +17,7 @@ import lk.ijse.model.Delivery;
 import lk.ijse.model.Vehicle;
 import lk.ijse.model.tm.DeliveryTm;
 import lk.ijse.repository.*;
+import lk.ijse.util.Regex;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -64,6 +66,22 @@ public class DeliveryFormController {
         getStockIds();
         getAllDeliveries();
         setCellValueFactory();
+    }
+
+    @FXML
+    void txtDateOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.DATE,txtDate);
+    }
+
+    @FXML
+    void txtDeliveryIdOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.ID,txtDeliveryID);
+    }
+
+    public boolean isValid(){
+        if(!Regex.setTextColor(lk.ijse.util.TextField.DATE,txtDate)) return false;
+        if(!Regex.setTextColor(lk.ijse.util.TextField.ID,txtDeliveryID)) return false;
+        return true;
     }
 
     private void setCellValueFactory() {
@@ -132,6 +150,8 @@ public class DeliveryFormController {
                 clearFields();
                 getAllDeliveries();
                 setCellValueFactory();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Can't find Delivery ").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).show();
@@ -153,7 +173,12 @@ public class DeliveryFormController {
         Delivery delivery = new Delivery(deliveryID, date, orderID, vehicleNo);
 
         try {
-            boolean isSaved = DeliveryRepo.save(delivery);
+            boolean isSaved = false;
+            if (isValid()) {
+                isSaved = DeliveryRepo.save(delivery);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
+            }
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Delivery Saved").show();
                 clearFields();
@@ -181,7 +206,12 @@ public class DeliveryFormController {
         Delivery delivery = new Delivery(deliveryID, date, orderID, vehicleNo);
 
         try {
-            boolean isUpdated = DeliveryRepo.update(delivery);
+            boolean isUpdated = false;
+            if (isValid()) {
+                isUpdated = DeliveryRepo.update(delivery);
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ",ButtonType.OK).show();
+            }
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Delivery Updated").show();
                 clearFields();

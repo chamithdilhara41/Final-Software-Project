@@ -36,7 +36,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtTransactionID" layoutX="137.0" layoutY="346.0" onAction="#txtOnActionSearch" prefHeight="30.0" prefWidth="147.0" style="-fx-background-radius: 15 15 15 15;">
+        <TextField fx:id="txtTransactionID" layoutX="137.0" layoutY="346.0" onAction="#txtOnActionSearch" onKeyReleased="#txtTransectionIdOnKeyReleased" prefHeight="30.0" prefWidth="147.0" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -46,7 +46,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtAccountNo" layoutX="127.0" layoutY="408.0" prefHeight="30.0" prefWidth="187.0" style="-fx-background-radius: 15 15 15 15;">
+        <TextField fx:id="txtAccountNo" layoutX="127.0" layoutY="408.0" onKeyReleased="#txtAccountNoOnKeyReleased" prefHeight="30.0" prefWidth="187.0" style="-fx-background-radius: 15 15 15 15;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -66,7 +66,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtAmount" layoutX="129.0" layoutY="524.0" prefHeight="30.0" prefWidth="147.0" style="-fx-background-radius: 15 15 15 15;">
+      <TextField fx:id="txtAmount" layoutX="129.0" layoutY="524.0" onKeyReleased="#txtAmountOnKeyReleased" prefHeight="30.0" prefWidth="147.0" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>
@@ -156,7 +156,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtDate" layoutX="656.0" layoutY="524.0" prefHeight="30.0" prefWidth="138.0" style="-fx-background-radius: 15 15 15 15;">
+      <TextField fx:id="txtDate" layoutX="656.0" layoutY="524.0" onKeyReleased="#txtDateOnKeyReleased" prefHeight="30.0" prefWidth="138.0" style="-fx-background-radius: 15 15 15 15;">
          <font>
             <Font size="14.0" />
          </font>

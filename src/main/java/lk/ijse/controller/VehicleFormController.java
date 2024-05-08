@@ -91,7 +91,7 @@ public class VehicleFormController {
         try {
             boolean isDeleted = VehicleRepo.delete(vehicleNo);
             if (isDeleted){
-                new Alert(Alert.AlertType.CONFIRMATION , "Vehicle Deleted").showAndWait();
+                new Alert(Alert.AlertType.INFORMATION , "Vehicle Deleted").showAndWait();
                 clearFields();
                 getAllVehicles();
                 setCellValueFactory();
@@ -110,7 +110,7 @@ public class VehicleFormController {
         String vehicleType = txtVehicleType.getText();
 
         if(vehicleNo.isEmpty() || vehicleType.isEmpty()){
-            new Alert(Alert.AlertType.CONFIRMATION , "Vehicle Name & No cannot be empty").showAndWait();
+            new Alert(Alert.AlertType.INFORMATION , "Vehicle Name & No cannot be empty").showAndWait();
             return;
         }
 
@@ -124,7 +124,7 @@ public class VehicleFormController {
                 new Alert(Alert.AlertType.ERROR, "Please check Text Fields... ").show();
             }
             if(isSaved) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Vehicle saved!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Vehicle saved!").show();
                 clearFields();
                 getAllVehicles();
                 setCellValueFactory();
