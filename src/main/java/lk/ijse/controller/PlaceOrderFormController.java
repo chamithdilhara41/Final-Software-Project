@@ -18,26 +18,31 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import lk.ijse.animation.AnimationUtil;
+import lk.ijse.db.DbConnection;
 import lk.ijse.model.*;
 import lk.ijse.model.tm.OrderCartTm;
 import lk.ijse.repository.BuyerRepo;
 import lk.ijse.repository.OrderRepo;
 import lk.ijse.repository.PlaceOrderRepo;
 import lk.ijse.repository.StockRepo;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class PlaceOrderFormController {
 
     public Label lblPlaceOrderForm;
 
     public AnchorPane mainPane;
+
+    public Label lblStocksTotalWeight;
 
     @FXML
     private JFXComboBox<String> cmbBuyerId;
@@ -131,12 +136,13 @@ public class PlaceOrderFormController {
         OrderCartTm tm = new OrderCartTm(buyerID, buyerName, date, stockID, stockWeight, btnRemove);
         obList.add(tm);
 
-        tblOrderPlace.setItems(obList);
 
+        tblOrderPlace.setItems(obList);
+        calculateNetTotal();
     }
 
     @FXML
-    void btnOnActionPlaceOrder(ActionEvent event) {
+    void btnOnActionPlaceOrder(ActionEvent event) throws IOException, JRException, SQLException {
         String orderID = lblOrderID.getText();
         String date = lblDate.getText();
         String stockID = cmbStockID.getValue();
@@ -154,6 +160,7 @@ public class PlaceOrderFormController {
                     tm.getBuyerID()
             );
             odList.add(od);
+
         }
 
         PlaceOrder po = new PlaceOrder(order, odList);
@@ -170,7 +177,35 @@ public class PlaceOrderFormController {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
+        JasperDesign jasperDesign = JRXmlLoader.load("src/main/resources/reports/PrintsBill.jrxml");
+        JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 
+        Map<String,Object> data = new HashMap<>();
+        data.put("orderId",lblOrderID.getText());
+
+        JasperPrint jasperPrint =
+                JasperFillManager.fillReport(jasperReport, data, DbConnection.getInstance().getConnection());
+        JasperViewer.viewReport(jasperPrint,false);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlaceOrderForm.fxml"));
+        AnchorPane contentPane = loader.load();
+
+        // Add the loaded content to the main pane
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(contentPane);
+        //AnimationUtil.popUpAnimation(mainPane, contentPane);
+
+    }
+    private void calculateNetTotal() {
+        double netTotal = 0;
+        for (int i = 0; i < tblOrderPlace.getItems().size(); i++) {
+            OrderCartTm tm = obList.get(i);
+
+            double weight = Double.parseDouble(tm.getStockWeight());
+
+            netTotal += weight;
+        }
+        lblStocksTotalWeight.setText(String.valueOf(netTotal));
     }
 
     @FXML
@@ -211,7 +246,7 @@ public class PlaceOrderFormController {
             Stock stock = StockRepo.searchByStockIdForOrder(No);
 
             if (stock != null) {
-                lblStockWeight.setText(String.valueOf(stock.getWeight())+" kg");
+                lblStockWeight.setText(String.valueOf(stock.getWeight()));
             } else {
                 // Handle case when vehicle is not found
                 lblStockWeight.setText("");

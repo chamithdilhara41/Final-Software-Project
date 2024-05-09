@@ -75,13 +75,13 @@ public class Regex {
         return false;
     }
 
-    public static void setTextColorLogin(TextField location, javafx.scene.control.TextField textField){
+    public static boolean setTextColorLogin(TextField location, javafx.scene.control.TextField textField){
         if (Regex.isTextFieldValid(location, textField.getText())){
             textField.setStyle("-fx-border-color:  #3bf63b; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;");
-
+            return true;
         }else {
             textField.setStyle("-fx-border-color: #f33232;-fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;");
-
+            return false;
         }
     }
 

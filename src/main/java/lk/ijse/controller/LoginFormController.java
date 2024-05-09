@@ -8,10 +8,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import lk.ijse.animation.AnimationUtil;
@@ -54,36 +51,47 @@ public class LoginFormController {
         Regex.setTextColorLogin(lk.ijse.util.TextField.PASSWORD,txtPasswordLogin);
     }
 
+    public boolean isValid(){
+        if (!Regex.setTextColorLogin(lk.ijse.util.TextField.USERNAME,txtUsernameLogin)) return false;
+        if (!Regex.setTextColorLogin(lk.ijse.util.TextField.PASSWORD,txtPasswordLogin)) return false;
+        return true;
+    }
+
     @FXML
     void btnLoginOnAction() throws SQLException, IOException {
 
         String usernameLogin = txtUsernameLogin.getText();
         String passwordLogin = txtPasswordLogin.getText();
 
-        if (usernameLogin.isEmpty() || passwordLogin.isEmpty()) {
-            new Alert(Alert.AlertType.CONFIRMATION,"please fill all.....");
-        }
-
-        String sql = "SELECT username,password FROM users WHERE username = ?";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1,usernameLogin);
-
-        ResultSet resultSet = pstm.executeQuery();
-
-        if (resultSet.next()){
-            String dbPw = resultSet.getString("password");
-            if (passwordLogin.equals(dbPw)){
-                new Alert(Alert.AlertType.INFORMATION,"Login Successful").show();
-                navigateToTheMainForm();
-            }else {
-                new Alert(Alert.AlertType.ERROR,"sorry! password is incorrect!").show();
+        if (!isValid()) {
+            if (usernameLogin.isEmpty() || passwordLogin.isEmpty()) {
+                new Alert(Alert.AlertType.ERROR, "please fill all.....", ButtonType.OK).show();
+                return;
             }
-        }else {
-            new Alert(Alert.AlertType.INFORMATION,"sorry! username can't be find!").show();
-        }
+            new Alert(Alert.AlertType.ERROR, "Check Username and Password Text fields again", ButtonType.OK).show();
+        } else {
 
+            String sql = "SELECT username,password FROM users WHERE username = ?";
+
+            Connection connection = DbConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setObject(1, usernameLogin);
+
+            ResultSet resultSet = pstm.executeQuery();
+
+            if (resultSet.next()) {
+                String dbPw = resultSet.getString("password");
+                if (passwordLogin.equals(dbPw)) {
+                    new Alert(Alert.AlertType.INFORMATION, "Login Successful").show();
+                    navigateToTheMainForm();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "sorry! password is incorrect!").show();
+                }
+            } else {
+                new Alert(Alert.AlertType.INFORMATION, "sorry! username can't be find!").show();
+            }
+
+        }
     }
 
     private void navigateToTheMainForm () throws IOException {
