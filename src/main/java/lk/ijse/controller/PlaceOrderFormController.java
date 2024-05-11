@@ -4,14 +4,12 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -34,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class PlaceOrderFormController {
@@ -111,6 +110,11 @@ public class PlaceOrderFormController {
     @FXML
     void btnOnActionAddToCart(ActionEvent event) {
 
+        if (cmbStockID.getSelectionModel().isEmpty() || cmbBuyerId.getSelectionModel().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please Select Stock ID and Buyer ID", ButtonType.OK).show();
+            return;
+        }
+
         String buyerID = cmbBuyerId.getValue();
         String buyerName = lblBuyerName.getText();
         String date = lblDate.getText();
@@ -139,13 +143,21 @@ public class PlaceOrderFormController {
 
         tblOrderPlace.setItems(obList);
         calculateNetTotal();
+        cmbBuyerId.getSelectionModel().clearSelection();
+        cmbStockID.getSelectionModel().clearSelection();
+
     }
 
     @FXML
     void btnOnActionPlaceOrder(ActionEvent event) throws IOException, JRException, SQLException {
+
+        if (cmbStockID.getSelectionModel().isEmpty() || cmbBuyerId.getSelectionModel().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please Select Stock ID and Buyer ID", ButtonType.OK).show();
+            return;
+        }
+
         String orderID = lblOrderID.getText();
         String date = lblDate.getText();
-        String stockID = cmbStockID.getValue();
 
         var order = new Order(orderID,  date);
 
@@ -169,9 +181,9 @@ public class PlaceOrderFormController {
 
             boolean isPlaced = PlaceOrderRepo.placeOrder(po);
             if(isPlaced) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Order Placed!").show();
+                new Alert(Alert.AlertType.CONFIRMATION, "Order Placed!",ButtonType.OK).show();
             } else {
-                new Alert(Alert.AlertType.WARNING, "Order Placed Unsuccessfully!").show();
+                new Alert(Alert.AlertType.WARNING, "Order Placed Unsuccessfully!",ButtonType.OK).show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -182,18 +194,20 @@ public class PlaceOrderFormController {
 
         Map<String,Object> data = new HashMap<>();
         data.put("orderId",lblOrderID.getText());
+        data.put("date",lblDate.getText());
+        data.put("time", LocalTime.now().toString());
+        data.put("netWeight",lblStocksTotalWeight.getText());
 
         JasperPrint jasperPrint =
-                JasperFillManager.fillReport(jasperReport, data, DbConnection.getInstance().getConnection());
+                JasperFillManager.fillReport(jasperReport, data,DbConnection.getInstance().getConnection());
         JasperViewer.viewReport(jasperPrint,false);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlaceOrderForm.fxml"));
-        AnchorPane contentPane = loader.load();
-
-        // Add the loaded content to the main pane
-        mainPane.getChildren().clear();
-        mainPane.getChildren().add(contentPane);
-        //AnimationUtil.popUpAnimation(mainPane, contentPane);
+        cmbBuyerId.getSelectionModel().clearSelection();
+        cmbStockID.getSelectionModel().clearSelection();
+        tblOrderPlace.getItems().clear();
+        tblOrderPlace.refresh();
+        lblStocksTotalWeight.setText("");
+        getCurrentOrderId();
 
     }
     private void calculateNetTotal() {

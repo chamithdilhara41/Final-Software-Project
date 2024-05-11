@@ -40,7 +40,7 @@ public class Regex {
                 filed = "^\\d+(\\.\\d+)?$";
                 break;
             case VEHICLENo:
-                filed = "^[A-Z]{2}-\\d{4}$";
+                filed = "^[A-Z][0-9]{3}-\\d{4}$";
                 break;
             case VEHICLETYPE:
                 filed = "^[A-Za-z\\s]+$";
@@ -52,7 +52,10 @@ public class Regex {
                 filed = "^[a-zA-Z0-9_]{3,20}$";
                 break;
             case WEIGHT:
-                filed = "^[1-9]\\d*$";
+                filed = "^[1-9]\\d*(\\.\\d+)?$";
+                break;
+            case SID:
+                filed = "^([Ss][Tt][0-9]{3})$";
                 break;
 
         }

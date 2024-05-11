@@ -3,7 +3,10 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintsBill" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe8c8964-f92e-452f-8b4d-3b68eaca6ed3">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (3)"/>
-	<parameter name="Parameter1" class="java.lang.String"/>
+	<parameter name="orderId" class="java.lang.String"/>
+	<parameter name="netWeight" class="java.lang.String"/>
+	<parameter name="date" class="java.lang.String"/>
+	<parameter name="time" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT o.orderId, b.buyerId, b.name AS buyerName, o.date AS orderDate,
        osi.stockId, s.TotalWeight AS stockTotalWeight
@@ -11,7 +14,7 @@ FROM orders o
 JOIN ordersStockinfo osi ON o.orderId = osi.orderId
 JOIN buyer b ON osi.buyerId = b.buyerId
 JOIN Stock s ON osi.stockId = s.stockId
-WHERE o.orderId = $P{Parameter1};]]>
+WHERE o.orderId =$P{orderId};]]>
 	</queryString>
 	<field name="orderId" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="orderId"/>
@@ -69,7 +72,7 @@ WHERE o.orderId = $P{Parameter1};]]>
 			<staticText>
 				<reportElement x="195" y="0" width="170" height="40" uuid="9cdfe175-2950-43f8-b6af-4e0cd1953d68"/>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Serif" size="15" isBold="true"/>
+					<font fontName="SansSerif" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[AWS Tea Collecting
 Center]]></text>
@@ -88,16 +91,9 @@ Center]]></text>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="60" splitType="Stretch">
-			<textField>
-				<reportElement x="66" y="38" width="100" height="20" uuid="3faafec5-10c2-472f-93de-4b8e1e880a32"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{Parameter1}]]></textFieldExpression>
-			</textField>
+		<band height="63" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="38" width="62" height="20" uuid="030c5c0f-1eb9-4025-a858-7db72eadfe62"/>
+				<reportElement x="18" y="38" width="62" height="20" uuid="030c5c0f-1eb9-4025-a858-7db72eadfe62"/>
 				<textElement textAlignment="Left">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -110,6 +106,10 @@ Center]]></text>
 				</textElement>
 				<text><![CDATA[Stock Details. ]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="87" y="41" width="81" height="17" uuid="b29163ee-3ca7-41e2-a8bd-35b94b3c5d1c"/>
+				<textFieldExpression><![CDATA[$P{orderId}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -205,12 +205,57 @@ Weight]]></text>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="53" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement x="389" y="-52" width="79" height="50" uuid="f3c838bc-ad33-4093-9376-353c971b05d7"/>
+				<textElement>
+					<font size="16" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Total
+Weight :-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="467" y="-29" width="106" height="26" uuid="951a630f-eb21-4401-a2d0-1b4e1c977ec1"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{netWeight}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="7" width="50" height="20" uuid="73dd8752-268e-4ebb-9692-3adcecb84088"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date :-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="28" width="50" height="20" uuid="67e17912-5503-48cd-8fdc-20dd5436141c"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Time :-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="72" y="9" width="70" height="21" uuid="7844f5a7-3110-44e9-927e-9735e5154d75"/>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="72" y="31" width="70" height="20" uuid="8eb77078-6da8-49a3-9c62-d096d5d1f283"/>
+				<textFieldExpression><![CDATA[$P{time}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="403" y="27" width="190" height="35" uuid="1b2c13b8-3e9d-4fe8-b46c-4e26cdb16424"/>
+				<textElement>
+					<font fontName="Cambria" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Thank You.......]]></text>
+			</staticText>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="50" splitType="Stretch"/>
 	</summary>
 </jasperReport>

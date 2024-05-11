@@ -107,7 +107,7 @@ public class LoginFormController {
         // Set the new scene to the stage
         stage.setScene(scene);
         stage.centerOnScreen();
-        stage.setTitle("Main Form (Tea leaves Management System)");
+        stage.setTitle("Main Form (Tea leaves stock Management System)");
     }
 
 

@@ -91,12 +91,12 @@ public class StockFormController {
 
     @FXML
     void txtStockIdOnKeyReleased(KeyEvent event) {
-        Regex.setTextColor(lk.ijse.util.TextField.ID,txtStockID);
+        Regex.setTextColor(lk.ijse.util.TextField.SID,txtStockID);
     }
 
     @FXML
     void txtSupStockIdOnKeyReleased(KeyEvent event) {
-        Regex.setTextColor(lk.ijse.util.TextField.ID,txtSuppliersStockID);
+        Regex.setTextColor(lk.ijse.util.TextField.SID,txtSuppliersStockID);
     }
 
     @FXML
@@ -105,7 +105,7 @@ public class StockFormController {
     }
 
     public  boolean isValid(){
-        if(!Regex.setTextColor(lk.ijse.util.TextField.ID,txtStockID)) return false;
+        if(!Regex.setTextColor(lk.ijse.util.TextField.SID,txtStockID)) return false;
         if(!Regex.setTextColor(lk.ijse.util.TextField.WEIGHT,txtWeight)) return false;
         if(!Regex.setTextColor(lk.ijse.util.TextField.DATE,txtDate)) return false;
         return true;
@@ -185,7 +185,7 @@ public class StockFormController {
     }
 
     public boolean isValidSupplier(){
-        if(!Regex.setTextColor(lk.ijse.util.TextField.ID,txtSuppliersStockID)) return false;
+        if(!Regex.setTextColor(lk.ijse.util.TextField.SID,txtSuppliersStockID)) return false;
         return true;
     }
 
@@ -226,7 +226,7 @@ public class StockFormController {
 
         try {
             if (stockID.isEmpty() || supplierID.isEmpty() || weight.isEmpty() || date.isEmpty()) {
-                new Alert(Alert.AlertType.INFORMATION, "Please fill all the fields", ButtonType.OK).show();
+                new Alert(Alert.AlertType.ERROR, "Please fill all the fields", ButtonType.OK).show();
                 return;
             }
         } catch (Exception e) {
