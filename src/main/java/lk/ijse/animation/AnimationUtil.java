@@ -1,12 +1,21 @@
 package lk.ijse.animation;
 
 import javafx.animation.TranslateTransition;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class AnimationUtil {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class AnimationUtil implements Initializable {
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("Initializing AnimationUtil");
+    }
 
     public static void popUpAnimation(AnchorPane stage, Parent rootNode) {
 
@@ -28,4 +37,5 @@ public class AnimationUtil {
 
         stage.show();
     }
+
 }

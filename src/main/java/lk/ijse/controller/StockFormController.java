@@ -15,14 +15,11 @@ import javafx.util.Duration;
 import lk.ijse.model.Stock;
 import lk.ijse.model.Supplier;
 import lk.ijse.model.SupplierStockDetail;
-import lk.ijse.model.Transaction;
 import lk.ijse.model.tm.StockTm;
 import lk.ijse.model.tm.SupplierStockDetailTm;
-import lk.ijse.model.tm.TransactionTm;
 import lk.ijse.repository.StockRepo;
 import lk.ijse.repository.SupplierRepo;
 import lk.ijse.repository.SupplierStockDetailRepo;
-import lk.ijse.repository.TransactionRepo;
 import lk.ijse.util.Regex;
 
 import java.sql.Date;

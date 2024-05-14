@@ -8,13 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.db.DbConnection;
+import lk.ijse.util.Regex;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,6 +42,33 @@ public class RegisterFormController {
     }
 
     @FXML
+    void txtEmailOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.EMAIL,txtEmailRegister);
+    }
+
+    @FXML
+    void txtNameOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.NAME,txtNameRegister);
+    }
+
+    @FXML
+    void txtPasswordOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.PASSWORD,txtPasswordRegister);
+    }
+
+    @FXML
+    void txtUsernameOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(lk.ijse.util.TextField.USERNAME,txtUsernameRegister);
+    }
+    public boolean isValid(){
+        if (!Regex.setTextColor(lk.ijse.util.TextField.EMAIL,txtEmailRegister)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.NAME,txtNameRegister)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.PASSWORD,txtPasswordRegister)) return false;
+        if (!Regex.setTextColor(lk.ijse.util.TextField.USERNAME,txtUsernameRegister)) return false;
+        return true;
+    }
+
+    @FXML
     void btnRegisterOnAction(ActionEvent event) {
 
         String usernameRegister = txtUsernameRegister.getText();
@@ -53,9 +80,14 @@ public class RegisterFormController {
             new Alert(Alert.AlertType.INFORMATION,"Please Fill All Fields").show();
         }else {
             try {
-                boolean isSaved = saveUser(usernameRegister, name, passwordRegister, emailRegister);
+                boolean isSaved = false;
+                if (isValid()) {
+                    isSaved = saveUser(usernameRegister, name, passwordRegister, emailRegister);
+                }else {
+                    new Alert(Alert.AlertType.ERROR,"Please Check Fields", ButtonType.OK).show();
+                }
                 if (isSaved) {
-                    new Alert(Alert.AlertType.CONFIRMATION, "user saved!").show();
+                    new Alert(Alert.AlertType.CONFIRMATION, "user saved!", ButtonType.OK).show();
 
                     Parent root = FXMLLoader.load(getClass().getResource("/view/LoginForm.fxml"));
                     Scene scene = new Scene(root);

@@ -15,16 +15,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import lk.ijse.animation.AnimationUtil;
-import lk.ijse.model.Buyer;
 import lk.ijse.model.Order;
 import lk.ijse.model.tm.OrderStockTm;
 import lk.ijse.model.tm.OrderTm;
-import lk.ijse.repository.BuyerRepo;
 import lk.ijse.repository.OrderRepo;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 
 public class OrderFormController {

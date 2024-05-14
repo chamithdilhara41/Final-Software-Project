@@ -1,10 +1,8 @@
 package lk.ijse.controller;
 
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -35,6 +33,9 @@ public class LoginFormController {
 
     @FXML
     private TextField txtUsernameLogin;
+
+    public static String UserName;
+    public static String Name;
 
 
     public void initialize() {
@@ -71,7 +72,7 @@ public class LoginFormController {
             new Alert(Alert.AlertType.ERROR, "Check Username and Password Text fields again", ButtonType.OK).show();
         } else {
 
-            String sql = "SELECT username,password FROM users WHERE username = ?";
+            String sql = "SELECT username,password,name FROM users WHERE username = ?";
 
             Connection connection = DbConnection.getInstance().getConnection();
             PreparedStatement pstm = connection.prepareStatement(sql);
@@ -81,9 +82,13 @@ public class LoginFormController {
 
             if (resultSet.next()) {
                 String dbPw = resultSet.getString("password");
+                String dbName = resultSet.getString("name");
                 if (passwordLogin.equals(dbPw)) {
+                    UserName= txtUsernameLogin.getText();
+                    Name=dbName;
                     new Alert(Alert.AlertType.INFORMATION, "Login Successful").show();
                     navigateToTheMainForm();
+
                 } else {
                     new Alert(Alert.AlertType.ERROR, "sorry! password is incorrect!").show();
                 }
@@ -95,6 +100,8 @@ public class LoginFormController {
     }
 
     private void navigateToTheMainForm () throws IOException {
+
+
         // Load the FXML file
         Parent rootNode = FXMLLoader.load(getClass().getResource("/view/MainForm.fxml"));
 

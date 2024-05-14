@@ -32,7 +32,7 @@
             <Font name="Candara Bold" size="32.0" />
          </font>
       </Label>
-      <TextField fx:id="txtUsernameRegister" layoutX="54.0" layoutY="90.0" prefHeight="48.0" prefWidth="290.0" promptText="type username here" style="-fx-background-radius: 10 10 10 10;">
+      <TextField fx:id="txtUsernameRegister" layoutX="54.0" layoutY="90.0" onKeyReleased="#txtUsernameOnKeyReleased" prefHeight="48.0" prefWidth="290.0" promptText="type username here" style="-fx-background-radius: 10 10 10 10;">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>
@@ -42,7 +42,7 @@
             <Font name="Calibri Light" size="19.0" />
          </font>
       </Label>
-      <TextField fx:id="txtEmailRegister" layoutX="54.0" layoutY="166.0" prefHeight="48.0" prefWidth="290.0" promptText="type e-mail here" style="-fx-background-radius: 10 10 10 10;">
+      <TextField fx:id="txtEmailRegister" layoutX="54.0" layoutY="166.0" onKeyReleased="#txtEmailOnKeyReleased" prefHeight="48.0" prefWidth="290.0" promptText="type e-mail here" style="-fx-background-radius: 10 10 10 10;">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>
@@ -57,7 +57,7 @@
             <Font name="Calibri Light" size="19.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNameRegister" layoutX="54.0" layoutY="238.0" prefHeight="48.0" prefWidth="290.0" promptText="type name here" style="-fx-background-radius: 10 10 10 10;">
+      <TextField fx:id="txtNameRegister" layoutX="54.0" layoutY="238.0" onKeyReleased="#txtNameOnKeyReleased" prefHeight="48.0" prefWidth="290.0" promptText="type name here" style="-fx-background-radius: 10 10 10 10;">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>
@@ -67,7 +67,7 @@
             <Font name="Calibri Light" size="19.0" />
          </font>
       </Label>
-      <PasswordField fx:id="txtPasswordRegister" layoutX="55.0" layoutY="311.0" prefHeight="48.0" prefWidth="290.0" promptText="type password here" style="-fx-background-radius: 10 10 10 10;">
+      <PasswordField fx:id="txtPasswordRegister" layoutX="55.0" layoutY="311.0" onKeyReleased="#txtPasswordOnKeyReleased" prefHeight="48.0" prefWidth="290.0" promptText="type password here" style="-fx-background-radius: 10 10 10 10;">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>

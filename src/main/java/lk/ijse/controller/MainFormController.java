@@ -22,6 +22,9 @@ import lk.ijse.animation.AnimationUtil;
 public class MainFormController {
 
     @FXML
+    public Label lblName;
+
+    @FXML
     public Label lblDate;
 
     @FXML
@@ -33,10 +36,13 @@ public class MainFormController {
     @FXML
     private AnchorPane rootNode;
 
+
+
     public void initialize() throws IOException {
         loadDashboardForm();
         setDate();
         setTime();
+        lblName.setText(LoginFormController.Name);
     }
 
     @FXML
@@ -118,8 +124,12 @@ public class MainFormController {
     }
 
     @FXML
-    void btnOnActionSettings(ActionEvent event) {
+    void btnOnActionSettings(ActionEvent event) throws IOException {
+        AnchorPane settingsPane = FXMLLoader.load(getClass().getResource("/view/SettingsForm.fxml"));
 
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(settingsPane);
+        AnimationUtil.popUpAnimation(mainPane,settingsPane);
     }
 
     @FXML
