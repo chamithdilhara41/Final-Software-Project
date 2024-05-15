@@ -45,7 +45,7 @@
                 <Font size="36.0" />
             </font>
         </Label>
-      <Line endX="-89.79998779296875" endY="414.60003662109375" layoutX="562.0" layoutY="139.0" startX="-89.79998779296875" startY="-40.59996795654297">
+      <Line endX="-89.79998779296875" endY="414.60003662109375" layoutX="562.0" layoutY="140.0" startX="-89.79998779296875" startY="-40.59996795654297">
          <stroke>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
@@ -78,17 +78,17 @@
             <Font name="Calibri" size="15.0" />
          </font>
       </TextField>
-      <Label layoutX="571.0" layoutY="183.0" prefHeight="22.0" prefWidth="186.0" text="Type new e-mail *">
+      <Label layoutX="574.0" layoutY="179.0" prefHeight="22.0" prefWidth="186.0" text="Type new e-mail *">
          <font>
             <Font name="Calibri Light" size="19.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNewEmail1" layoutX="570.0" layoutY="207.0" onKeyReleased="#txtNewEmail1OnKeyReleased" prefHeight="42.0" prefWidth="273.0" promptText="Someone@example.com" style="-fx-background-radius: 10 10 10 10;">
+      <TextField fx:id="txtNewEmail1" layoutX="573.0" layoutY="203.0" onKeyReleased="#txtNewEmail1OnKeyReleased" prefHeight="42.0" prefWidth="273.0" promptText="Someone@example.com" style="-fx-background-radius: 10 10 10 10;">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>
       </TextField>
-      <JFXButton buttonType="RAISED" layoutX="573.0" layoutY="432.0" onAction="#btnOnActionSaveEmail" prefHeight="42.0" prefWidth="265.0" style="-fx-background-color: #9FE2BF; -fx-background-radius: 15 15 15 15;" text="Change E-mail">
+      <JFXButton buttonType="RAISED" layoutX="577.0" layoutY="426.0" onAction="#btnOnActionSaveEmail" prefHeight="42.0" prefWidth="265.0" style="-fx-background-color: #9FE2BF; -fx-background-radius: 15 15 15 15;" text="Change E-mail">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -99,24 +99,24 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </JFXButton>
-      <Label layoutX="571.0" layoutY="295.0" prefHeight="22.0" prefWidth="194.0" text="Re-Type new e-mail *">
+      <Label layoutX="574.0" layoutY="291.0" prefHeight="22.0" prefWidth="194.0" text="Re-Type new e-mail *">
          <font>
             <Font name="Calibri Light" size="19.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNewEmail2" layoutX="570.0" layoutY="319.0" onKeyReleased="#txtNewEmail2OnKeyReleased" prefHeight="42.0" prefWidth="273.0" promptText="Someone@example.com" style="-fx-background-radius: 10 10 10 10;">
+      <TextField fx:id="txtNewEmail2" layoutX="573.0" layoutY="315.0" onKeyReleased="#txtNewEmail2OnKeyReleased" prefHeight="42.0" prefWidth="273.0" promptText="Someone@example.com" style="-fx-background-radius: 10 10 10 10;">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>
       </TextField>
       <Label layoutX="54.0" layoutY="106.0" text="Username :-">
          <font>
-            <Font name="Calibri" size="20.0" />
+            <Font name="Calibri Bold" size="20.0" />
          </font>
       </Label>
       <Label fx:id="lblUsername" layoutX="159.0" layoutY="107.0" prefHeight="23.0" prefWidth="266.0">
          <font>
-            <Font name="Calibri" size="20.0" />
+            <Font name="Calibri Italic" size="20.0" />
          </font>
       </Label>
     </children>

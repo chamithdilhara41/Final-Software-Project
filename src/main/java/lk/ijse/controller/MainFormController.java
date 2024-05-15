@@ -42,7 +42,8 @@ public class MainFormController {
         loadDashboardForm();
         setDate();
         setTime();
-        lblName.setText(LoginFormController.Name);
+        lblName.setText(LoginFormController.Name+"...");
+        animateLabelTyping();
     }
 
     @FXML
@@ -188,5 +189,27 @@ public class MainFormController {
         clock.play();
     }
 
+    private void animateLabelTyping() {
+        String loginText = lblName.getText(); // Text to be typed
+        int animationDuration = 350; // Duration of animation in milliseconds
+
+        // Set initial text of lblLogin to an empty string
+        lblName.setText("");
+
+        // Create a Timeline for the typing animation
+        Timeline typingAnimation = new Timeline();
+
+        // Add KeyFrames to gradually display the characters
+        for (int i = 0; i <= loginText.length(); i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationDuration * i), event -> {
+                lblName.setText(loginText.substring(0, finalI)); // Update label text with substring
+            });
+            typingAnimation.getKeyFrames().add(keyFrame);
+        }
+
+        // Play the animation
+        typingAnimation.play();
+    }
 
 }

@@ -121,7 +121,7 @@ public class LoginFormController {
     @FXML
     void hyperOnActionForgetPassword(ActionEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/ForgetPasswordOTPForm.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/ForgetGetUsernameEmailForm.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
