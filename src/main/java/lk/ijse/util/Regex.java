@@ -40,7 +40,7 @@ public class Regex {
                 filed = "^\\d+(\\.\\d+)?$";
                 break;
             case VEHICLENo:
-                filed = "^[A-Z][0-9]{3}-\\d{4}$";
+                filed = "^([a-zA-Z]{1,3}|((?!0*-)[0-9]{1,3}))-[0-9]{4}(?<!0{4})$";
                 break;
             case VEHICLETYPE:
                 filed = "^[A-Za-z\\s]+$";

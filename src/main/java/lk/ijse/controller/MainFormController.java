@@ -1,5 +1,6 @@
 package lk.ijse.controller;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,9 +18,46 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import javafx.animation.FadeTransition;
 import lk.ijse.animation.AnimationUtil;
 
 public class MainFormController {
+
+    @FXML
+    private JFXButton btnBuyer;
+
+    @FXML
+    private JFXButton btnDashboard;
+
+    @FXML
+    private JFXButton btnDelivery;
+
+    @FXML
+    private JFXButton btnEmployee;
+
+    @FXML
+    private JFXButton btnLogout;
+
+    @FXML
+    private JFXButton btnOrders;
+
+    @FXML
+    private JFXButton btnPayment;
+
+    @FXML
+    private JFXButton btnSettings;
+
+    @FXML
+    private JFXButton btnStock;
+
+    @FXML
+    private JFXButton btnSupplier;
+
+    @FXML
+    private JFXButton btnTransactions;
+
+    @FXML
+    private JFXButton btnVehicle;
 
     @FXML
     public Label lblName;
@@ -39,6 +77,18 @@ public class MainFormController {
 
 
     public void initialize() throws IOException {
+        AnimationUtil.addPulseAnimation(btnBuyer);
+        AnimationUtil.addPulseAnimation(btnDashboard);
+        AnimationUtil.addPulseAnimation(btnDelivery);
+        AnimationUtil.addPulseAnimation(btnEmployee);
+        AnimationUtil.addPulseAnimation(btnLogout);
+        AnimationUtil.addPulseAnimation(btnOrders);
+        AnimationUtil.addPulseAnimation(btnPayment);
+        AnimationUtil.addPulseAnimation(btnSettings);
+        AnimationUtil.addPulseAnimation(btnStock);
+        AnimationUtil.addPulseAnimation(btnSupplier);
+        AnimationUtil.addPulseAnimation(btnTransactions);
+        AnimationUtil.addPulseAnimation(btnVehicle);
         loadDashboardForm();
         setDate();
         setTime();
@@ -211,5 +261,9 @@ public class MainFormController {
         // Play the animation
         typingAnimation.play();
     }
+
+
+
+
 
 }

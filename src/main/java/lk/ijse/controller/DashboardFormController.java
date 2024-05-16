@@ -3,25 +3,35 @@ package lk.ijse.controller;
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import lk.ijse.db.DbConnection;
 
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalTime;
+import java.util.*;
 
 import javafx.scene.chart.LineChart;
+import lk.ijse.model.tm.OrderBuyerTm;
+import lk.ijse.repository.OrderRepo;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class DashboardFormController {
 
@@ -33,13 +43,13 @@ public class DashboardFormController {
 
 
     @FXML
-    private TableView<?> tblOrderBuyer;
+    private TableView<OrderBuyerTm> tblOrderBuyer;
 
     @FXML
-    private JFXButton btnEmployeeList;
+    private TableColumn<?, ?> colOrderID;
 
     @FXML
-    private JFXButton btnSupplierList;
+    private TableColumn<?, ?> colBuyerName;
 
     @FXML
     private ImageView wishImageView;
@@ -59,10 +69,12 @@ public class DashboardFormController {
     @FXML
     private LineChart<?, ?> LineChart;
 
-    public void initialize() {
+    public void initialize() throws SQLException {
         LineChar();
         setGreeting();
         animateLabelTyping();
+        getAllOrderBuyerNames();
+        setCellValueFactoryOrderBuyer();
         try {
             supplierCount = getSupplierCount();
             employeeCount = getEmployeeCount();
@@ -73,6 +85,11 @@ public class DashboardFormController {
         setSupplierCount(supplierCount);
         setEmployeeCount(employeeCount);
         setBuyerCount(buyerCount);
+    }
+
+    private void setCellValueFactoryOrderBuyer() {
+        colOrderID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
+        colBuyerName.setCellValueFactory(new PropertyValueFactory<>("buyerName"));
     }
 
     private void setEmployeeCount(int employeeCount) {
@@ -108,6 +125,27 @@ public class DashboardFormController {
         return 0;
     }
 
+    public void btnEmployeeListOnAction(javafx.event.ActionEvent actionEvent) throws JRException, SQLException {
+        JasperDesign jasperDesign = JRXmlLoader.load("src/main/resources/reports/EmployeeList.jrxml");
+        JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+
+        Map<String,Object> data = new HashMap<>();
+
+        JasperPrint jasperPrint =
+                JasperFillManager.fillReport(jasperReport, data,DbConnection.getInstance().getConnection());
+        JasperViewer.viewReport(jasperPrint,false);
+    }
+    public void btnSupplierListOnAction(javafx.event.ActionEvent actionEvent) throws JRException, SQLException {
+        JasperDesign jasperDesign = JRXmlLoader.load("src/main/resources/reports/SupplierList.jrxml");
+        JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+
+        Map<String,Object> data = new HashMap<>();
+
+        JasperPrint jasperPrint =
+                JasperFillManager.fillReport(jasperReport, data,DbConnection.getInstance().getConnection());
+        JasperViewer.viewReport(jasperPrint,false);
+    }
+
     private int getBuyerCount() throws SQLException {
         String sql = "SELECT COUNT(*) AS buyer_count FROM buyer";
 
@@ -121,21 +159,68 @@ public class DashboardFormController {
         return 0;
     }
 
+    private void getAllOrderBuyerNames() throws SQLException {
+        ObservableList<OrderBuyerTm> obList = FXCollections.observableArrayList();
+        List<OrderBuyerTm> ordersList = OrderRepo.getAllOrderBuyerNames();
+
+        for ( OrderBuyerTm order: ordersList){
+            obList.add(new OrderBuyerTm(
+                    order.getOrderID(),
+                    order.getBuyerName()
+            ));
+        }
+        tblOrderBuyer.setItems(obList);
+    }
+
     private void setBuyerCount(int buyerCount) {
         lblBuyerCount.setText(String.valueOf(buyerCount));
     }
 
-    private void LineChar(){
-        XYChart.Series series = new XYChart.Series<>();
-        series.getData().add(new XYChart.Data("Monday",8)) ;
-        series.getData().add(new XYChart.Data("TuesDay",10)) ;
-        series.getData().add(new XYChart.Data("WendsDay",15)) ;
-        series.getData().add(new XYChart.Data("ThursDay",5)) ;
-        series.getData().add(new XYChart.Data("Friday",5)) ;
-        series.getData().add(new XYChart.Data("Saturday",9)) ;
-        series.getData().add(new XYChart.Data("Sunday",8)) ;
-        LineChart.getData().addAll(series);
+//    private void LineChar(){
+//        XYChart.Series series = new XYChart.Series<>();
+//        series.getData().add(new XYChart.Data("Monday",8)) ;
+//        series.getData().add(new XYChart.Data("TuesDay",10)) ;
+//        series.getData().add(new XYChart.Data("WendsDay",15)) ;
+//        series.getData().add(new XYChart.Data("ThursDay",5)) ;
+//        series.getData().add(new XYChart.Data("Friday",5)) ;
+//        series.getData().add(new XYChart.Data("Saturday",9)) ;
+//        series.getData().add(new XYChart.Data("Sunday",8)) ;
+//        LineChart.getData().addAll(series);
+//    }
+
+    private void LineChar() {
+        XYChart.Series series = new XYChart.Series();
+
+        Map<String, Double> stocksByDay = getStocksByDay();
+
+        for (Map.Entry<String, Double> entry : stocksByDay.entrySet()) {
+            series.getData().add(new XYChart.Data(entry.getKey(), entry.getValue()));
+        }
+
+        LineChart.getData().add(series);
+        LineChart.lookup(".chart-plot-background").setStyle("-fx-background-color: transparent;");
     }
+
+    public static Map<String, Double> getStocksByDay() {
+        Map<String, Double> stocksByDay = new HashMap<>();
+
+        String sql = " SELECT date,TotalWeight AS total_weight FROM stock;";
+
+        try (PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+             ResultSet resultSet = pstm.executeQuery()) {
+
+            while (resultSet.next()) {
+                String date = resultSet.getString("date");
+                double totalWeight = resultSet.getDouble("total_weight");
+                stocksByDay.put(date, totalWeight);
+            }
+            System.out.println(stocksByDay);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return stocksByDay;
+    }
+
 
     public void setGreeting() {
         Calendar c = Calendar.getInstance();
@@ -157,6 +242,7 @@ public class DashboardFormController {
             wishImageView.setImage(new Image(DashboardFormController.class.getResourceAsStream("/images/night.png")));
         }
     }
+
     private void animateLabelTyping() {
         String loginText = lblGreetings.getText();
         int animationDuration = 250;
@@ -176,4 +262,6 @@ public class DashboardFormController {
 
         typingAnimation.play();
     }
+
+
 }

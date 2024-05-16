@@ -4,6 +4,7 @@ import lk.ijse.db.DbConnection;
 import lk.ijse.model.Buyer;
 import lk.ijse.model.Employee;
 import lk.ijse.model.Order;
+import lk.ijse.model.tm.OrderBuyerTm;
 import lk.ijse.model.tm.OrderStockTm;
 
 import java.sql.Connection;
@@ -103,6 +104,22 @@ public class OrderRepo {
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3)
+            ));
+        }
+        return data;
+    }
+
+    public static List<OrderBuyerTm> getAllOrderBuyerNames() throws SQLException {
+        String sql = "SELECT DISTINCT osi.orderId, b.name AS buyerName FROM ordersstockinfo osi JOIN buyer b ON osi.buyerId = b.buyerId;";
+        Connection con = DbConnection.getInstance().getConnection();
+
+        List<OrderBuyerTm> data = new ArrayList<>();
+
+        ResultSet resultSet = con.createStatement().executeQuery(sql);
+        while (resultSet.next()) {
+            data.add(new OrderBuyerTm(
+                    resultSet.getString(1),
+                    resultSet.getString(2)
             ));
         }
         return data;

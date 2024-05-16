@@ -151,8 +151,8 @@ public class PlaceOrderFormController {
     @FXML
     void btnOnActionPlaceOrder(ActionEvent event) throws IOException, JRException, SQLException {
 
-        if (cmbStockID.getSelectionModel().isEmpty() || cmbBuyerId.getSelectionModel().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Please Select Stock ID and Buyer ID", ButtonType.OK).show();
+        if (tblOrderPlace.getItems().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Add to cart firstly...", ButtonType.OK).show();
             return;
         }
 
