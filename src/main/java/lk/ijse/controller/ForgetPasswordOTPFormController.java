@@ -1,5 +1,6 @@
 package lk.ijse.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +26,28 @@ public class ForgetPasswordOTPFormController {
 
     @FXML
     private TextField txtForgetOTP4;
+
+    public void initialize() {
+        Platform.runLater(() -> txtForgetOTP1.requestFocus());
+
+        txtForgetOTP1.setOnKeyReleased(event -> handleKeyEvent(txtForgetOTP1, txtForgetOTP2, null));
+        txtForgetOTP2.setOnKeyReleased(event -> handleKeyEvent(txtForgetOTP2, txtForgetOTP3, txtForgetOTP1));
+        txtForgetOTP3.setOnKeyReleased(event -> handleKeyEvent(txtForgetOTP3, txtForgetOTP4, txtForgetOTP2));
+        txtForgetOTP4.setOnKeyReleased(event -> handleKeyEvent(txtForgetOTP4, null, txtForgetOTP3));
+    }
+
+    private void handleKeyEvent(TextField currentTextField, TextField nextTextField, TextField previousTextField) {
+        if (currentTextField.getText().length() == 1) {
+            if (nextTextField != null) {
+                nextTextField.requestFocus();
+            }
+        } else if (currentTextField.getText().isEmpty()) {
+            if (previousTextField != null) {
+                previousTextField.requestFocus();
+            }
+        }
+    }
+
 
     @FXML
     void btnBackLoginOnAction(ActionEvent event) throws IOException   {

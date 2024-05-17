@@ -194,7 +194,9 @@ public class DashboardFormController {
         Map<String, Double> stocksByDay = getStocksByDay();
 
         for (Map.Entry<String, Double> entry : stocksByDay.entrySet()) {
-            series.getData().add(new XYChart.Data(entry.getKey(), entry.getValue()));
+            series.getData().add(
+                    new XYChart.Data(entry.getKey(), entry.getValue()
+                    ));
         }
 
         LineChart.getData().add(series);
@@ -204,7 +206,7 @@ public class DashboardFormController {
     public static Map<String, Double> getStocksByDay() {
         Map<String, Double> stocksByDay = new HashMap<>();
 
-        String sql = " SELECT date,TotalWeight AS total_weight FROM stock;";
+        String sql = " SELECT date,SUM(TotalWeight) AS total_weight FROM stock GROUP BY date;";
 
         try (PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
              ResultSet resultSet = pstm.executeQuery()) {
@@ -214,7 +216,7 @@ public class DashboardFormController {
                 double totalWeight = resultSet.getDouble("total_weight");
                 stocksByDay.put(date, totalWeight);
             }
-            System.out.println(stocksByDay);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
