@@ -13,7 +13,7 @@ import java.util.List;
 
 public class StockRepo {
     public static boolean save(Stock stock) throws SQLException {
-        String sql = "insert into stock values(?,?,?)";
+        String sql = "insert into stock values(?,?,?,'active')";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
@@ -52,7 +52,7 @@ public class StockRepo {
     }
 
     public static List<String> getIds() throws SQLException {
-        String sql = "SELECT stockId FROM stock";
+        String sql = "SELECT stockId FROM stock WHERE status ='active'";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);

@@ -16,6 +16,7 @@ public class PlaceOrderRepo {
             boolean isOrderSaved = OrderRepo.save(po.getOrder());
             if (isOrderSaved) {
                 boolean isOrderDetailSaved = OrderDetailRepo.save(po.getOdList());
+//                po.getOdList(getStockId)
                 System.out.println(isOrderDetailSaved);
                 if (isOrderDetailSaved) {
                     connection.commit();

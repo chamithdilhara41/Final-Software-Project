@@ -126,7 +126,7 @@ public class ForgetGetUsernameEmailController {
         while (resultSet.next()) {
             String id = resultSet.getString(1);
             idList.add(id);
-        }
+        }   
         return idList;
     }
 

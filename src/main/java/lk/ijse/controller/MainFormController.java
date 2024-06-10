@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,17 +12,20 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import javafx.animation.FadeTransition;
 import lk.ijse.animation.AnimationUtil;
+import lombok.SneakyThrows;
 
-public class MainFormController {
+public class MainFormController implements Initializable {
 
     @FXML
     private JFXButton btnBuyer;
@@ -73,10 +77,12 @@ public class MainFormController {
 
     @FXML
     private AnchorPane rootNode;
+    @SneakyThrows
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    public void initialize() throws IOException {
         AnimationUtil.addPulseAnimation(btnBuyer);
         AnimationUtil.addPulseAnimation(btnDashboard);
         AnimationUtil.addPulseAnimation(btnDelivery);
@@ -94,6 +100,7 @@ public class MainFormController {
         setTime();
         lblName.setText(LoginFormController.Name+"...");
         animateLabelTyping();
+
     }
 
     @FXML

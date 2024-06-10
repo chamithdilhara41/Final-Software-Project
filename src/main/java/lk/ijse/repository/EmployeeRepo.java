@@ -12,7 +12,9 @@ import java.util.List;
 
 public class EmployeeRepo {
     public static boolean save(Employee employee) throws SQLException {
-        String sql = "INSERT INTO employee VALUES (?,?,?,?,?,?)";
+
+        String sql = "INSERT INTO employee values(?,?,?,?,?,?)";
+
         PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
         pstm.setObject(1, employee.getEmployeeId());
         pstm.setObject(2, employee.getEmployeeName());

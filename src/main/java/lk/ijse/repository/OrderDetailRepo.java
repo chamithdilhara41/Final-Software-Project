@@ -29,7 +29,14 @@ public class OrderDetailRepo {
         pstm.setObject(3, od.getBuyerID());
 
 
-        return pstm.executeUpdate() > 0;    //false ->  |
+        String sql1 = "UPDATE stock SET status = 'inactive' WHERE stockId = ?";
+        PreparedStatement pstm1 = DbConnection.getInstance().getConnection().prepareStatement(sql1);
+
+        pstm1.setObject(1, od.getStockID());
+        pstm1.executeUpdate();
+
+
+        return pstm.executeUpdate() > 0 ;    //false ->  |
 
     }
 }

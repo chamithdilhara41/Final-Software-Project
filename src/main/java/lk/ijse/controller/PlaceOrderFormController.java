@@ -182,6 +182,7 @@ public class PlaceOrderFormController {
             boolean isPlaced = PlaceOrderRepo.placeOrder(po);
             if(isPlaced) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Order Placed!",ButtonType.OK).show();
+                getStockIds();
             } else {
                 new Alert(Alert.AlertType.WARNING, "Order Placed Unsuccessfully!",ButtonType.OK).show();
             }
