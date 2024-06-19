@@ -68,7 +68,12 @@ public class DeliveryRepo {
          List<Delivery> deliveryList = new ArrayList<Delivery>();
         ResultSet resultSet = DbConnection.getInstance().getConnection().createStatement().executeQuery(sql);
         while(resultSet.next()){
-            deliveryList.add(new Delivery(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4)));
+            deliveryList.add(new Delivery(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4)
+            ));
         }
         return deliveryList;
     }

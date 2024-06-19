@@ -37,7 +37,6 @@ public class LoginFormController {
     public static String UserName;
     public static String Name;
 
-
     public void initialize() {
         animateLabelTyping();
     }
@@ -71,6 +70,8 @@ public class LoginFormController {
             }
             new Alert(Alert.AlertType.ERROR, "Check Username and Password Text fields again", ButtonType.OK).show();
         } else {
+
+            //UserRepo.getLoginDetails(usernameLogin);
 
             String sql = "SELECT username,password,name FROM users WHERE username = ?";
 
